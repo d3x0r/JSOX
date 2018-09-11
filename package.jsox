@@ -3,17 +3,18 @@
 
 
 {
-    name: "json-6",
-    version: "1.0.2",
-    description: "JSON for the ES6 era.",
+    name: "jsox",
+    version: "1.0.0",
+    description: "Java Script Object eXchange.",
     keywords: [
         "json",
-        "es6"
+        "es6",
+	"macro","template","class"
     ],
     author: "d3x0r <d3x0r@github.com>",
     contributors: [
     ],
-    main: "lib/json6.js",
+    main: "lib/jsox.js",
     bin: "lib/cli.js",
     files: [
         "lib/"
@@ -23,13 +24,13 @@
         mocha: "^3.1.0"
     },
     scripts: {
-        build: "node ./lib/cli.js -c package.json6",
+        build: "node ./lib/cli.js -c package.jsox",
         test: "mocha --ui exports --reporter spec"
     },
-    homepage: "http://npmjs.org/package/json-6/",
+    homepage: "http://npmjs.org/package/jsox/",
     license: "MIT",
     repository: {
         type: "git",
-        url: "https://github.com/d3x0r/json6"
+        url: "https://github.com/d3x0r/jsox"
     }
 }
