@@ -252,6 +252,15 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 - (**JSOX**) Open to support for transporting ArrayBuffer and TypedArray fields... This will probably be constants as tags applied prefixing and opening brace '['.
   - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
   - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
+
+```
+// simple example, array buffer with 8 bytes
+var ab = new ArrayBuffer([0,1,2,3,4,5,6,7]);
+console.log( JSOX.stringify( {ab:new Float32Array(ab)} ) );
+
+// example output
+{ab:f32[AAECAwQFBgc=]}
+```
   
 ## Example
 
@@ -389,6 +398,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |Stringifier method | parameters | Description |
 |-------|------|-----|
 |defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object |
+|setQuote | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
 |stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][jsox-stringify] |
 
 [json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
