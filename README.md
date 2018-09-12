@@ -367,10 +367,16 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |JSOX Methods | parameters | Description |
 |-----|-----|-----|
 |parse| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
-|stringify | ( value ) | converts object to JSON.  [stringify][json-stringify] |
+|stringify | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][jsox-stringify] |
+|stringifier | () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
 |escape | ( string ) | substitutes ", \, ', and ` with backslashed sequences. (prevent 'JSON injection') |
 |begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
 
+
+|Stringifier method | parameters | Description |
+|-------|------|-----|
+|defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object |
+|stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][jsox-stringify] |
 
 [json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
 [json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
