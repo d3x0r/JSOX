@@ -1,4 +1,6 @@
-# JSOX – Programmable ECMA Script Object Notation for Humans
+# JSOX – JavaScript Object eXchange format.
+
+ (PESON) Programmable ECMA Script Object Notation for Humans
 
 ## Please Fix links.
 
