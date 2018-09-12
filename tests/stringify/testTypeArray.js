@@ -1,11 +1,15 @@
 var JSOX=require( "../.." );
+var ab = new ArrayBuffer(8);
+var u8 = new Uint8Array(ab);
+for( var n = 0; n < 8; n++ ) u8[n] = n;
 
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:ab[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:u8[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:u16[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:u32[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:s8[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:s16[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:s32[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:f32[0,1,2,3,4,5,6,7]}' )) );
-console.log( "MNOP=", JSOX.stringify(JSOX.parse( '{ab:f64[0,1,2,3,4,5,6,7]}' )) );
+
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:ab}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Uint8Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Uint16Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Uint32Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Int8Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Int16Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Int32Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Float32Array(ab)}) )) );
+console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:new Float64Array(ab)}) )) );

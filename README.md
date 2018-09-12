@@ -250,8 +250,8 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 ### ArrayBuffer/TypedArray
 
 - (**JSOX**) Open to support for transporting ArrayBuffer and TypedArray fields... This will probably be constants as tags applied prefixing and opening brace '['.
-  - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array contents is the byte values (0-255).
-  - Could use a more compact encoding for the data; u8 strings instead of array elements perhaps; or bas64....
+  - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
+  - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
   
 ## Example
 
