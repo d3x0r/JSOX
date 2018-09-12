@@ -6,6 +6,12 @@ var stringify = JSOX.stringify;
 var parse = JSOX.parse;
 
 var r, r2, r3;
+r = stringify( { "true": "simple object", "false":3, "test extra":new Date(), "This+fails":0, "123":123, 124:123 } );
+	r2 = stringify( parse( r ) );
+	if( r != r2 )
+console.log( "identTest:", r );
+
+
 r = stringify( { a: "simple object", b:3, c:new Date() } );
 	r2 = stringify( parse( r ) );
 	if( r != r2 )
