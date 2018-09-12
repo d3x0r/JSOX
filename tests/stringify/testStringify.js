@@ -23,7 +23,9 @@ r = stringify( [ "simple array", 3, new Date() ] );
 console.log( "2:", r );
 
 if( BigInt ) {
-	r = stringify( { a: "simple object", b:3, c:new Date(), d:123n, e:null, f:undefined, g:NaN, h:Infinity, i:-Infinity, h:-0.302 } );
+	r = stringify( { a: "simple object", b:3, c:new Date(), d:123n, e:null, f:undefined, g:NaN, h:Infinity, i:-Infinity, j:-0.302 }, null, 3 );
+	console.log( "pretty:", r );
+	r = stringify( { a: "simple object", b:3, c:new Date(), d:123n, e:null, f:undefined, g:NaN, h:Infinity, i:-Infinity, j:-0.302 } );
 	r2 = stringify( parse( r ) );
 	if( r != r2 )
 	console.log( "3:", r, r2 );
