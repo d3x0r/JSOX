@@ -1,16 +1,16 @@
-# PESON – Programmable ECMA Script Object Notation for Humans
+# JSOX – Programmable ECMA Script Object Notation for Humans
 
 ## Please Fix links.
 
-[![Join the chat at https://gitter.im/sack-vfs/peson](https://badges.gitter.im/sack-vfs/peson.svg)](https://gitter.im/sack-vfs/peson?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/sack-vfs/jsox](https://badges.gitter.im/sack-vfs/jsox.svg)](https://gitter.im/sack-vfs/jsox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 *Documenation base cloned from JSON5 project https://github.com/json5/json5*
 *Documenation base cloned from JSON6 project https://github.com/d3x0r/json6*
 
 100% Compatible reader for JSON.  Stringify may be JSON output compatible;
-but then there will be other methods for outputing PESON.
+but then there will be other methods for outputing JSOX.
 
-PESON Adds processing of `tag` keywords, which influences the states in the
+JSOX Adds processing of `tag` keywords, which influences the states in the
 parser; and a prefix 'type' for data.  Example: `v{ x, y } { a : v{a,b} }`.
 It defines a template/class of object that has fields 'x', and 'y'.  Then
 defines an object with a field A what is a object of type 'v', with values
@@ -18,26 +18,39 @@ defines an object with a field A what is a object of type 'v', with values
 comes when you have a lot of the same sort of record with the same field
 names repeated often.
 
-JSON is an excellent data format, but thought to be better.
+ * adds macro/class support for object field names.
+ * adds support for bigint numbers; indicated with an 'n' suffix.
+ * adds support for Date parsing.
 
-**PESON is a proposed extension to JSON** that aims to make it easier for
+**JSOX is a proposed extension to JSON** that aims to make it easier for
 *humans to write and maintain* by hand. It does this by adding some minimal
 syntax features directly from ECMAScript 6.
 
-PESON is a **superset of JavaScript**, although adds **no new data types**,
-and **works with all existing JSON content**. Some features allowed in PESON
+JSOX is a **superset of JavaScript**, although adds **no new data types**,
+and **works with all existing JSON content**. Some features allowed in JSOX
 are not directly supported by Javascript; although all javascript parsable
-features can be used in PESON, except functions or any other code construct, 
+features can be used in JSOX, except functions or any other code construct, 
 transporting only data save as JSON.
 
-PESON is *not* an official successor to JSON, and PESON content may *not*
-work with existing JSON parsers. For this reason, PESON files use a new .peson
+JSOX is *not* an official successor to JSON, and JSOX stringified content *will not*
+work with existing JSON parsers. For this reason, JSOX files use a new .jsox
 extension. *(TODO: new MIME type needed too.)*
 
 The code is a **reference JavaScript implementation** for both Node.js
-and all browsers. It is a completly new implementation.
+and all browsers. The code is derrived from JSON-6 sources.
 
 ## Why
+
+Beyond the existing reasons for JSON5/JSON6 for their modifications; this
+addresses the biggest shortcoming of JSON, which is the repetitive and redundant
+specification of field names; especially when lots of the same sort of object
+is represented.
+
+This also aims to provide support for BigInt and Date format for less work
+at the application layer.  **A method for handling typed array object members
+should also be impelemented**
+
+(Historic Why below)
 
 JSON isn’t the friendliest to *write*. Keys need to be quoted, objects and
 arrays can’t have trailing commas, and comments aren’t allowed — even though
@@ -59,12 +72,26 @@ JSON6’s aim is to remain close to JSON and JavaScript.
 ## Features
 
 The following is the exact list of additions to JSON’s syntax introduced by
-PESON. **All of these are optional**, and **MOST of these come from ES5/6**.
+JSOX. **All of these are optional**.
+
+ - Concise representation of dates and times including as much information as is
+available for the timestamp(timezone).  
+
+ - Supports encode and decode of BigInt numbers with no application overhead. 
+ - reduces overhead from none-requires quotes for identifiers.
+ - can further reduce overall output size by using class tags ( Needs internal
+implementation; although users can generate output simply ).
 
 ## Caveats
 
-Does not include stringify, instead falling back to original JSON.stringify.
-This will cause problems maintaining undefined, Infinity and NaN type values.
+JSOX.stringify will produce output that JSON.parse cannot handle; JSOX.parse
+can always handle JSON.stringify.
+
+### Summary of Changes from JSON6
+
+  - BigInt encoding
+  - ISO date/time Encoding/decoding (as part of Number format)
+  - Adds classes/tags to reduce redundant information.
 
 ### Summary of Changes from JSON5
 
@@ -77,11 +104,52 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
   - Streaming reader interface
   - (Twice the speed of JSON5; subjective)
 
+### Classes/Tags
+
+The definition of a class is an identifer at the top level (before the JSON data) followed by an open brace ('{').
+Within the open brace '{' until the close '}' is a list of names seprated by commas, and of constants indicated
+by an identifier followed by a colon and a value.
+
+```
+
+tagdef : identifier '{' identifier [ ',' identifier ] ... '}'
+tagdef : identifier '{' constant_initializer [ ',' identifier ] ... '}'
+
+constant_initializer : identifier ':' value 
+
+```
+
+Usage of tags is done by specifing their identifer followed by an open brace '{' in the value 
+field of an object definition; or at a top level referencing the same tag name already defined.
+For each field defined in the class, a value is expected.  If a value is not found, the field
+will not be added, as if receiving `field:undefined`.
+
+
+```
+
+tag usage : ':' identifier '{' value [ ',' value ]... '}' 
+
+//-- the following...
+a { firstField, secondField }
+a { 1, 2 }
+//-- results as
+{ firstField : 1, secondField : 2 }
+
+
+//-- the following...
+a { firstField, secondField }
+[ a { 1, 2 }, a(5,6), a("val1","val2") ]
+//-- results as
+[ { firstField : 1, secondField : 2 }, { firstField : 5, secondField : 6 }, { firstField : "val1", secondField : "val2" } ]
+
+```
+
+
 ### Objects
 
 - Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace.
 
-- Object keys can be single-quoted, (**PESON**) or back-tick quoted; any valid string 
+- Object keys can be single-quoted, (**JSON6**) or back-tick quoted; any valid string 
 
 - Object keys can be double-quoted (original JSON).
 
@@ -93,7 +161,7 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
 
 - Arrays can have trailing commas. If more than 1 is found, additional empty elements will be added.
 
-- (**PESON**) Arrays can have comma ( ['test',,,'one'] ), which will result with empty values in the empty places.
+- (**JSON6**) Arrays can have comma ( ['test',,,'one'] ), which will result with empty values in the empty places.
 
 ### Strings
 
@@ -106,20 +174,20 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
 - Strings can be split across multiple lines; just prefix each newline with a
   backslash. [ES5 [§7.8.4](http://es5.github.com/#x7.8.4)]
 
-- (**PESON**) all strings will continue keeping every character between the start and end, this allows multi-line strings 
+- (**JSON6**) all strings will continue keeping every character between the start and end, this allows multi-line strings 
   and keep the newlines in the string; if you do not want the newlines they can be escaped as previously mentioned.
 
 ### Numbers
 
-- (**PESON**) Numbers can have underscores separating digits '_' these are treated as zero-width-non-breaking-space. ([Proposal](https://github.com/tc39/proposal-numeric-separator) with the exception that _ can preceed or follow . and may be trailing.)
+- (**JSON6**) Numbers can have underscores separating digits '_' these are treated as zero-width-non-breaking-space. ([Proposal](https://github.com/tc39/proposal-numeric-separator) with the exception that _ can preceed or follow . and may be trailing.)
 
 - Numbers can be hexadecimal (base 16).  ( 0x prefix )
 
-- (**PESON**) Numbers can be binary (base 2).  (0b prefix)
+- (**JSON6**) Numbers can be binary (base 2).  (0b prefix)
 
-- (**PESON**) Numbers can be octal (base 8).  (0o prefix)
+- (**JSON6**) Numbers can be octal (base 8).  (0o prefix)
 
-- (**PESON**) Numbers can be octal (base 8).  (0 prefix followed by more numbers, without a decimal)
+- (**JSON6**) Numbers can be octal (base 8).  (0 prefix followed by more numbers, without a decimal)
 
 - Numbers can begin or end with a (leading or trailing) decimal point.
 
@@ -131,7 +199,7 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
 
 ### Keyword Values
 
-- (**PESON**) supports 'undefined' in addition to 'true', 'false', 'null'.
+- (**JSON6**) supports 'undefined' in addition to 'true', 'false', 'null'.
 
 
 ### Comments
@@ -179,23 +247,23 @@ multi-line string; but keeps newline',
 }
 ```
 
-This implementation’s own [package.PESON](package.PESON) is more realistic:
+This implementation’s own [package.jsox](package.jsox) is more realistic:
 
 ```js
-// This file is written in PESON syntax, naturally, but npm needs a regular
+// This file is written in JSOX syntax, naturally, but npm needs a regular
 // JSON file, so compile via `npm run build`. Be sure to keep both in sync!
 
 {
-    name: 'PESON',
+    name: 'JSOX',
     version: '0.1.105',
     description: 'JSON for the ES6 era.',
     keywords: ['json', 'es6'],
     author: 'd3x0r <d3x0r@github.com>',
     contributors: [
         // TODO: Should we remove this section in favor of GitHub's list?
-        // https://github.com/d3x0r/PESON/contributors
+        // https://github.com/d3x0r/JSOX/contributors
     ],
-    main: 'lib/PESON.js',
+    main: 'lib/JSOX.js',
     bin: 'lib/cli.js',
     files: ["lib/"],
     dependencies: {},
@@ -207,15 +275,15 @@ This implementation’s own [package.PESON](package.PESON) is more realistic:
         mocha: "^2.4.5"
     },
     scripts: {
-        build: 'node ./lib/cli.js -c package.PESON',
+        build: 'node ./lib/cli.js -c package.JSOX',
         test: 'mocha --ui exports --reporter spec',
             // TODO: Would it be better to define these in a mocha.opts file?
     },
-    homepage: 'http://github.com/d3x0r/PESON/',
+    homepage: 'http://github.com/d3x0r/JSOX/',
     license: 'MIT',
     repository: {
         type: 'git',
-        url: 'https://github.com/d3x0r/PESON',
+        url: 'https://github.com/d3x0r/JSOX',
     },
 }
 ```
@@ -223,62 +291,62 @@ This implementation’s own [package.PESON](package.PESON) is more realistic:
 
 ## Community
 
-Join the [Google Group](http://groups.google.com/group/PESON) if you’re
-interested in PESON news, updates, and general discussion.
+Join the [Google Group](http://groups.google.com/group/JSOX) if you’re
+interested in JSOX news, updates, and general discussion.
 Don’t worry, it’s very low-traffic.
 
-The [GitHub wiki](https://github.com/d3x0r/PESON/wiki) (will be) a good place to track
-PESON support and usage. Contribute freely there!
+The [GitHub wiki](https://github.com/d3x0r/JSOX/wiki) (will be) a good place to track
+JSOX support and usage. Contribute freely there!
 
-[GitHub Issues](https://github.com/d3x0r/PESON/issues) is the place to
+[GitHub Issues](https://github.com/d3x0r/JSOX/issues) is the place to
 formally propose feature requests and report bugs. Questions and general
 feedback are better directed at the Google Group.
 
 
 ## Usage
 
-This JavaScript implementation of PESON simply provides a `PESON` object just
+This JavaScript implementation of JSOX simply provides a `JSOX` object just
 like the native ES5 `JSON` object.
 
 To use from Node:
 
 ```sh
-npm install json-6
+npm install jsox
 ```
 
 ```js
-var PESON = require('json-6');
+var JSOX = require('jsox');
 ```
 
-To use in the browser (adds the `PESON` object to the global namespace):
+To use in the browser (adds the `JSOX` object to the global namespace):
 
 ```html
-<script src="node_modules/json-6/lib/peson.js"></script>
+<script src="node_modules/json-6/lib/jsox.js"></script>
 ```
 
-Then in both cases, you can simply replace native `JSON` calls with `PESON`:
+Then in both cases, you can simply replace native `JSON` calls with `JSOX`:
 
 ```js
-var obj = PESON.parse('{unquoted:"key",trailing:"comma",}');
-var str = PESON.stringify(obj); /* uses JSON stringify, so don't have to replace */
+var obj = JSOX.parse('{unquoted:"key",trailing:"comma",}');
+var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace */
 ```
 
-|PESON Methods | parameters | Description |
+|JSOX Methods | parameters | Description |
 |-----|-----|-----|
-|parse| (string [,reviver]) | supports all of the PESON features listed above, as well as the native [`reviver` argument][json-parse]. |
+|parse| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
 |stringify | ( value ) | converts object to JSON.  [stringify][json-stringify] |
 |escape | ( string ) | substitutes ", \, ', and ` with backslashed sequences. (prevent 'JSON injection') |
-|begin| (cb [,reviver] ) | create a PESON stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
+|begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
 
 
 [json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
 [json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 
-### PESON Streaming
+### JSOX Streaming
 
 A Parser that returns objects as they are encountered in a stream can be created.  `JSON.begin( dataCallback, reviver );`  The callback is called for each complete object in a stream of data that is passed.  
 
-`PESON.begin( cb, reviver )` returns an object with a few methods.
+`JSOX.begin( cb, reviver )` returns an object with a few methods.
 
 | Method | Arguments | Description | 
 |:---|:---|:---|
@@ -326,20 +394,20 @@ parser.write( '5678 ' );  // at this point, the space will flush the number valu
 
 ### Extras
 
-If you’re running this on Node, you can also register a PESON `require()` hook
-to let you `require()` `.peson` files just like you can `.json` files:
+If you’re running this on Node, you can also register a JSOX `require()` hook
+to let you `require()` `.jsox` files just like you can `.json` files:
 
 ```js
-require('JSON-6/lib/require');
-require('./path/to/foo');   // tries foo.peson after foo.js, foo.json, etc.
-require('./path/to/bar.peson');
+require('jsox/lib/require');
+require('./path/to/foo');   // tries foo.jsox after foo.js, foo.json, etc.
+require('./path/to/bar.jsox');
 ```
 
-This module also provides a `peson` executable (requires Node) for converting
-PESON files to JSON:
+This module also provides a `jsox` executable (requires Node) for converting
+JSOX files to JSON:
 
 ```sh
-peson -c path/to/foo.peson    # generates path/to/foo.json
+jsox -c path/to/foo.jsox    # generates path/to/foo.json
 ```
 
 ## Other Implementations
@@ -361,49 +429,23 @@ This is half the speed of the sack.vfs native C++ node addon implementation (whi
 ## Development
 
 ```sh
-git clone https://github.com/d3x0r/peson
-cd peson
+git clone https://github.com/d3x0r/jsox
+cd jsox
 npm install
 npm test
 ```
 
-As the `package.peson` file states, be sure to run `npm run build` on changes
-to `package.peson`, since npm requires `package.json`.
+As the `package.jsox` file states, be sure to run `npm run build` on changes
+to `package.jsox`, since npm requires `package.json`.
 
-Feel free to [file issues](https://github.com/d3x0r/peson/issues) and submit
-[pull requests](https://github.com/d3x0r/PESON/pulls) — contributions are
+Feel free to [file issues](https://github.com/d3x0r/jsox/issues) and submit
+[pull requests](https://github.com/d3x0r/JSOX/pulls) — contributions are
 welcome. If you do submit a pull request, please be sure to add or update the
 tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.0.2 - Udate in Readme updated.
-- 1.0.1 - Fix homepage reference.
-- 1.0.0 - Fix bug reading surrogate pairs, and error with > 65k buffers.  Release 1.0.  I don't see this changing beyond the current functionality.
-- 0.1.127 - Fix bad shift/unshift/pop methods.
-- 0.1.126 - Fix handling very wide characters.  Improved number parsing speed.  Fix string character escapes.  Update documentation to include '0o' prefix for numbers.
-- 0.1.125 - Fix some `let`s that were causing deoptimization
-- 0.1.123 - Fix `npm install json-6` in readme.  Remove dev dependancies that aren't used.  Fix #8 Wierd arrays [test](./tests/json6TestObjectArray.js)
-- 0.1.122 - Fix referencing `val.negative` that should be just `negative`.
-- 0.1.121 - Optimization; use `Number()` instead of `new Number()`
-- 0.1.120 - If a non-string is passed to parse, convert to a string using String(msg).
-- 0.1.119 - standardize errors; fix negative sign for -Infinity.
-- 0.1.118 - Fix "use strict" undefined variables string_status and exponent_digit. Issue #4.
-- 0.1.117 - documentation and license updates. (Issue #3)
-- 0.1.116 - Updated docs; Fixed stream parse issue with numbers.
-- 0.1.115 - Fix object key names with spaces being accepted.  Fix number parsing to be more strict.
-- 0.1.114 - Fix true/false values.
-- 0.1.113 - documentation update fix.
-- 0.1.112 - fix streaming error at end of string, and values in some circumstances.
-- 0.1.111 - fix packaging error.
-- 0.1.110 - fix empty elements in arrays.  `[,]` = `[<empty item>]` not `[undefined]`. improve test.
-- 0.1.109 - fix redundant result with certain buffers.
-- 0.1.108 - rename 'add' to 'write' for compatibilty with other sack.vfs PESON parser.
-- 0.1.107 - fix variable used for gathering Strings that caused permanent error
-- 0.1.106 - fix handling whitespace after keyword
-- 0.1.105 - Add a streaming interface.
-- 0.1.104 - Readme updates. 
-- 0.1.103 - Add underscore as a zero-space-non-breaking-whitespace for numbers.
+- 1.0.0 - Intial Release.
 
 
 ## License
