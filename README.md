@@ -2,12 +2,7 @@
 
  (PESON) Programmable ECMA Script Object Notation for Humans
 
-## Please Fix links.
-
 [![Join the chat at https://gitter.im/sack-vfs/jsox](https://badges.gitter.im/sack-vfs/jsox.svg)](https://gitter.im/sack-vfs/jsox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-*Documenation base cloned from JSON5 project https://github.com/json5/json5*
-*Documenation base cloned from JSON6 project https://github.com/d3x0r/json6*
 
 100% Compatible reader for JSON.  Stringify may be JSON output compatible;
 but then there will be other methods for outputing JSOX.
@@ -22,11 +17,11 @@ names repeated often.
 
  * adds macro/class support for object field names.
  * adds support for bigint numbers; indicated with an 'n' suffix.
- * adds support for Date parsing.
+ * adds support for Date parsing and stringification.
+
+### Example Encoding
 
 ```
-// Example encoding
-
 r = JSOX.stringify( { 
 	a: "simple object"
 	, b:3
@@ -61,13 +56,15 @@ r = JSOX.stringify( {
 *humans to write and maintain* by hand. It does this by adding some minimal
 syntax features directly from ECMAScript 6.
 
-JSOX is a **superset of JavaScript**, although adds **no new data types**,
+JSOX is a **(super-sub)set of JavaScript**, although adds **no new data types**,
 and **works with all existing JSON content**. Some features allowed in JSOX
 are not directly supported by Javascript; although all javascript parsable
 features can be used in JSOX, except functions or any other code construct, 
-transporting only data save as JSON.
+transporting only data save as JSON.  Most ES6 structure can be parsed, 
+with the extension of classes/tags the reverse is not true.  It was true for
+JSON6.
 
-JSOX is *not* an official successor to JSON, and JSOX stringified content *will not*
+JSOX is a proprosal for an official successor to JSON, and JSOX stringified content *will not*
 work with existing JSON parsers. For this reason, JSOX files use a new .jsox
 extension. *(TODO: new MIME type needed too.)*
 
@@ -128,7 +125,7 @@ can always handle JSON.stringify.
   - ISO date/time Encoding/decoding (as part of Number format)
   - Adds classes/tags to reduce redundant information.
 
-### Summary of Changes from JSON5
+### Summary of Changes from JSON5/JSON
 
   - Keyword undefined
   - Objects/Strings back-tick quoted strings (no template support, just quotes); Object key names can be unquoted.
@@ -179,6 +176,10 @@ a { firstField, secondField }
 
 ```
 
+## Additional support above JSON base
+
+All items listed below are JSON5 additions if not specifed as JSON6.
+
 
 ### Objects
 
@@ -214,6 +215,8 @@ a { firstField, secondField }
 
 ### Numbers
 
+- (**JSOX**) BitInt numbers are stringified with suffix of 'n' as in ES(?), and implemented in V8(google/chrome/node) 2018/09/12.  BigInt number parsed with 'n' suffix.
+
 - (**JSON6**) Numbers can have underscores separating digits '_' these are treated as zero-width-non-breaking-space. ([Proposal](https://github.com/tc39/proposal-numeric-separator) with the exception that _ can preceed or follow . and may be trailing.)
 
 - Numbers can be hexadecimal (base 16).  ( 0x prefix )
@@ -226,21 +229,28 @@ a { firstField, secondField }
 
 - Numbers can begin or end with a (leading or trailing) decimal point.
 
-- Numbers can include `Infinity`, `-Infinity`,  `NaN`, and `-NaN`.
+- Numbers can include `Infinity`, `-Infinity`, `NaN`. 
 
 - Numbers can begin with an explicit plus sign.
 
 - Numbers can begin with multiple minus signs. For example '----123' === 123.
 
+### Dates
+
+- (**JSOX**) Encodes date time with local timestamp information to recover as much information as the original date contained.  Is treated as a subtype of Number parsing; and are stored without quotes.
+
 ### Keyword Values
 
 - (**JSON6**) supports 'undefined' in addition to 'true', 'false', 'null'.
-
 
 ### Comments
 
 - Both inline (single-line using '//' (todo:or '#'?) ) and block (multi-line using \/\* \*\/ ) comments are allowed.
 
+### ArrayBuffer/TypedArray
+
+- (**JSOX**) Open to support for transporting ArrayBuffer and TypedArray fields... This will probably be constants as tags applied prefixing and opening brace '['.
+  - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array contents is the byte values (0-255).
 
 ## Example
 

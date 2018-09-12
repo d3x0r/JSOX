@@ -1,2 +1,2 @@
-var JSON6=require( ".." );
-console.log( "MNOP=", JSON6.parse( 'a{b,c,d}{truetruetrue:0,classTest:a{1,2,3}}' ) );
+var JSOX=require( ".." );
+console.log( "MNOP=", JSOX.parse( 'abc{b,c,d}{truetruetrue:0,classTest:abc{1,2,3}}' ) );
