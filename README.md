@@ -22,6 +22,39 @@ names repeated often.
  * adds support for bigint numbers; indicated with an 'n' suffix.
  * adds support for Date parsing.
 
+```
+// Example encoding
+
+r = JSOX.stringify( { 
+	a: "simple object"
+	, b:3
+	, c:new Date()
+	, d:123n
+	, e:null
+	, f:undefined
+	, g:NaN
+	, h:Infinity
+	, i:-Infinity
+	, j:-0.302 } );
+
+// r = 
+{a:"simple object",b:3,c:2018-09-11T23:04:40-07:00,d:123n,e:null,g:NaN,h:Infinity,i:-Infinity,j:-0.302}
+
+// or with space = 3 
+{
+   a: "simple object",
+   b: 3,
+   c: 2018-09-11T23:06:09-07:00,
+   d: 123n,
+   e: null,
+   g: NaN,
+   h: Infinity,
+   i: -Infinity,
+   j: -0.302
+}
+
+```
+
 **JSOX is a proposed extension to JSON** that aims to make it easier for
 *humans to write and maintain* by hand. It does this by adding some minimal
 syntax features directly from ECMAScript 6.
