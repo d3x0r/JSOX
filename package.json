@@ -1,10 +1,13 @@
 {
     "name": "jsox",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Java Script Object eXchange.",
     "keywords": [
         "json",
-        "es6"
+        "es6",
+        "macro",
+        "template",
+        "class"
     ],
     "author": "d3x0r <d3x0r@github.com>",
     "contributors": [],
@@ -18,7 +21,7 @@
         "mocha": "^3.1.0"
     },
     "scripts": {
-        "build": "node ./lib/cli.js -c package.json6",
+        "build": "node ./lib/cli.js -c package.jsox",
         "test": "mocha --ui exports --reporter spec"
     },
     "homepage": "http://npmjs.org/package/jsox/",
@@ -26,5 +29,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/d3x0r/jsox"
+    },
+    "arrayBuffer": {
+        "0": 1963,
+        "1": 47019,
+        "2": 41515
     }
 }

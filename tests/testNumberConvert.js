@@ -1,3 +1,5 @@
+// this is a benchmark of number conversion methods and applications of negative or positibe
+console.log( "ES Number Conversion Benchmark" )
 
 function test() 
 {

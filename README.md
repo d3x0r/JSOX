@@ -1,14 +1,17 @@
 # JSOX – JavaScript Object eXchange format.
 
- (PESON) Programmable ECMA Script Object Notation for Humans
 
 [![Join the chat at https://gitter.im/sack-vfs/jsox](https://badges.gitter.im/sack-vfs/jsox.svg)](https://gitter.im/sack-vfs/jsox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-100% Compatible reader for JSON.  Stringify may be JSON output compatible;
-but then there will be other methods for outputing JSOX.
+100% Compatible reader for JSON.  JSOX.stringify cannot generate JSON
+compatible output; it would lose all the features anyway; use existing
+`JSON.stringify()` if required, again all JSON(JSON3/JSON5/JSON6) is valid JSOX.
 
-JSOX Adds processing of `tag` keywords, which influences the states in the
-parser; and a prefix 'type' for data.  Example: `v{ x, y } { a : v{a,b} }`.
+JSOX adds BigInt, Date, and TypeArray transport support, and includes
+keywords (5)'Infinity', (5)'NaN', (6)'undefined'.
+
+JSOX Adds optional processing of `tag` keywords, which influences the states 
+in the parser; and a prefix 'type' for data.  Example: `v{ x, y } { a : v{a,b} }`.
 It defines a template/class of object that has fields 'x', and 'y'.  Then
 defines an object with a field A what is a object of type 'v', with values
 'a', and 'b'.  This example does not gain any visible savings; savings 
@@ -18,11 +21,12 @@ names repeated often.
  * adds macro/class support for object field names.
  * adds support for bigint numbers; indicated with an 'n' suffix.
  * adds support for Date parsing and stringification.
+ * `o === JSOX.parse(JSON.stringify(o))` should always be exactly true.
 
 ### Example Encoding
 
 ```
-r = JSOX.stringify( { 
+r = JSOX.stringify( o = { 
 	a: "simple object"
 	, b:3
 	, c:new Date()
@@ -32,29 +36,46 @@ r = JSOX.stringify( {
 	, g:NaN
 	, h:Infinity
 	, i:-Infinity
-	, j:-0.302 } );
+	, j:-0.302 }, null, 3 );
+cnsole.log( "pretty:", o, "=\n", r );
 
-// r = 
-{a:"simple object",b:3,c:2018-09-11T23:04:40-07:00,d:123n,e:null,g:NaN,h:Infinity,i:-Infinity,j:-0.302}
+// -- output --
+pretty: { a: 'simple object',
+  b: 3,
+  c: 2018-09-14T09:55:27.292Z,
+  d: 123n,
+  e: null,
+  f: undefined,
+  g: NaN,
+  h: Infinity,
+  i: -Infinity,
+  j: -0.302,
+  k: Uint8Array [ 0, 0, 0, 0, 0, 0, 0, 0 ] } =
 
-// or with space = 3 
 {
-   a: "simple object",
-   b: 3,
-   c: 2018-09-11T23:06:09-07:00,
-   d: 123n,
-   e: null,
-   g: NaN,
-   h: Infinity,
-   i: -Infinity,
-   j: -0.302
+      a: "simple object",
+      b: 3,
+      c: 2018-09-14T02:55:27-07:00,
+      d: 123n,
+      e: null,
+      g: NaN,
+      h: Infinity,
+      i: -Infinity,
+      j: -0.302,
+      k: u8[AAAAAAAAAAA=]
 }
-
 ```
 
-**JSOX is a proposed extension to JSON** that aims to make it easier for
-*humans to write and maintain* by hand. It does this by adding some minimal
-syntax features directly from ECMAScript 6.
+**JSOX is a proposed replacement to JSON** that aims to make it easier for
+*humans to write and maintain* by hand, while also transporting the correct
+type of the data.  Humans, for example, wouldn't hand-code a base64 encoding 
+for a TypedArray; however sending a mesh from a server to a client already 
+processed as a typed buffer ready for WebGL consumption may be of use. 
+
+The class/tag support is entirely optional, and while it's goal is to reduce redundancy,
+which for large datasets of similar records can benefit, it has been argued
+that gzip could just be used to reduce the size; However, this also reduces
+the size of the data to be parsed on input, which gzip does not do.
 
 JSOX is a **(super-sub)set of JavaScript**, although adds **no new data types**,
 and **works with all existing JSON content**. Some features allowed in JSOX
@@ -64,9 +85,9 @@ transporting only data save as JSON.  Most ES6 structure can be parsed,
 with the extension of classes/tags the reverse is not true.  It was true for
 JSON6.
 
-JSOX is a proprosal for an official successor to JSON, and JSOX stringified content *will not*
-work with existing JSON parsers. For this reason, JSOX files use a new .jsox
-extension. *(TODO: new MIME type needed too.)*
+JSOX is a proprosal for an official successor to JSON, and JSOX stringified 
+content *will not* work with existing JSON parsers. For this reason, JSOX 
+files use a new .jsox extension. *(TODO: new MIME type needed too.)*
 
 The code is a **reference JavaScript implementation** for both Node.js
 and all browsers. The code is derrived from JSON-6 sources.
@@ -508,6 +529,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.
 - 1.0.0 - Intial Release.
 
 
