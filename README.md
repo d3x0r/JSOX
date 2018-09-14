@@ -276,6 +276,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
   - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
   - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
 
+
 ```
 // simple example, array buffer with 8 bytes
 var ab = new ArrayBuffer([0,1,2,3,4,5,6,7]);
@@ -284,8 +285,26 @@ console.log( JSOX.stringify( {ab:new Float32Array(ab)} ) );
 // example output
 {ab:f32[AAECAwQFBgc=]}
 ```
+
+
+#### Base64 vs UTF-8 Encoding
+
+UTF-8, for character 0-127 requires 1 byte; 128-255 requires 2 bytes.  For random data 0-255, 1.5 bytes will, on average, bt used
+to represent the string.  So this is 150% larger than the original string.  Even if like a base 2^40 bits, which would encode 5 bytes 
+into a single (very extended) utf8 encoding, each byte has the prefix of 2 bits `10xx xxxx`, which gives 6 bits per byte used.
+
+Base64 is 6 bits per byte used, so instead of having a complex encoder, base64 is the optimal of 3:4 byte expasion (133%) which is 
+the ideal that extra-long UTF8 encoding coule reach.
+
+An alternative might be a base128 encoding, which would be close to utf-8, but would actually require 129 characters, one to indicate
+the bytes that are unused.  7 bytes expand to 8, gathering the top bit of each of the 7 bytes of each one into one more byte; it could
+be an optimal encoding using code points 0-128 (128 being the end terminator like '=' in base64).  But, this also mean that up to 5
+bytes of waste may be included.  That is incomplete values at the end of the string have to be marked as unused.
+
+
   
-## Example
+
+## Example conversion
 
 The following is a contrived example, but it illustrates most of the features:
 
