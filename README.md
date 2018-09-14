@@ -163,6 +163,8 @@ The definition of a class is an identifer at the top level (before the JSON data
 Within the open brace '{' until the close '}' is a list of names seprated by commas, and of constants indicated
 by an identifier followed by a colon and a value.
 
+All objects created with a class/tag definition shares the same prototype.
+
 ```
 
 tagdef : identifier '{' identifier [ ',' identifier ] ... '}'
