@@ -65,9 +65,8 @@ parser.write( `5rg": {
    }
 ]`);
 
-
         
-parser.write( "123" );
+parser.write( "123\n" ); // this can no longer immediately preceed [ for streaming
 
 parser.write( "[\n   null,\n   null\n]" );
 
@@ -77,7 +76,7 @@ parser.write( '{ first: 1,' );   // a broken structure
 parser.write( ' second : 2 }' );
 parser.write( '[1234,12');  // a broken array across a value
 parser.write( '34,1234]'); 
-parser.write( '1234 456 789 123 523');  // multiple single simple values that are numbers
+parser.write( '1234 456 789 123 523 ');  // multiple single simple values that are numbers
 parser.write( '{a:1} {b:2} {c:3}');  // multiple objects
 
 parser.write( '1234' );  // this won't return immediately, there might be more numeric data.
