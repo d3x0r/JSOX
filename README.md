@@ -550,7 +550,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.
+- 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.
+- 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.  Make objects of a class share the same prototype.
 - 1.0.0 - Intial Release.
 
 
