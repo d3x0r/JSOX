@@ -1,0 +1,4 @@
+p  {  x  ,  y  }
+r   {    o    ,    n   }
+object { pos, motion, color }
+object{ p{6,3}, r{p{1,2},p{3,4}}, "white" }

@@ -1,0 +1,1 @@
+{ a: "simple object", b:3, c:2018-09-11T09:33:02, d:123n, e:null, f:undefined, g:NaN, h:Infinity, i:-Infinity, j:-0.302, k:ab[faefa3BDa]  }
