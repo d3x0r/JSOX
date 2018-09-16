@@ -22,6 +22,7 @@ names repeated often.
  * adds support for bigint numbers; indicated with an 'n' suffix.
  * adds support for Date parsing and stringification.
  * `o === JSOX.parse(JSON.stringify(o))` should always be exactly true.
+ * adds support for circular references.
 
 ### Example Encoding
 
@@ -179,7 +180,6 @@ field of an object definition; or at a top level referencing the same tag name a
 For each field defined in the class, a value is expected.  If a value is not found, the field
 will not be added, as if receiving `field:undefined`.
 
-
 ```
 
 tag usage : ':' identifier '{' value [ ',' value ]... '}' 
@@ -199,10 +199,33 @@ a { firstField, secondField }
 
 ```
 
+Implementation of tags allows apply a class to arrays.  Arrays have a class of ArrayBuffer, or other TypedArray type.  The
+representation path in an array and a reference type for the array. This allows circular encoding.
+
+```
+// this is a string with a reference.
+{company:{name:"Example.com",employees:[{name:"bob"},{name:"tom"}],manager:ref["company","employees",0]}}
+
+// The above 'ref[]' gets resolved into the same employee object...
+OUT: ./file6.jsox { company:
+   { name: 'Example.com',
+     employees: [ /*a*/{ name: 'bob' }, { name: 'tom' } ],
+     manager: /*a*/{ name: 'bob' } } }
+```
+
+
+
 ## Additional support above JSON base
 
 All items listed below are JSON5 additions if not specifed as JSON6.
 
+### 
+
+### ArrayBuffer/TypedArray
+
+- (**JSOX**) Support transporting ArrayBuffer and TypedArray fields. This is implemented with constants as tags applied prefixing and opening brace '\[' and encoding the binary data as a base64 string(without quotes) before the closing ']'.
+  - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
+  - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
 
 ### Objects
 
@@ -269,12 +292,6 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 ### Comments
 
 - Both inline (single-line using '//' (todo:or '#'?) ) and block (multi-line using \/\* \*\/ ) comments are allowed.
-
-### ArrayBuffer/TypedArray
-
-- (**JSOX**) Support transporting ArrayBuffer and TypedArray fields. This is implemented with constants as tags applied prefixing and opening brace '\[' and encoding the binary data as a base64 string(without quotes) before the closing ']'.
-  - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
-  - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
 
 
 ```
@@ -550,7 +567,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.
+- 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
 - 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.  Make objects of a class share the same prototype.
 - 1.0.0 - Intial Release.
 
