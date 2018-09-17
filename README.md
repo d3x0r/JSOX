@@ -523,19 +523,17 @@ jsox -c path/to/foo.jsox    # generates path/to/foo.json
 
 ## Other Implementations
 
-This is also implemented as part of npm [sack.vfs https://www.npmjs.com/package/sack.vfs] 
+This is also implemented as part of npm [sack.vfs](https://www.npmjs.com/package/sack.vfs)
 as a native code node.js addon.  This native javascript version allows usage in browsers.
 
 ## Benchmarks
 
-~~
-This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON
-implementation][json_parse.js] for JSON parsing.  
+~~ This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON
+implementation][json_parse.js] for JSON parsing.  ~~
 
-This is nearly double the speed of [JSON5 http://json5.org] implementation that inspired this (which is half the speed of Crockford's reference implementation).
+~~This is nearly double the speed of [JSON5 http://json5.org] implementation that inspired this (which is half the speed of Crockford's reference implementation).~~
 
-This is half the speed of the sack.vfs native C++ node addon implementation (which itself is half the speed of V8's native code implementation, but they can cheat and build strings directly).
-~~
+~~This is half the speed of the sack.vfs native C++ node addon implementation (which itself is half the speed of V8's native code implementation, but they can cheat and build strings directly).~~
 
 
 ## Development
