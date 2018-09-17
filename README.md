@@ -528,10 +528,10 @@ as a native code node.js addon.  This native javascript version allows usage in 
 
 ## Benchmarks
 
-~~ This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON
+~~This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON
 implementation][json_parse.js] for JSON parsing.  ~~
 
-~~This is nearly double the speed of [JSON5 http://json5.org] implementation that inspired this (which is half the speed of Crockford's reference implementation).~~
+~~This is nearly double the speed of [JSON5](http://json5.org) implementation that inspired this (which is half the speed of Crockford's reference implementation).~~
 
 ~~This is half the speed of the sack.vfs native C++ node addon implementation (which itself is half the speed of V8's native code implementation, but they can cheat and build strings directly).~~
 
@@ -555,6 +555,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.0.4 - Be more forgiving about platforms not having BigInt native support.
 - 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
 - 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.  Make objects of a class share the same prototype.
