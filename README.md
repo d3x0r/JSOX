@@ -41,18 +41,7 @@ r = JSOX.stringify( o = {
 cnsole.log( "pretty:", o, "=\n", r );
 
 // -- output --
-pretty: { a: 'simple object',
-  b: 3,
-  c: 2018-09-14T09:55:27.292Z,
-  d: 123n,
-  e: null,
-  f: undefined,
-  g: NaN,
-  h: Infinity,
-  i: -Infinity,
-  j: -0.302,
-  k: Uint8Array [ 0, 0, 0, 0, 0, 0, 0, 0 ] } =
-
+pretty:
 {
       a: "simple object",
       b: 3,
