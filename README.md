@@ -464,6 +464,7 @@ A Parser that returns objects as they are encountered in a stream can be created
 | \_write | (string,completeAtEnd) | Low level routine used internally.  This does the work of parsing the passed string. Returns 0 if no object completed, 1 if there is no more data, and an object was completd, returns 2 if there is more data and a parsed object is found.  if completedAtEnd is true, dangling values are returned, for example "1234" isn't known to be completed, more of the number might follow in another buffer; if completeAtEnd is passed, this iwll return as number 1234.  Passing empty arguments steps to the next buffered input value. |
 | value | () | Returns the currently completed object.  Used to get the completed object after calling \_write. |
 | reset | () | If `write()` or `\_write()` throws an exception, no further objects will be parsed becuase internal status is false, this resets the internal status to allow continuing using the existing parser.  ( May require some work to actually work for complex cases) |
+| usePrototype | (className,protoType) | configure what prototypes to use for class recovery |
 
 
 ```js
@@ -556,6 +557,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
 - 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.  Make objects of a class share the same prototype.
 - 1.0.0 - Intial Release.
