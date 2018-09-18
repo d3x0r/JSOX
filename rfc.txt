@@ -100,8 +100,8 @@ Table of Contents
 
    1. Introduction ....................................................3
       1.1. Conventions Used in This Document ..........................4
-      1.2. Specifications of JSON .....................................4
-   2. JSON Grammar ....................................................4
+      1.2. Specifications of JSOX .....................................4
+   2. JSOX Grammar ....................................................4
    3. Values ..........................................................5
    4. Objects .........................................................6
    5. Arrays ..........................................................6
@@ -390,7 +390,7 @@ Table of Contents
    generally available and widely used, good interoperability can be
    achieved by implementations that expect no more precision or range
    than these provide, in the sense that implementations will
-   approximate JSON numbers within the expected precision.  A JSON
+   approximate JSOX numbers within the expected precision.  A JSOX
    number such as 1E400 or 3.141592653589793238462643383279 may indicate
    potential interoperability problems, since it suggests that the
    software that created it expects receiving software to have greater
@@ -478,7 +478,7 @@ Table of Contents
 9.1.  Character Encoding
 
    JSOX text SHALL be encoded in UTF-8, UTF-16, or UTF-32.  The default
-   encoding is UTF-8, and JSON texts that are encoded in UTF-8 are
+   encoding is UTF-8, and JSOX texts that are encoded in UTF-8 are
    interoperable in the sense that they will be read successfully by the
    maximum number of implementations; there are many implementations
    that cannot successfully read texts in other encodings (such as
@@ -486,13 +486,13 @@ Table of Contents
 
    Implementations MUST NOT add a byte order mark to the beginning of a
    JSOX text.  In the interests of interoperability, implementations
-   that parse JSON texts MAY ignore the presence of a byte order mark
+   that parse JSOX texts MAY ignore the presence of a byte order mark
    rather than treating it as an error.
 
 9.2.  Unicode Characters
 
-   When all the strings represented in a JSON text are composed entirely
-   of Unicode characters [UNICODE] (however escaped), then that JSON
+   When all the strings represented in a JSOX text are composed entirely
+   of Unicode characters [UNICODE] (however escaped), then that JSOX
    text is interoperable in the sense that all software implementations
    that parse it will agree on the contents of names and of string
    values in objects and arrays.
@@ -503,7 +503,7 @@ Table of Contents
    surrogate).  Instances of this have been observed, for example, when
    a library truncates a UTF-16 string without checking whether the
    truncation split a surrogate pair.  The behavior of software that
-   receives JSON texts containing such values is unpredictable; for
+   receives JSOX texts containing such values is unpredictable; for
    example, implementations might return different values for the length
    of a string value or even suffer fatal runtime exceptions.
 
@@ -539,7 +539,7 @@ Table of Contents
 
 12.  IANA Considerations
 
-   The MIME media type for JSON text is application/jsox.
+   The MIME media type for JSOX text is application/jsox.
 
    Type name:  application
 
@@ -605,7 +605,7 @@ Table of Contents
 
 14.  Examples
 
-   This is a JSON object:
+   This is a JSOX object:
 
       {
         "Image": {
@@ -625,7 +625,7 @@ Table of Contents
    Its Image member is an object whose Thumbnail member is an object and
    whose IDs member is an array of numbers.
 
-   This is a JSON array containing two objects:
+   This is a JSOX array containing two objects:
 
       [
         {
@@ -688,7 +688,7 @@ Table of Contents
 
 
 
-   Here are three small JSON texts containing only values:
+   Here are three small JSOX texts containing only values:
 
    "Hello world!"
 
