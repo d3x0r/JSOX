@@ -292,9 +292,14 @@ Table of Contents
    ordering will be interoperable in the sense that they will not be
    affected by these differences.
 
-   
+   Typed Objects have a type definition, defined as a top-level object;
+   the definition specifies the fields for the object, so later references
+   of that object type only need specify values.  In Javascript, all
+   objects that are the same type, share the same prototype.  In C,
+   the information about the class of object is retained, but is only
+   represented for parser consumers to resolve.   
 
-5.  Arrays
+5.  Arrays and Typed Arrays
 
    An array structure is represented as square brackets surrounding zero
    or more values (or elements).  Elements are separated by commas.
@@ -303,6 +308,27 @@ Table of Contents
 
    There is no requirement that the values in an array be of the same
    type.
+
+   ECMA Script defined (in version 6?) typed arrays, which are packed,
+   binary types of data.  These can be encoded in JSOX using the same
+   sort of definition as a Typed Object, but, instead there are several
+   hard coded array types.   The element of a typed array buffer is
+   a base64 encoded identifier.  The base64 data should be decoded to 
+   the raw bytes before parser output.
+
+      ab - array buffer, untyped data of some byte length.
+      u8 - unsigned 8 bit integer array (Uint8Array),
+      uc8 (Uint8ClampedArray), s8(Int8ARray), 
+      u16, s16, 
+      u32, s32,
+      (u64, s64?),  (Uint64Array, Int64Array, not yet implemented in the real world)
+      f32, f64,
+
+   And finally, an internal (to the parser), array type 'ref'.  Reference
+   arrays contain strings and integer numbers, which define the path in the
+   current object or array to the value to use.  A 'ref' type array may NOT
+   occur as a primitive value.
+   
 
 6.  Numbers
 
@@ -380,17 +406,19 @@ Table of Contents
 7.  Identifiers
 
    Identifiers are not themselves values that result, but can be used
-   for the field 
-   - Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace.
+   for the field or defining typed objects.
 
-7.  Strings
+   Unquoted identifier strings must not have ':', ']', '[', '{', '}', ',', 
+   any quote or whitespace.  They must also not begin with characters that begin
+   a number.
 
-   The representation of strings is similar to conventions used in the C
-   family of programming languages.  A string begins and ends with
+8.  Strings
+
+   The representation of strings is similar to conventions used in ECMA Script.
+   A string begins and ends with
    quotation marks.  All Unicode characters may be placed within the
    quotation marks, except for the characters that must be escaped:
-   quotation mark, reverse solidus, and the control characters (U+0000
-   through U+001F).
+   the quotation mark used to open the string, and reverse solidus.
 
    Any character may be escaped.  If the character is in the Basic
    Multilingual Plane (U+0000 through U+FFFF), then it may be
@@ -400,11 +428,17 @@ Table of Contents
    F can be upper or lower case.  So, for example, a string containing
    only a single reverse solidus character may be represented as
    "\u005C".
+       Escaping character that are 1 byte may be done with \x or \[0-2]
+       for hex or octal conversion.
+
+       or \u{HEXDIGITS}
+       or \u0034
 
    Alternatively, there are two-character sequence escape
    representations of some popular characters.  So, for example, a
    string containing only a single reverse solidus character may be
    represented more compactly as "\\".
+
 
    To escape an extended character that is not in the Basic Multilingual
    Plane, the character is represented as a 12-character sequence,
@@ -417,6 +451,8 @@ Table of Contents
       char = unescaped /
           escape (
               %x22 /          ; "    quotation mark  U+0022
+              %x27 /          ; '    quotation mark  U+0027
+              %x60 /          ; `    quotation mark  U+0060
               %x5C /          ; \    reverse solidus U+005C
               %x2F /          ; /    solidus         U+002F
               %x62 /          ; b    backspace       U+0008
@@ -424,20 +460,24 @@ Table of Contents
               %x6E /          ; n    line feed       U+000A
               %x72 /          ; r    carriage return U+000D
               %x74 /          ; t    tab             U+0009
+              %x78 2HEXDIG )  ; xXX                  
+              %x30-%x32 2OCTDIG )  ; 0               
               %x75 4HEXDIG )  ; uXXXX                U+XXXX
 
       escape = %x5C              ; \
 
-      quotation-mark = %x22      ; "
+      quotation-mark = %x22 /     ; "
+                       %x29 /     ; '
+                       %x60 /     ; `
 
       unescaped = %x20-21 / %x23-5B / %x5D-10FFFF
 
 
-8.  String and Character Issues
+9.  String and Character Issues
 
-8.1.  Character Encoding
+9.1.  Character Encoding
 
-   JSON text SHALL be encoded in UTF-8, UTF-16, or UTF-32.  The default
+   JSOX text SHALL be encoded in UTF-8, UTF-16, or UTF-32.  The default
    encoding is UTF-8, and JSON texts that are encoded in UTF-8 are
    interoperable in the sense that they will be read successfully by the
    maximum number of implementations; there are many implementations
@@ -445,11 +485,11 @@ Table of Contents
    UTF-16 and UTF-32).
 
    Implementations MUST NOT add a byte order mark to the beginning of a
-   JSON text.  In the interests of interoperability, implementations
+   JSOX text.  In the interests of interoperability, implementations
    that parse JSON texts MAY ignore the presence of a byte order mark
    rather than treating it as an error.
 
-8.2.  Unicode Characters
+9.2.  Unicode Characters
 
    When all the strings represented in a JSON text are composed entirely
    of Unicode characters [UNICODE] (however escaped), then that JSON
@@ -467,7 +507,7 @@ Table of Contents
    example, implementations might return different values for the length
    of a string value or even suffer fatal runtime exceptions.
 
-8.3.  String Comparison
+0.3.  String Comparison
 
    Software implementations are typically required to test names of
    object members for equality.  Implementations that transform the
@@ -480,11 +520,11 @@ Table of Contents
    equal.
 
 
-9.  Parsers
+10.  Parsers
 
-   A JSON parser transforms a JSON text into another representation.  A
-   JSON parser MUST accept all texts that conform to the JSON grammar.
-   A JSON parser MAY accept non-JSON forms or extensions.
+   A JSOX parser transforms a JSOX text into another representation.  A
+   JSOX parser MUST accept all texts that conform to the JSOX grammar.
+   A JSOX parser MAY accept non-JSOX forms or extensions.
 
    An implementation may set limits on the size of texts that it
    accepts.  An implementation may set limits on the maximum depth of
@@ -492,12 +532,12 @@ Table of Contents
    of numbers.  An implementation may set limits on the length and
    character contents of strings.
 
-10.  Generators
+11.  Generators
 
-   A JSON generator produces JSON text.  The resulting text MUST
-   strictly conform to the JSON grammar.
+   A JSOX generator produces JSOX text.  The resulting text MUST
+   strictly conform to the JSOX grammar.
 
-11.  IANA Considerations
+12.  IANA Considerations
 
    The MIME media type for JSON text is application/jsox.
 
@@ -518,12 +558,8 @@ Table of Contents
    Published specification:  [RFC!??!]
 
    Applications that use this media type:
-      JSON has been used to exchange data between applications written
-      in all of these programming languages: ActionScript, C, C#,
-      Clojure, ColdFusion, Common Lisp, E, Erlang, Go, Java, JavaScript,
-      Lua, Objective CAML, Perl, PHP, Python, Rebol, Ruby, Scala, and
-      Scheme.
-
+      JSOX has been used to exchange data between applications written
+      in all of these programming languages: C, C++, JavaScript.
 
 
    Additional information:
@@ -550,14 +586,16 @@ Table of Contents
    Note:  No "charset" parameter is defined for this registration.
       Adding one really has no effect on compliant recipients.
 
-12.  Security Considerations
+13.  Security Considerations
 
    Generally, there are security issues with scripting languages.  JSOX
    is a subset of JavaScript that excludes expressions.
 
    Since JSOX's syntax deviates from Javascript for class defintions, 
    it is no longer possible to  use that language's "eval()" function 
-   to parse JSOX texts.
+   to parse JSOX texts; although there is a subset of documents, those
+   which do not use typed objects or typed arrays, which can still be
+   resolved using "eval()".
 
 
 
@@ -565,7 +603,7 @@ Table of Contents
 
 
 
-13.  Examples
+14.  Examples
 
    This is a JSON object:
 
@@ -592,25 +630,62 @@ Table of Contents
       [
         {
            "precision": "zip",
+           "ident":     123594985n,
            "Latitude":  37.7668,
            "Longitude": -122.3959,
-           "Address":   "",
-           "City":      "SAN FRANCISCO",
-           "State":     "CA",
-           "Zip":       "94107",
-           "Country":   "US"
+           created:     2018-09-11T03:43:53.345-07:00,
+           binary:      u8[U2VjcmV0],   /* Secret */
+           Address:     "",
+           City:        "SAN FRANCISCO",
+           State:       "CA",
+           Zip:         "94107",
+           Country:     "US"
         },
         {
-           "precision": "zip",
-           "Latitude":  37.371991,
+           precision:   "zip",
+           "ident":     123594986n,
+           Latitude:    37.371991,
            "Longitude": -122.026020,
+           created:     2018-09-11T10:43:52.437Z,
+           "binary":    u8[SGVsbG8sIFdvcmxkIQ==],   // Hello, World!
            "Address":   "",
-           "City":      "SUNNYVALE",
+           City:        "SUNNYVALE",
            "State":     "CA",
-           "Zip":       "94085",
+           Zip:         "94085",
            "Country":   "US"
         }
       ]
+
+   This is an example of typed Objects
+
+      locale{ precision,ident,Latitude,Longitude,
+              created,binary,Address,City,State,Zip,Country}
+      [ locale{ "zip",123594985n,37.7668,-122.3959,                     
+                2018-09-11T03:43:53.345-07:00,
+                u8[U2VjcmV0],
+                "","SAN FRANCISCO","CA","94107","US"},
+        locale{ "zip",123594986n,37.371991,-122.026020,                     
+                2018-09-11T10:43:52.437Z,
+                u8[SGVsbG8sIFdvcmxkIQ==],
+                "","SUNNYVALE","CA","94107","US"}
+      ]
+
+      locale{ "zip",123594988n,36.1699,-115.1398,
+              2018-09-11T13:23:23.636Z,
+              u8[SGVsbG8sIFdvcmxkIQ==],
+              "","LAS VEGAS","NV","89109","US"}
+
+   This is an example of a reference
+
+      { 
+         company : { name : "Example.com",
+                  employees : [ { name:"bob" },{name:"tom"} ],
+                  manager : ref["company","employees",0]
+                   }
+      }
+
+      // output.company.manager === output.company.employees[0]
+
 
 
    Here are three small JSON texts containing only values:
@@ -619,7 +694,13 @@ Table of Contents
 
    42
 
+   123n
+
    true
+
+   Infinity
+
+   
 
 14.  Contributors
 
