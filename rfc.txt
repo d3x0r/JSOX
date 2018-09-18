@@ -6,7 +6,7 @@
 
                                                             	 Jim B.
 Request for Comments: !??!                        Independant Developer
-Obsoletes: 4627, 7158                                         Sep, 2018
+                                                              Sep, 2018
 Category: Standards Track
 ISSN: ???
 
@@ -17,13 +17,10 @@ Abstract
 
    JavaScript Object eXchange (JSOX) is a lightweight, text-based,
    language-independent data interchange format.  It was derived from
-   the ECMAScript Programming Language Standard.  JSON defines a small
-   set of formatting rules for the portable representation of structured
-   data.
+   the ECMAScript Programming Language Standard and JSON which defines 
+   a small set of formatting rules for the portable representation of 
+   structured data.
 
-   This document removes inconsistencies with other specifications of
-   JSON, repairs specification errors, and offers experience-based
-   interoperability guidance.
 
 Status of This Memo
 
@@ -55,17 +52,13 @@ Status of This Memo
 
 
 
-Bray                         Standards Track                    [Page 1]
-
-RFC 7159                          JSON                        March 2014
-
 
 Copyright Notice
 
-   Copyright (c) 2014 IETF Trust and the persons identified as the
+   Copyright (c) 2018 (unclaimed) and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
+   (is it?)This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
@@ -103,17 +96,11 @@ Copyright Notice
 
 
 
-
-
-
-
-
 Table of Contents
 
    1. Introduction ....................................................3
       1.1. Conventions Used in This Document ..........................4
       1.2. Specifications of JSON .....................................4
-      1.3. Introduction to This Revision ..............................4
    2. JSON Grammar ....................................................4
    3. Values ..........................................................5
    4. Objects .........................................................6
@@ -165,7 +152,8 @@ Table of Contents
    JavaScript.  The term "class" is used in the general sense of
 
       "a set or category of things having some property or attribute in 
-      common and differentiated from others by kind, type, or quality" [google search 'class definition' 1]
+      common and differentiated from others by kind, type, or quality"
+      [google search 'class definition' 1]
 
 
    JSOX's design goals were to extend and enhance JSON adding more
@@ -174,6 +162,10 @@ Table of Contents
    Additionally, encoding for basic types like TypedArrays, which are
    actually a set of 12 classes of array, and support for encoding
    cyclic structures.
+
+   JSOX allows identifiers in all places that JSON requires a string,
+   except as a value.  All places that take an identifier WILL also
+   take a string.
 
 1.1.  Conventions Used in This Document
 
@@ -186,45 +178,26 @@ Table of Contents
 
 1.2.  Specifications of JSOX
 
-**   This document updates [RFC4627], which describes JSON and registers
-**   the media type "application/json".
-**
-**   A description of JSON in ECMAScript terms appears in Version 5.1 of
-**   the ECMAScript specification [ECMA-262], Section 15.12.  JSON is also
-**   described in [ECMA-404].
-**
-**   All of the specifications of JSOX syntax agree on the syntactic
-**   elements of the language.
+   This document describes JSOX and registers the media type "application/jsox".
 
-1.3.  Introduction to This Revision
+   Reference implementation at https://github.com/d3x0r/jsox has 
+   a README.md which also contributes to the definition.
 
-   In the years since the publication of RFC 4627, JSON has found very
-   wide use.  This experience has revealed certain patterns, which,
-   while allowed by its specifications, have caused interoperability
-   problems.
-
-   Also, a small number of errata have been reported (see RFC Errata IDs
-   607 [Err607] and 3607 [Err3607]).
-
-   This document's goal is to apply the errata, remove inconsistencies
-   with other specifications of JSON, and highlight practices that can
-   lead to interoperability problems.
-
-2.  JSON Grammar
-
-   A JSON text is a sequence of tokens.  The set of tokens includes six
-   structural characters, strings, numbers, and three literal names.
-
-   A JSON text is a serialized value.  Note that certain previous
-   specifications of JSON constrained a JSON text to be an object or an
+   All of the specifications of JSOX syntax agree on the syntactic
+   elements of the language.
 
 
 
-   array.  Implementations that generate only objects or arrays where a
-   JSON text is called for will be interoperable in the sense that all
-   implementations will accept these as conforming JSON texts.
+2.  JSOX Grammar
 
-      JSON-text = ws value ws
+   A JSOX text is a sequence of tokens.  The set of tokens includes six
+   structural characters, identifiers, strings, numbers, and six literal 
+   names.
+
+   A JSOX text is a serialized value, or class specification. 
+
+
+      JSOX-text = ws value ws
 
    These are the six structural characters:
 
@@ -240,7 +213,6 @@ Table of Contents
 
       value-separator = ws %x2C ws  ; , comma
 
-
    Insignificant whitespace is allowed before or after any of the six
    structural characters.
 
@@ -252,18 +224,24 @@ Table of Contents
               %x07ed /            ; 2029 PS (paragraph separator)
               %x0D )              ; Carriage return
 
+   Identifiers are either a string or any sequence of characters that do not 
+   include structural characters or whitespace, and also does not begin with 
+   a digit, minus, plus, or decimal-point.
+
+       identifier = ws [ string / not(0-9.+-)  *(not ws and not structure character ) ] ws
+
 3.  Values
 
-   A JSON value MUST be an object, array, number, or string, or one of
-   the following three literal names:
+   A JSOX value MUST be an object, typed-object, array, typed-array, number,
+   string, or one of the following six literal names:
 
       false null true Infinity NaN undefined
 
-   The literal names MUST be lowercase.  No other literal names are
+   The literal names MUST exactly match tbe case.  No other literal names are
    allowed.
 
       value = false / null / true / object / array / number / string
-            / Infinity / NaN / date / reference / TypedArray
+            / Infinity / NaN / undefined
 
       false = %x66.61.6c.73.65   ; false
 
@@ -280,7 +258,7 @@ Table of Contents
       undefined = %x75.6e.64.65.66.69.6e.65.64   ; undefined
 
 
-4.  Objects
+4.  Objects and Typed Objects
 
    An object structure is represented as a pair of curly brackets
    surrounding zero or more name/value pairs (or members).  A name is a
@@ -291,7 +269,13 @@ Table of Contents
       object = begin-object [ member *( value-separator member ) ]
                end-object
 
+      object-type = identifier begin-object [ string, *(string)] end-object
+
+      typed-object = string/identifier object
+
       member = string name-separator value
+
+      identifier = non-digit non-ws-character* 
 
    An object whose names are all unique is interoperable in the sense
    that all software implementations receiving that object will agree on
@@ -302,11 +286,13 @@ Table of Contents
    object, and some implementations report all of the name/value pairs,
    including duplicates.
 
-   JSON parsing libraries have been observed to differ as to whether or
+   JSOX parsing libraries MAY differ as to whether or
    not they make the ordering of object members visible to calling
    software.  Implementations whose behavior does not depend on member
    ordering will be interoperable in the sense that they will not be
    affected by these differences.
+
+   
 
 5.  Arrays
 
@@ -391,6 +377,11 @@ Table of Contents
    values.
 
 
+7.  Identifiers
+
+   Identifiers are not themselves values that result, but can be used
+   for the field 
+   - Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace.
 
 7.  Strings
 
