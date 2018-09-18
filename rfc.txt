@@ -332,15 +332,36 @@ Table of Contents
 
 6.  Numbers
 
+   Generally, numbers are any string of charcters which may be passed
+   to the Number() constructor in ES6.  JSOX breaks that by also 
+   allowing 'T','Z',':','+', and '-' to switch to a ES6 Date type,
+   and numbers suffixed with an 'n' which uses BigInt constructor
+   to result with the number's value.
+
    The representation of numbers is similar to that used in most
    programming languages.  A number is represented in base 10 using
    decimal digits.  It contains an integer component that may be
    prefixed with an optional minus sign, which may be followed by a
-   fraction part and/or an exponent part.  Leading zeros are not
-   allowed.
+   fraction part and/or an exponent part.  
+
+   In JSON, Leading zeros are not allowed.  Leading zeros are allowed,
+   although will often change the value's interpretation.  Radix numbers
+   like 0x123 have a leading zero, followed by a format character ( one of
+   'x','o',or 'b' in any case, which inidicate hexidecimal, octal, and binary
+   respectively).  A leading zero on an integer changes the meaning to
+   be octal, and while parsing, any character not in 0-7 emits an error.
+
+   A number begins with [0-9], '+', and '.'.  Once a number starts, only
+   a limited number of characters are allowed and they are all less
+   then 127.  
+
+   Underscore('_') may be used in a number. It is treated as a Non-Breaking-Zero-
+   Width-space (NBZWSP).  That is the character is not stored, it and 
+   does not modify the number.  Many languages support this now; although
+   most have very strict rules about allowed placement.  A leading 
+   underscore puts this value in the realm of Identifiers.
 
    A fraction part is a decimal point followed by one or more digits.
-
 
    An exponent part begins with the letter E in upper or lower case,
    which may be followed by a plus or minus sign.  The E and optional
@@ -377,6 +398,8 @@ Table of Contents
       time-symbol = [ %54 ] [ %5a ] [ %2b ] [ %2d ] [ %3a ]   ; [ T ] [Z] [+] [-] [:]
 
       bigint-suffix = %6e        ; n
+
+      underscore = %5f
 
    Dates decoded which are not ISO 8601 compatible may result in 'Invalid Date';
    especially given the vagueness of date value specification.
