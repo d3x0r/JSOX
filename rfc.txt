@@ -230,6 +230,9 @@ Table of Contents
 
        identifier = ws [ string / not(0-9.+-)  *(not ws and not structure character ) ] ws
 
+   When dealing with a JSOX stream, whitespace may be significant to separate
+   values, for example the stream '1 2 3 4 5' which are 5 simple numbers.
+
 3.  Values
 
    A JSOX value MUST be an object, typed-object, array, typed-array, number,
@@ -269,9 +272,9 @@ Table of Contents
       object = begin-object [ member *( value-separator member ) ]
                end-object
 
-      object-type = identifier begin-object [ string, *(string)] end-object
+      typed-object = identifier begin-object [ string, *(string)] end-object
 
-      typed-object = string/identifier object
+      typed-object-reference = identifier ws begin-object [ value, *(value)] end-object
 
       member = string name-separator value
 

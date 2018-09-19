@@ -147,18 +147,18 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
   - Streaming reader interface
   - (Twice the speed of JSON5; subjective)
 
-### Classes/Tags
+### Classes/Tags - typed-object and typed-array
 
-The definition of a class is an identifer at the top level (before the JSON data) followed by an open brace ('{').
-Within the open brace '{' until the close '}' is a list of names seprated by commas, and of constants indicated
-by an identifier followed by a colon and a value.
+The definition of a class is an identifer at the top level (before the JSON data) followed immediately by an open brace ('{'),
+whitespace is not allowed.  Within the open brace '{' until the close '}' is a list of names seprated by commas, and of
+constants indicated by an identifier followed by a colon and a value.
 
 All objects created with a class/tag definition shares the same prototype.
 
 ```
 
 tagdef : identifier '{' identifier [ ',' identifier ] ... '}'
-tagdef : identifier '{' constant_initializer [ ',' identifier ] ... '}'
+tagdef : identifier '{' constant_initializer [ ',' identifier ] ... '}' (TBI)
 
 constant_initializer : identifier ':' value 
 
@@ -218,7 +218,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 ### Objects
 
-- Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace.
+- Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace, and do not begin like a number.
 
 - Object keys can be single-quoted, (**JSON6**) or back-tick quoted; any valid string 
 
@@ -555,6 +555,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.0.5 - Fix streaming ability; consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
 - 1.0.4 - Be more forgiving about platforms not having BigInt native support.
 - 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
