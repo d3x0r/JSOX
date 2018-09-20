@@ -441,11 +441,11 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |stringifier | () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
 |escape | ( string ) | substitutes ", \, ', and ` with backslashed sequences. (prevent 'JSON injection') |
 |begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
-
+|registerToJSOX| (prototype,cb) | Instead of setting prototype extensions, provide a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
 
 |Stringifier method | parameters | Description |
 |-------|------|-----|
-|defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object |
+|defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
 |setQuote | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
 |stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][jsox-stringify] |
 
