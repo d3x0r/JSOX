@@ -555,7 +555,10 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.0.5 - Fix streaming ability; consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
+- 1.0.5 
+    - Fix streaming ability
+    - consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
+    - implement test for non-identifier characters to quote field strings (or not).  Implement reading non-identifier characters, and fault if identifier is unquoted and has such a character.
 - 1.0.4 - Be more forgiving about platforms not having BigInt native support.
 - 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.

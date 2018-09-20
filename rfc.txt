@@ -226,7 +226,10 @@ Table of Contents
 
    Identifiers are either a string or any sequence of characters that do not 
    include structural characters or whitespace, and also does not begin with 
-   a digit, minus, plus, or decimal-point.
+   a digit, minus, plus, or decimal-point.  Identifiers were meant to parse
+   as ES6 Identifier, skipping unicode non-identifier characters; at a minimum
+   '(', ')', '<', '>', '=', '+', '-', '*', '/', '.', '&', '|', '!','~','%''^'
+   should also be considered structure chracters.
 
        identifier = ws [ string / not(0-9.+-)  *(not ws and not structure character ) ] ws
 
