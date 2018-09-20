@@ -1,2 +1,4 @@
 *~
 tests
+makeUnicodeNonIdent.js
+parser.md

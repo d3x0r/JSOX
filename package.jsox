@@ -4,10 +4,10 @@
 
 {
     name: "jsox",
-    version: "1.0.4",
+    version: "1.0.5",
     description: "Java Script Object eXchange.",
     keywords: [
-        "json",
+        "jsox","json",
         "es6",
 	"macro","template","class"
     ],
