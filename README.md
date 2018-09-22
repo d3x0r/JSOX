@@ -383,7 +383,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |JSOX Methods | parameters | Description |
 |-----|-----|-----|
 |parse| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
-|stringify | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][jsox-stringify] |
+|stringify | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][json-stringify] |
 |stringifier | () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
 |escape | ( string ) | substitutes ", \, ', and ` with backslashed sequences. (prevent 'JSON injection') |
 |begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
@@ -396,7 +396,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 
 |Stringifier method | parameters | Description |
 |-------|------|-----|
-|stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][jsox-stringify] |
+|stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][json-stringify] |
 |setQuote | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
 |defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
 
