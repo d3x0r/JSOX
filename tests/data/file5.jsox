@@ -1,0 +1,12 @@
+{
+	a: { name: "a" },
+        b: { name: "b" },
+        pair : [ref["a"],ref["b"]]
+}
+
+{ 
+	company : { name : "Example.com",
+        	employees : [ { name:"bob" },{name:"tom"} ],
+                manager : ref["company","exploees",0]
+                }
+}

@@ -1,0 +1,6 @@
+{ 
+	company : { name : "Example.com",
+        	employees : [ { name:"bob" },{name:"tom"} ],
+                manager : ref["company","employees",0]
+                }
+}

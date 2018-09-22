@@ -1,0 +1,13 @@
+color"0x21160b"
+stringTest"HelloWorld"
+{ a: stringTest"HelloWorld" }
+
+arrayTest[1,2,3]
+
+objectTest{a,b,c}
+objectTest{1,2,3}
+
+objectTest2{a,b,c}
+objectTest2{6,7,8}
+
+[1,2,3,4,5,6,7,[1,2,3,4,5,[4,3,2,1]]]
