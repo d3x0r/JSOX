@@ -631,6 +631,10 @@ jsox -c path/to/foo.jsox    # generates path/to/foo.json
 This is also implemented as part of npm [sack.vfs](https://www.npmjs.com/package/sack.vfs)
 as a native code node.js addon.  This native javascript version allows usage in browsers.
 
+Possible release of amagamated source, native Node Addon (standalone).
+
+Working on a WebAssembly version.
+
 ## Benchmarks
 
 ~~This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON implementation][json_parse.js] for JSON parsing.~~
