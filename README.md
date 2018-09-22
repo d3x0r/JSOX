@@ -23,7 +23,7 @@ provide the values for each field respectively.
 A typed-object example: `v{ x, y } { a : v{1,2} }`, which decodes as `{ a : {x:1,y:2} }`.
 It defines a template/class of object that has fields 'x', and 'y'.  Then
 defines an object with a field A what is a object of type 'v', with values
-'a', and 'b'.  This example does not gain any visible savings; savings 
+(1), and (2).  This example does not gain any visible savings; savings 
 comes when you have a lot of the same sort of record with the same field
 names repeated often.
 
