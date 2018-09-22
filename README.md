@@ -663,6 +663,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.0.6 - just updated build products
 - 1.0.5 
     - Fix streaming ability
     - consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
