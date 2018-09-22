@@ -5,18 +5,28 @@
 
 100% Compatible reader for JSON.  JSOX.stringify cannot generate JSON
 compatible output; it would lose all the features anyway; use existing
-`JSON.stringify()` if required, again all JSON(JSON3/JSON5/JSON6) is valid JSOX.
+`JSON.stringify()` if required, all JSON(JSON3/JSON5/JSON6) is valid JSOX.
 
 JSOX adds BigInt, Date, and TypeArray transport support, and includes
 keywords (5)'Infinity', (5)'NaN', (6)'undefined'.
 
-JSOX Adds optional processing of `tag` keywords, which influences the states 
-in the parser; and a prefix 'type' for data.  Example: `v{ x, y } { a : v{a,b} }`.
+JSOX adds optional processing of `typed` data.  Type names can be applied
+to Objects, Arrays and Strings.  Type names are defined and provided with
+to/from JSOX handlers by users of this library.   The data, decoded as
+the object '{}', array '[]', or string '""' is passed to the fromJSOX 
+handler, and the resulting value returned as the decoded object.
+ 
+Typed-objects may also be emitted as a class-defintition and then class-references.
+A class-defintition defines the fields in the object, and a class-reference would
+provide the values for each field respectively.
+
+A typed-object example: `v{ x, y } { a : v{1,2} }`, which decodes as `{ a : {x:1,y:2} }`.
 It defines a template/class of object that has fields 'x', and 'y'.  Then
 defines an object with a field A what is a object of type 'v', with values
 'a', and 'b'.  This example does not gain any visible savings; savings 
 comes when you have a lot of the same sort of record with the same field
 names repeated often.
+
 
  * adds macro/class support for object field names.
  * adds support for bigint numbers; indicated with an 'n' suffix.
@@ -558,7 +568,7 @@ A Parser that returns objects as they are encountered in a stream can be created
 | write | (string) | Parse string passed and as objects are found, invoke the callback passed to `begin()` Objects are passed through optional reviver function passed to `begin()`. |
 | \_write | (string,completeAtEnd) | Low level routine used internally.  This does the work of parsing the passed string. Returns 0 if no object completed, 1 if there is no more data, and an object was completd, returns 2 if there is more data and a parsed object is found.  if completedAtEnd is true, dangling values are returned, for example "1234" isn't known to be completed, more of the number might follow in another buffer; if completeAtEnd is passed, this iwll return as number 1234.  Passing empty arguments steps to the next buffered input value. |
 | value | () | Returns the currently completed object.  Used to get the completed object after calling \_write. |
-| reset | () | If `write()` or `\_write()` throws an exception, no further objects will be parsed becuase internal status is false, this resets the internal status to allow continuing using the existing parser.  ( May require some work to actually work for complex cases) |
+| reset | () | If `write()` or `_write()` throws an exception, no further objects will be parsed becuase internal status is false, this resets the internal status to allow continuing using the existing parser.  ( May require some work to actually work for complex cases) |
 | usePrototype | (className,protoType) | configure what prototypes to use for class recovery |
 
 
@@ -623,8 +633,7 @@ as a native code node.js addon.  This native javascript version allows usage in 
 
 ## Benchmarks
 
-~~This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON
-implementation][json_parse.js] for JSON parsing.  ~~
+~~This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON implementation][json_parse.js] for JSON parsing.  ~~
 
 ~~This is nearly double the speed of [JSON5](http://json5.org) implementation that inspired this (which is half the speed of Crockford's reference implementation).~~
 
@@ -655,6 +664,7 @@ tests, and ensure that `npm test` continues to pass.
     - consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
     - implement test for non-identifier characters to quote field strings (or not).  Implement reading non-identifier characters, and fault if identifier is unquoted and has such a character.
     - implement typed-strings, which can be used to trigger constructors which accept single strings.
+    - update readme with typed-strings, typed-arrays, and typed-objects.
 - 1.0.4 - Be more forgiving about platforms not having BigInt native support.
 - 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.

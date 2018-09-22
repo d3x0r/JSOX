@@ -88,6 +88,7 @@ parser.write( '5678 ' );  // at this point, the space will flush the number valu
 var start = Date.now();
 var n;
 for( n = 0; n < 1000000; n++ ) {
+	if( (n % 100 )==0 ) console.log( "...", n );
 	JSON6.parse( "{\"a\":{\"b\":{\"c\":{\"d\":123}}}}" );
 	JSON6.parse( '"Simple String value"' );
 	JSON6.parse( '123456789' );
