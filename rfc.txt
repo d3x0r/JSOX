@@ -626,7 +626,7 @@ Table of Contents
    which do not use typed objects or typed arrays, which can still be
    resolved using "eval()".
 
-
+   Streams of JSON or JSOX may generate '][' in a sequence.
 
 
 

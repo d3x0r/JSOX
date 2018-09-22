@@ -147,62 +147,6 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
   - Streaming reader interface
   - (Twice the speed of JSON5; subjective)
 
-### Classes/Tags - typed-object and typed-array
-
-The definition of a class is an identifer at the top level (before the JSON data) followed immediately by an open brace ('{'),
-whitespace is not allowed.  Within the open brace '{' until the close '}' is a list of names seprated by commas, and of
-constants indicated by an identifier followed by a colon and a value.
-
-All objects created with a class/tag definition shares the same prototype.
-
-```
-
-tagdef : identifier '{' identifier [ ',' identifier ] ... '}'
-tagdef : identifier '{' constant_initializer [ ',' identifier ] ... '}' (TBI)
-
-constant_initializer : identifier ':' value 
-
-```
-
-Usage of tags is done by specifing their identifer followed by an open brace '{' in the value 
-field of an object definition; or at a top level referencing the same tag name already defined.
-For each field defined in the class, a value is expected.  If a value is not found, the field
-will not be added, as if receiving `field:undefined`.
-
-```
-
-tag usage : ':' identifier '{' value [ ',' value ]... '}' 
-
-//-- the following...
-a { firstField, secondField }
-a { 1, 2 }
-//-- results as
-{ firstField : 1, secondField : 2 }
-
-
-//-- the following...
-a { firstField, secondField }
-[ a { 1, 2 }, a(5,6), a("val1","val2") ]
-//-- results as
-[ { firstField : 1, secondField : 2 }, { firstField : 5, secondField : 6 }, { firstField : "val1", secondField : "val2" } ]
-
-```
-
-Implementation of tags allows apply a class to arrays.  Arrays have a class of ArrayBuffer, or other TypedArray type.  The
-representation path in an array and a reference type for the array. This allows circular encoding.
-
-```
-// this is a string with a reference.
-{company:{name:"Example.com",employees:[{name:"bob"},{name:"tom"}],manager:ref["company","employees",0]}}
-
-// The above 'ref[]' gets resolved into the same employee object...
-OUT: ./file6.jsox { company:
-   { name: 'Example.com',
-     employees: [ /*a*/{ name: 'bob' }, { name: 'tom' } ],
-     manager: /*a*/{ name: 'bob' } } }
-```
-
-
 
 ## Additional support above JSON base
 
@@ -443,14 +387,163 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
 |registerToJSOX| (prototype,cb) | Instead of setting prototype extensions, provide a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
 
+| registerToJSOX  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX |
+| registerFromJSOX| (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
+| registerToFrom  | (name,prototype,toCb, fromCb) | register both to and from for the same name |
+
+
 |Stringifier method | parameters | Description |
 |-------|------|-----|
-|defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
-|setQuote | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
 |stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][jsox-stringify] |
+|setQuote | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
+|defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
 
 [json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
 [json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+
+#### registerToJSOX
+
+Registers a handler to convert a type to JSOX.  This method is used to avoid modification of prototypes; would require instead 
+that ojects that have a toJSOX know of the JSOX module instead.  The result of the callback should be a string, and is up to the
+toJSOX method to include quotes if it is a string value.  Any string may result that is valid JSOX.
+
+Regsitering the same name more than once throws an error.
+
+```
+JSOX.registerToJSOX( "stringTest", stringTest.prototype, function() { return '"' + this.toString() + '"' } );
+```
+
+#### registerFromJSOX
+
+Registers a handler to convert recovered string, array or object from JSOX.  The converted data from the JSOX stream is passed as
+'this'.  The result of the callback may be any type of value; the resulting value is used instead of the data converted from JSOX.
+
+Regsitering the same name more than once throws an error.
+
+```
+// this epects a string, as indicated by the above toJSOX output.
+JSOX.registerFromJSOX( "stringTest", function() {
+	console.log( "Resuurect from String:[%s]", this /*string*/ );
+	return new stringTest( this );
+} );
+```
+
+#### registerToFrom
+
+Registers both to and from methods or a spsecified name, using the specified prototype to match during stringify.
+Internally, calls the above functions with the parameters split as appropriate.
+
+Regsitering the same name more than once for From or To throws an error.
+
+```
+JSOX.registerToFrom( "stringTest", stringTest.prototype
+	, function() { return '"' + this.toString() + '"' }
+	, function() {
+		console.log( "Resuurect from String:[%s]", this /*string*/ );
+		return new stringTest( this );  // some stringTest class with string initializer
+	}
+);
+```
+
+### JSOX typed-objects, typed-arrays, and typed-strings
+
+typed-data is represented in the JSOX stream as \<identifier\>\[data\].  For objects, this is a document compression technique,
+which reduces the size of data to process.  For arrays, internally, fixed types represent ES6 TypedArray types (u8,s8, u16,f32,etc);
+Another internal type is 'ref' which uses the array to have a list of element identifiers that define the path to the original object
+reference.  Another, simple variation is to implement typed-strings, which allows `color"0x1234568"` to have a `fromJSOX` method that
+is passed the string, and can result with a color object.
+
+In each case, in the following example JSOX, the same 'color' fromJSOX 
+method will be called.  It will be invoked with a string, with an array, 
+with an object, with an object, and with an object respectively.
+
+```
+// this are all variations which may be used to revive a color object
+color"0x12345678"                   // typed-string
+color[0x12,0x34,0x56,0x78]          // typed-array
+
+// at a root level, the first 'color' definition encountered
+// is used to create a field-name map.  Then later usages
+// sould only specify the values.
+color{r,g,b,a}            // typed-object definition
+color{0x12,34,0x56,0x78}  // typed-object subsequent usage
+
+// if no typed-object definition is rquired, then 
+// the typed-object must never be used at a root level.
+
+{ a : color{r:0x12,g:0x34,b:0x56,a:0x78} } // object containing typed-object fromJSOX only, no pre-field-definition
+[ color{r:0x12,g:0x34,b:0x56,a:0x78} ]     // array containing typed-object fromJSOX only, no pre-field-definition
+```
+
+Typed strings have a caveat; at a root level, strings which are typed, MUST have 
+unquoted-identifier strings indicating their type.  Because the closing quote is 
+a definitive end-of-data marker, quoted strings at a root level always emit as a 
+completed string; This also requires no space between the unquoted-identifier string
+and the quoted data string.  
+
+Typed-object and typed-arrays also require the identifer or string used for their
+type information not be followed by a space before the opening '{' or '\['. 
+
+### More on Classes/Tags - typed-object and typed-array
+
+(constant initializers on typed-objects are not yet supported?)
+
+The definition of a class is an identifer at the top level (before the JSON data) followed immediately by an open brace ('{'),
+whitespace is not allowed.  Within the open brace '{' until the close '}' is a list of names seprated by commas, and of
+constants indicated by an identifier followed by a colon and a value.
+
+All objects created with a class/tag definition shares the same prototype.
+
+```
+
+tagdef : identifier '{' identifier [ ',' identifier ] ... '}'
+tagdef : identifier '{' constant_initializer [ ',' identifier ] ... '}' (TBI)
+
+constant_initializer : identifier ':' value 
+
+```
+
+Usage of tags is done by specifing their identifer followed by an open brace '{' in the value 
+field of an object definition; or at a top level referencing the same tag name already defined.
+For each field defined in the class, a value is expected.  If a value is not found, the field
+will not be added, as if receiving `field:undefined`.
+
+```
+
+tag usage : ':' identifier '{' value [ ',' value ]... '}' 
+
+//-- the following...
+a { firstField, secondField }
+a { 1, 2 }
+//-- results as
+{ firstField : 1, secondField : 2 }
+
+
+//-- the following...
+a { firstField, secondField }
+[ a { 1, 2 }, a(5,6), a("val1","val2") ]
+//-- results as
+[ { firstField : 1, secondField : 2 }, { firstField : 5, secondField : 6 }, { firstField : "val1", secondField : "val2" } ]
+
+```
+
+Implementation of tags allows apply a class to arrays.  Arrays have a class of ArrayBuffer, or other TypedArray type.  The
+representation path in an array and a reference type for the array. This allows circular encoding.
+
+```
+// this is a string with a reference.
+{company:{name:"Example.com",employees:[{name:"bob"},{name:"tom"}],manager:ref["company","employees",0]}}
+
+// The above 'ref[]' gets resolved into the same employee object...
+OUT: ./file6.jsox { company:
+   { name: 'Example.com',
+     employees: [ /*a*/{ name: 'bob' }, { name: 'tom' } ],
+     manager: /*a*/{ name: 'bob' } } }
+```
+
+
+
 
 ### JSOX Streaming
 
@@ -559,6 +652,7 @@ tests, and ensure that `npm test` continues to pass.
     - Fix streaming ability
     - consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
     - implement test for non-identifier characters to quote field strings (or not).  Implement reading non-identifier characters, and fault if identifier is unquoted and has such a character.
+    - implement typed-strings, which can be used to trigger constructors which accept single strings.
 - 1.0.4 - Be more forgiving about platforms not having BigInt native support.
 - 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
