@@ -23,6 +23,7 @@ names repeated often.
  * adds support for Date parsing and stringification.
  * `o === JSOX.parse(JSON.stringify(o))` should always be exactly true.
  * adds support for circular references.
+ * typed-strings, typed-arrays, and typed-objects, for user defined types and to and from JSOX methods. (more)[JSOX typed-objects, typed-arrays, and typed-strings]
 
 ### Example Encoding
 
@@ -37,7 +38,8 @@ r = JSOX.stringify( o = {
 	, g:NaN
 	, h:Infinity
 	, i:-Infinity
-	, j:-0.302 }, null, 3 );
+	, j:-0.302 
+	, k:new Uint8Array(9)}, null, 3 );
 cnsole.log( "pretty:", o, "=\n", r );
 
 // -- output --
