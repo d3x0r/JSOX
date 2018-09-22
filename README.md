@@ -633,7 +633,7 @@ as a native code node.js addon.  This native javascript version allows usage in 
 
 ## Benchmarks
 
-~~This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON implementation][json_parse.js] for JSON parsing.  ~~
+~~This is as fast as the javascript version of Douglas Crockford's reference implementation [JSON implementation][json_parse.js] for JSON parsing.~~
 
 ~~This is nearly double the speed of [JSON5](http://json5.org) implementation that inspired this (which is half the speed of Crockford's reference implementation).~~
 
