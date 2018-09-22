@@ -1,6 +1,3 @@
-invalidCode{a,b,c}[1,2,3][1,2,3]
-
-
 Parser State Transitions
 
 The parser is implemented as a stateful streaming processor, which

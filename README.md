@@ -669,6 +669,7 @@ tests, and ensure that `npm test` continues to pass.
     - implement test for non-identifier characters to quote field strings (or not).  Implement reading non-identifier characters, and fault if identifier is unquoted and has such a character.
     - implement typed-strings, which can be used to trigger constructors which accept single strings.
     - update readme with typed-strings, typed-arrays, and typed-objects.
+    - performance fix; was keeping parser objects forever.
 - 1.0.4 - Be more forgiving about platforms not having BigInt native support.
 - 1.0.3 - Add ability to register prototypes to use for decoding.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
