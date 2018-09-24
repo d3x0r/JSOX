@@ -23,7 +23,7 @@ object
     '{' members '}'
 
 objectfields
-    '{' strings '}'
+    '{' identifiers '}'
 
 objectvalues
     '{' elements '}'
@@ -60,13 +60,14 @@ elements
 element
     ws value ws
 
+identifiers
+    identifier
+    identifier ',' identifiers
+
 identifier
     string
     characters - nonidentifier - ws - value
 
-strings
-    string strings
-   
 string
     '"' characters '"'
     '`' characters '`'
