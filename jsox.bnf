@@ -1,0 +1,193 @@
+
+jsox
+    element
+
+value
+    object
+    array
+    string
+    number
+    "true"
+    "false"
+    "null"
+    "NaN"
+    "Infinity"
+    "-Infinity"
+    "undefined"
+    typedobjectuse
+    typedarray
+    typedstring
+
+object
+    '{' ws '}'
+    '{' members '}'
+
+objectfields
+    '{' strings '}'
+
+objectvalues
+    '{' elements '}'
+
+members
+    member
+    member ',' members
+
+member
+    ws string ws ':' element
+
+array
+    '[' ws ']'
+    '[' elements ']'
+
+typedarray
+    identifier '[' ws ']'
+    identifier '[' elements ']'
+
+typedstring
+    identifier string
+    identifier string
+
+typedobjectdef
+    identifier objectfields
+
+typedobjectuse
+    identifier objectvalues
+
+elements
+    element
+    element ',' elements
+
+element
+    ws value ws
+
+identifier
+    string
+    characters - nonidentifier - ws - value
+
+strings
+    string strings
+   
+string
+    '"' characters '"'
+    '`' characters '`'
+    "'" characters "'"
+characters
+    ""
+    character characters
+character
+    '0020' . '10ffff' - '"' - '\' - "'" - "`"
+    '\' escape
+
+escape
+    '"'
+    "'"
+    '`'
+    '\'
+    'b'
+    'n'
+    'r'
+    't'
+    'u' hex hex hex hex
+    'u' '{ hex '}'
+    '0' . '2' oct oct
+    'x' hex hex
+    
+
+hex
+    digit
+    'A' . 'F'
+    'a' . 'f'
+    
+octs 
+    oct
+    oct octs
+    
+oct
+    '0' . '7'
+
+bins
+    bin
+    bin bins
+    
+bin
+    '0' . '1'
+
+number
+    int frac exp
+    int '_' number
+    '0' 'x' digits
+    '0' 'X' digits
+    '0' 'o' octs
+    '0' 'O' octs
+    '0' 'b' bins
+    '0' 'B' bins
+    '0' octs
+    dates
+    digits 'n'
+
+dates
+    digit dates
+    ':' dates
+    '-' dates
+    '+' dates
+    'T' dates
+    'Z'
+
+int
+    digit
+    onenine digits
+    '-' digit
+    '-' onenine digits
+
+digits
+    digit
+    digit digits
+
+digit
+    '0'
+    onenine
+
+onenine
+    '1' . '9'
+
+frac
+    ""
+    '.' digits
+
+exp
+    ""
+    'E' sign digits
+    'e' sign digits
+
+sign
+    ""
+    '+'
+    '-'
+
+ws
+    ""
+    '0009' ws
+    '000a' ws
+    '000d' ws
+    '0020' ws
+    '07EC' ws
+    '07ED' ws
+    
+breaking_ws
+    '0009' ws
+    '000a' ws
+    '000d' ws
+    '0020' ws
+    '07EC' ws
+    '07ED' ws
+    
+nonidentifier
+    '('
+    ')'
+    '='
+    '+'
+    '-'
+    '*'
+    '/'
+    
+    
