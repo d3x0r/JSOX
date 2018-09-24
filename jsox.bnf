@@ -1,4 +1,8 @@
 
+jsox-stream
+    jsox
+    jsox jsox-stream
+
 jsox
     element
 
@@ -6,17 +10,33 @@ value
     object
     array
     string
-    number
+    numbertoken
+    keywords
+    typedobjectuse
+    typedarray
+    typedstring
+
+keywords
     "true"
     "false"
     "null"
     "NaN"
     "Infinity"
-    "-Infinity"
+    "-" "Infinity"
     "undefined"
-    typedobjectuse
-    typedarray
-    typedstring
+
+delimiter
+    '{'
+    '['
+    ','
+    ':'
+    ws
+
+closedelimiter
+    '}'
+    ']'
+    ','
+    ws
 
 object
     '{' ws '}'
@@ -58,7 +78,8 @@ elements
     element ',' elements
 
 element
-    ws value ws
+    value
+    value element
 
 identifiers
     identifier
@@ -66,18 +87,44 @@ identifiers
 
 identifier
     string
-    characters - nonidentifier - ws - value
+    characters - nonidentifier - ws - keywords
 
 string
-    '"' characters '"'
-    '`' characters '`'
-    "'" characters "'"
+    '"' dqcharacters '"'
+    '`' btcharacters '`'
+    "'" sqcharacters "'"
+
+sqcharacters
+    ""
+    sqcharacter sqcharacters
+
+sqcharacter
+    character - '\' - "'"
+    '\' escape
+
+dqcharacters
+    ""
+    dqcharacter dqcharacters
+
+dqcharacter
+    character - '"' - '\'
+    '\' escape
+
+btcharacters
+    ""
+    btcharacter btcharacters
+
+btcharacter
+    character - '\' - "`"
+    '\' escape
+
+
 characters
     ""
     character characters
+
 character
-    '0020' . '10ffff' - '"' - '\' - "'" - "`"
-    '\' escape
+    '\u{00000000}' . '\u{FFFFFFFF}'
 
 escape
     '"'
@@ -92,13 +139,51 @@ escape
     'u' '{ hex '}'
     '0' . '2' oct oct
     'x' hex hex
-    
 
+hexs
+    hex
+    hex hexs
+    
 hex
     digit
     'A' . 'F'
     'a' . 'f'
     
+numbertoken
+    number ws
+    number ','
+    number '}'
+    number ']'
+    number 'n'
+    date 'Z'
+
+number
+    '+' number
+    '-' number
+    '.' digits frac exp
+    digits frac exp
+    int
+    date
+    onenine digits 'n'
+
+date
+    digit date
+    - 'e' '-' date
+    ':' date
+    '+' date
+    'T' date
+    'Z'
+
+int
+    '0' 'x' hexs
+    '0' 'X' hexs
+    '0' 'o' octs
+    '0' 'O' octs
+    '0' 'b' bins
+    '0' 'B' bins
+    '0' octs
+    onenine digits
+
 octs 
     oct
     oct octs
@@ -113,36 +198,11 @@ bins
 bin
     '0' . '1'
 
-number
-    int frac exp
-    int '_' number
-    '0' 'x' digits
-    '0' 'X' digits
-    '0' 'o' octs
-    '0' 'O' octs
-    '0' 'b' bins
-    '0' 'B' bins
-    '0' octs
-    dates
-    digits 'n'
-
-dates
-    digit dates
-    ':' dates
-    '-' dates
-    '+' dates
-    'T' dates
-    'Z'
-
-int
-    digit
-    onenine digits
-    '-' digit
-    '-' onenine digits
-
 digits
     digit
     digit digits
+    digit '_' digits
+    digits '_' digit digits
 
 digit
     '0'
@@ -153,7 +213,7 @@ onenine
 
 frac
     ""
-    '.' digits
+    '.'
 
 exp
     ""
@@ -182,6 +242,12 @@ breaking_ws
     '07EC' ws
     '07ED' ws
     
+line-comment
+   '/' '/' characters '\n'
+
+block-comment
+   '/' '*' characters '*' '/'
+
 nonidentifier
     '('
     ')'
@@ -190,5 +256,12 @@ nonidentifier
     '-'
     '*'
     '/'
+    '\'
+    '"'
+    "'"
+    "`"
+    delimiter
+    closedelimiter
+    - unicode-non-identifier-characters
     
-    
+unicode-non-identifier-characters
