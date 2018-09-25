@@ -263,7 +263,9 @@ the bytes that are unused.  7 bytes expand to 8, gathering the top bit of each o
 be an optimal encoding using code points 0-128 (128 being the end terminator like '=' in base64).  But, this also mean that up to 5
 bytes of waste may be included.  That is incomplete values at the end of the string have to be marked as unused.
 
+## Pretty Images
 
+![JSOX Value BNF](JSOX-Value.gif "JSOX Values")
   
 
 ## Example conversion
