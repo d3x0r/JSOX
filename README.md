@@ -265,7 +265,7 @@ bytes of waste may be included.  That is incomplete values at the end of the str
 
 ## Pretty Images
 
-![JSOX Value BNF](JSOX-Value.gif "JSOX Values")
+![JSOX Value BNF](JSOX-Value.GIF "JSOX Values")
   
 
 ## Example conversion
