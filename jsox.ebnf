@@ -1,19 +1,18 @@
 Name     = "JSON Grammar".
 Author   = "someone".
 Version  = "1.0".
-Value = (  
-       "(Comment)" ( ( "/" "/" { "character not \n" ) "\n" )       
-                  | ( "/" "*" { "character" } "*" "/" ) 
-                  )|
-       ("(String)" ( ( '"' (( 'character not " or \ ' ) | ( '\' '"' 'emit "') | ("\" "\" "emit \") )  { ( 'character not " or \ ' ) | ( '\' '"' 'emit "') | ("\" "\" "emit \") } '"' ) |
-                     ( "'" (("character not ' or \"     | ( "\" "'" "emit '") | ("\" "\" "emit \" ) ) { "character not ' or \"      | ( "\" "'" "emit '" ) | ("\" "\" "emit \" ) }) "'" ) |
-                     ( "`" (("character not ` or \"     | ( "\" '`' "emit `") | ("\" "\" "emit \") )  { "character not ` or \"      | ( "\" '`' "emit `") | ("\" "\" "emit \") } "`" ) ) 
+Val =  "Value" ( ("(Comment)" ( ( "/" "/" { "character not \n" } "\n" )
+                  | ( "/" "*" { "character" } "*" "/" )
+                  ))|
+       ("(String)" ( ( '"' (( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) )  { ( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) } '"' ) |
+                     ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) } "'" ) |
+                     ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) )  { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) } "`" ) )
        )|
        ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ] } , :" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ] } , :" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
        )|
        ("(Number/Date/BigInt)" 
-		( |"-*") ( "/*Numbers must start with at least one symbol marked with '*' */   " "NaN" | "Infinity" | 
-                ( |"+*") ( ( | "-" | "+" ) { | "-" | "+" } (|"0-9*")  )
+		( |"-") ( "NaN" | "Infinity" | 
+                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  )
                     ( "/*  underscore '_' between any following sequence's symbols */"   | ( { "0-9" } "n" ) |
                 	( ( "0" ( 
                             ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
@@ -23,14 +22,14 @@ Value = (
                             )
 	       		  )
                 	  | ( "0-9" | ".  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} (  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
-                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace" )
-                        | ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ":" "0-9" "0-9" | "Z" ) )  
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
+                        | ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ("+"|"-") "0-9" "0-9" ":" "0-9" "0-9" | "Z" ) )  
                           
-                 )))) |
+                 ))) |
        ( "(Object)" "{" ( ident ":" Value ) { "," (ident ":" Value) } "}" ) | 
        ( "(typed-object-def)"  ident "{" ( ident ) { "," (ident ) } "}" ) | 
        ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
        ( "(Array)" "[" ( Value ) { "," Value } "]" ) | 
        ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
-       ( "(typed-string)" "ident" string ) | 
-       true | false  | null | undefined ).
+       ( "(typed-string)" "ident" String ) | 
+       true | false  | null | undefined )).
