@@ -1,14 +1,21 @@
 Name     = "JSON Grammar".
 Author   = "someone".
 Version  = "1.0".
-Val =  "Value" ( ("(Comment)" ( ( "/" "/" { "character not \n" } "\n" )
+Val =  "Value" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
                   | ( "/" "*" { "character" } "*" "/" )
                   ))|
-       ("(String)" ( ( '"' (( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) )  { ( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) } '"' ) |
-                     ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) } "'" ) |
-                     ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) )  { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) } "`" ) )
+       ("(String)" ( ( "/* Legal Escapes */ " ( "b" | "n" | "r" | "f" | "t" | ("'" | '"' | "`")
+                                              | ( "u" ( "{" {"0-9" | "A-F" | "a-f"} "}" | "4 hex digits" ) ) 
+                                              | ( "x" ("0-9" | "A-F" | "a-f") ("0-9" | "A-F" | "a-f") ) 
+                                              | ( "0-2" "0-7" "0-7" )
+                                              )
+                     )|
+                     ( '"' (( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "legal escapes" ) )  { ( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "legal escapes" ) } '"' ) |
+                     ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) | ( "\" "legal escapes" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) | ( "\" "legal escapes" ) } "'" ) |
+                     ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) | ( "\" "legal escapes" ) )  { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) | ( "\" "legal escapes" ) } "`" ) )
        )|
-       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ] } , :" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ] } , :" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
+       ( "(whitespace)" ( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" ) ) |
+       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
        )|
        ("(Number/Date/BigInt)" 
 		( |"-") ( "NaN" | "Infinity" | 
