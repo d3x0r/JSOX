@@ -1,9 +1,41 @@
 Name     = "JSON Grammar".
 Author   = "someone".
 Version  = "1.0".
-Val =  "Value" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
+Val =  "(Value)" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
                   | ( "/" "*" { "character" } "*" "/" )
                   ))|
+       ( "(whitespace)" ( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" ) ) |
+       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
+       )|
+       ( "(Object)" "{" ( ident ":" Value ) { "," (ident ":" Value) } "}" ) | 
+       ( "(typed-object-def)"  ident "{" ( ident ) { "," (ident ) } "}" ) | 
+       ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
+       ( "(Array)" "[" ( Value ) { "," Value } "]" ) | 
+       ( "(TypedArray)" ( "a" "b" | "u" "8" | "s" "8" | "u" "c" "8" | "u" "1" "6" | "s" "1" "6" 
+                        | "u" "3" "2" 
+                        | "s" "3" "2" 
+                        | "f" "3" "2" 
+                        | "f" "6" "4" 
+                        ) "[" "base64 ArrayBuffer bytes" "]" ) | 
+       ( "(reference)" "r" "e" "f" "[" (( "ident" | "int" ) { ("," ( "ident" | "int" ))}) "]" ) | 
+       ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
+       ( "(typed-string)" "ident" String ) | 
+       ("(Number/Date/BigInt)" 
+		( |"-") ( "NaN" | "Infinity" | 
+                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "(Number) /*Begin Number Collection*/"
+                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
+                	( "(int)"( "0" ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
+                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
+                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
+                            ( "0-7" {"0-7"})
+                            )
+	       		  )
+                	  | "(float)" ( "0-9" | ".  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} (  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
+                        | "(Date)" ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ("+"|"-") "0-9" "0-9" ":" "0-9" "0-9" | "Z" ) )  
+                          
+                 ))) |
        ("(String)" ( ( "/* Legal Escapes */ " ( "b" | "n" | "r" | "f" | "t" | ("'" | '"' | "`")
                                               | ( "u" ( "{" {"0-9" | "A-F" | "a-f"} "}" | "4 hex digits" ) ) 
                                               | ( "x" ("0-9" | "A-F" | "a-f") ("0-9" | "A-F" | "a-f") ) 
@@ -14,29 +46,4 @@ Val =  "Value" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n
                      ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) | ( "\" "legal escapes" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) | ( "\" "legal escapes" ) } "'" ) |
                      ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) | ( "\" "legal escapes" ) )  { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) | ( "\" "legal escapes" ) } "`" ) )
        )|
-       ( "(whitespace)" ( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" ) ) |
-       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
-       )|
-       ("(Number/Date/BigInt)" 
-		( |"-") ( "NaN" | "Infinity" | 
-                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  )
-                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( { "0-9" } "n" ) |
-                	( ( "0" ( 
-                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
-                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
-                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
-                            ( "0-7" {"0-7"})
-                            )
-	       		  )
-                	  | ( "0-9" | ".  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} (  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
-                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
-                        | ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ("+"|"-") "0-9" "0-9" ":" "0-9" "0-9" | "Z" ) )  
-                          
-                 ))) |
-       ( "(Object)" "{" ( ident ":" Value ) { "," (ident ":" Value) } "}" ) | 
-       ( "(typed-object-def)"  ident "{" ( ident ) { "," (ident ) } "}" ) | 
-       ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
-       ( "(Array)" "[" ( Value ) { "," Value } "]" ) | 
-       ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
-       ( "(typed-string)" "ident" String ) | 
        true | false  | null | undefined )).
