@@ -1,249 +1,36 @@
-
-jsoxstream = { jsox }
-
-jsox = element
-
-value =  object|    array|    string|    numbertoken|    keywords|    typedobjectuse|    typedarray|    typedstring
-
-keywords =    "true"|    "false"|   "null"|    "NaN"|    "Infinity"|    "-" "Infinity" |  "undefined"
-
-delimiter
-    '{'
-    '['
-    ','
-    ':'
-    ws
-
-closedelimiter
-    '}'
-    ']'
-    ','
-    ws
-
-object
-    '{' ws '}'
-    '{' members '}'
-
-objectfields
-    '{' identifiers '}'
-
-objectvalues
-    '{' elements '}'
-
-members
-    member
-    member ',' members
-
-member
-    ws string ws ':' element
-
-array
-    '[' ws ']'
-    '[' elements ']'
-
-typedarray
-    identifier '[' ws ']'
-    identifier '[' elements ']'
-
-typedstring
-    identifier string
-    identifier string
-
-typedobjectdef
-    identifier objectfields
-
-typedobjectuse
-    identifier objectvalues
-
-elements
-    element
-    element ',' elements
-
-element
-    value
-    value element
-
-identifiers
-    identifier
-    identifier ',' identifiers
-
-identifier
-    string
-    characters - nonidentifier - ws - keywords
-
-string
-    '"' dqcharacters '"'
-    '`' btcharacters '`'
-    "'" sqcharacters "'"
-
-sqcharacters
-    ""
-    sqcharacter sqcharacters
-
-sqcharacter
-    character - '\' - "'"
-    '\' escape
-
-dqcharacters
-    ""
-    dqcharacter dqcharacters
-
-dqcharacter
-    character - '"' - '\'
-    '\' escape
-
-btcharacters
-    ""
-    btcharacter btcharacters
-
-btcharacter
-    character - '\' - "`"
-    '\' escape
-
-
-characters
-    ""
-    character characters
-
-character
-    '\u{00000000}' . '\u{FFFFFFFF}'
-
-escape
-    '"'
-    "'"
-    '`'
-    '\'
-    'b'
-    'n'
-    'r'
-    't'
-    'u' hex hex hex hex
-    'u' '{ hex '}'
-    '0' . '2' oct oct
-    'x' hex hex
-
-hexs
-    hex
-    hex hexs
-    
-hex
-    digit
-    'A' . 'F'
-    'a' . 'f'
-    
-numbertoken
-    number ws
-    number ','
-    number '}'
-    number ']'
-    number 'n'
-    date 'Z'
-
-number
-    '+' number
-    '-' number
-    '.' digits frac exp
-    digits frac exp
-    int
-    date
-    onenine digits 'n'
-
-date
-    digit date
-    - 'e' '-' date
-    ':' date
-    '+' date
-    'T' date
-    'Z'
-
-int
-    '0' 'x' hexs
-    '0' 'X' hexs
-    '0' 'o' octs
-    '0' 'O' octs
-    '0' 'b' bins
-    '0' 'B' bins
-    '0' octs
-    onenine digits
-
-octs 
-    oct
-    oct octs
-    
-oct
-    '0' . '7'
-
-bins
-    bin
-    bin bins
-    
-bin
-    '0' . '1'
-
-digits
-    digit
-    digit digits
-    digit '_' digits
-    digits '_' digit digits
-
-digit
-    '0'
-    onenine
-
-onenine
-    '1' . '9'
-
-frac
-    ""
-    '.'
-
-exp
-    ""
-    'E' sign digits
-    'e' sign digits
-
-sign
-    ""
-    '+'
-    '-'
-
-ws
-    ""
-    '0009' ws
-    '000a' ws
-    '000d' ws
-    '0020' ws
-    '07EC' ws
-    '07ED' ws
-    
-breaking_ws
-    '0009' ws
-    '000a' ws
-    '000d' ws
-    '0020' ws
-    '07EC' ws
-    '07ED' ws
-    
-line-comment
-   '/' '/' characters '\n'
-
-block-comment
-   '/' '*' characters '*' '/'
-
-nonidentifier
-    '('
-    ')'
-    '='
-    '+'
-    '-'
-    '*'
-    '/'
-    '\'
-    '"'
-    "'"
-    "`"
-    delimiter
-    closedelimiter
-    - unicode-non-identifier-characters
-    
-unicode-non-identifier-characters
+Name     = "JSON Grammar".
+Author   = "someone".
+Version  = "1.0".
+Value = (  
+       "(Comment)" ( ( "/" "/" { "character not \n" ) "\n" )       
+                  | ( "/" "*" { "character" } "*" "/" ) 
+                  )|
+       ("(String)" ( ( '"' (( 'character not " or \ ' ) | ( '\' '"' 'emit "') | ("\" "\" "emit \") )  { ( 'character not " or \ ' ) | ( '\' '"' 'emit "') | ("\" "\" "emit \") } '"' ) |
+                     ( "'" (("character not ' or \"     | ( "\" "'" "emit '") | ("\" "\" "emit \" ) ) { "character not ' or \"      | ( "\" "'" "emit '" ) | ("\" "\" "emit \" ) }) "'" ) |
+                     ( "`" (("character not ` or \"     | ( "\" '`' "emit `") | ("\" "\" "emit \") )  { "character not ` or \"      | ( "\" '`' "emit `") | ("\" "\" "emit \") } "`" ) ) 
+       )|
+       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ] } , :" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ] } , :" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
+       )|
+       ("(Number/Date/BigInt)" 
+		( |"-*") ( "/*Numbers must start with at least one symbol marked with '*' */   " "NaN" | "Infinity" | 
+                ( |"+*") ( ( | "-" | "+" ) { | "-" | "+" } (|"0-9*")  )
+                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( { "0-9" } "n" ) |
+                	( ( "0" ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
+                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
+                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
+                            ( "0-7" {"0-7"})
+                            )
+	       		  )
+                	  | ( "0-9" | ".  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} (  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace" )
+                        | ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ":" "0-9" "0-9" | "Z" ) )  
+                          
+                 )))) |
+       ( "(Object)" "{" ( ident ":" Value ) { "," (ident ":" Value) } "}" ) | 
+       ( "(typed-object-def)"  ident "{" ( ident ) { "," (ident ) } "}" ) | 
+       ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
+       ( "(Array)" "[" ( Value ) { "," Value } "]" ) | 
+       ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
+       ( "(typed-string)" "ident" string ) | 
+       true | false  | null | undefined ).
