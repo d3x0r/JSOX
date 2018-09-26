@@ -1,14 +1,14 @@
 Name     = "JSON Grammar".
 Author   = "someone".
 Version  = "1.0".
-Val =  "(Value)" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
+Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
                   | ( "/" "*" { "character" } "*" "/" )
                   ))|
        ( "(whitespace)" ( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" ) ) |
        ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
        )|
-       ( "(Object)" "{" ( ident ":" Value ) { "," (ident ":" Value) } "}" ) | 
-       ( "(typed-object-def)"  ident "{" ( ident ) { "," (ident ) } "}" ) | 
+       ( "(Object)" "{" ( (|"whitespace")ident(|"whitespace") ":" Value ) { "," ( (|"whitespace") ident (|"whitespace") ":" Value) } "}" ) | 
+       ( "(typed-object-def)"  ident "{" (|"whitespace")(ident (|"whitespace"))  { "," (|"whitespace") (ident (|"whitespace"))  } "}" ) | 
        ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
        ( "(Array)" "[" ( Value ) { "," Value } "]" ) | 
        ( "(TypedArray)" ( "a" "b" | "u" "8" | "s" "8" | "u" "c" "8" | "u" "1" "6" | "s" "1" "6" 
@@ -17,7 +17,7 @@ Val =  "(Value)" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"
                         | "f" "3" "2" 
                         | "f" "6" "4" 
                         ) "[" "base64 ArrayBuffer bytes" "]" ) | 
-       ( "(reference)" "r" "e" "f" "[" (( "ident" | "int" ) { ("," ( "ident" | "int" ))}) "]" ) | 
+       ( "(reference)" "r" "e" "f" "[" ( (|"whitespace")( "ident" | "int" ) (|"whitespace") { ("," (|"whitespace")( "ident" | "int" )(|"whitespace")) }) "]" ) | 
        ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
        ( "(typed-string)" "ident" String ) | 
        ("(Number/Date/BigInt)" 
@@ -31,7 +31,7 @@ Val =  "(Value)" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"
                             ( "0-7" {"0-7"})
                             )
 	       		  )
-                	  | "(float)" ( "0-9" | ".  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} (  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                	  | "(float)" ( "0-9" | " .  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} ( "(int) if no . "  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
                         ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
                         | "(Date)" ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ("+"|"-") "0-9" "0-9" ":" "0-9" "0-9" | "Z" ) )  
                           
@@ -46,4 +46,4 @@ Val =  "(Value)" ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"
                      ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "'" ) |
                      ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) )  { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "`" ) )
        )|
-       true | false  | null | undefined )).
+       true | false  | null | undefined )) (|"whitespace").
