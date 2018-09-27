@@ -20,30 +20,54 @@ Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n 
        ( "(reference)" "r" "e" "f" "[" ( (|"whitespace")( "ident" | "int" ) (|"whitespace") { ("," (|"whitespace")( "ident" | "int" )(|"whitespace")) }) "]" ) | 
        ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
        ( "(typed-string)" "ident" String ) | 
-       ("(Number/Date/BigInt)" 
-		( |"-") ( "NaN" | "Infinity" | 
-                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "(Number) /*Begin Number Collection*/"
+        ( |"-") ( "NaN" | "Infinity" | 
+                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Bgin*/"
                     ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
-                	( "(int)"( "0" ( 
+                	"(Number)"( "(int)"( "0" ( 
                             ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
                             ( ( "o" | "O" ) "0-7" { "0-7" } ) |
                             ( ( "b" | "B" ) "0-1" { "0-1" ) |
                             ( "0-7" {"0-7"})
                             )
 	       		  )
-                	  | "(float)" ( "0-9" | " .  only one decimal allowed" ) { "0-9" | ".  only one decimal allowed"} ( "(int) if no . "  | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
-                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+"| "A-F"| "a-f"  ) ) ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
-                        | "(Date)" ( (("0-9" | ":" | "T" | "-" | "+"){ "0-9" | ":" | "T" | "-" | "+"  }) ( ("+"|"-") "0-9" "0-9" ":" "0-9" "0-9" | "Z" ) )  
-                          
-                 ))) |
+                	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 
+                                                                                   | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "A-F"| "a-f"  ) ) "/*number terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
+                        | "(Date)" ( ( ("0-9" | ":" | "T" | "-" | "+")
+                                       { "0-9" | ":" | "T" | "-" | "+"  }) 
+                                   (  ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "Z"| "T"  ) ) "/*date terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )  
+                                   | ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
+                                   | "Z" ) )                            
+                 )) |
        ("(String)" ( ( "(Legal Escapes)" ( "b" | "n" | "r" | "f" | "t" | ("'" | '"' | "`")
                                               | ( "u" ( "{" {"0-9" | "A-F" | "a-f"} "}" | "4 hex digits" ) ) 
                                               | ( "x" ("0-9" | "A-F" | "a-f") ("0-9" | "A-F" | "a-f") ) 
                                               | ( "0-2" "0-7" "0-7" )
                                               )
                      )|
-                     ( '"' (( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) )  { ( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } '"' ) |
+                     ( '"' (( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { ( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } '"' ) |
                      ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "'" ) |
-                     ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) )  { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "`" ) )
+                     ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "`" ) )
        )|
-       true | false  | null | undefined )) (|"whitespace").
+       true | false  | null | undefined ) (|"whitespace").
+
+NumberRule =  ("(Number/Date/BigInt)" 
+		( |"-") ( "NaN" | "Infinity" | 
+                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Bgin*/"
+                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
+                	"(Number)"( "(int)"( "0" ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
+                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
+                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
+                            ( "0-7" {"0-7"})
+                            )
+	       		  )
+                	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 
+                                                                                   | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "A-F"| "a-f"  ) ) "/*number terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
+                        | "(Date)" ( ( ("0-9" | ":" | "T" | "-" | "+")
+                                       { "0-9" | ":" | "T" | "-" | "+"  }) 
+                                   (  ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "Z"| "T"  ) ) "/*date terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )  
+                                   | ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
+                                   | "Z" ) )                            
+                 ))).
