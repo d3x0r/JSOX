@@ -1,0 +1,159 @@
+Name     = "JSOX Parser".
+Author   = "d3x0r".
+Version  = "1.0".
+
+Level0 =  "gatherString" ( "while string not close; NC" )
+          | "comment" ( "[state 0]" ( | ( "/" "state = 1; NC" ) ) 
+                    | "[state 1]" ( ( "*" "state = 3; NC" ) | ( ( "not /" "error - unexpected character" )
+                                                        | ( "/" "state=2; NC" ) ) 
+                                  )
+                    | "[state 2]" ( | ( ("\n" "\r") "state = 0; NC" ) )
+                    | "[state 3]" ( | ( "*" "state=4; NC" ) )
+                    | "[state 4]" ( ( "/" "state=0; NC" )
+                                  | ( "not *" "state=3; NC" )
+                                  | ( "NC" ) )
+                    )
+           ( ( "{" ( "if gettingFieldName" "error - unexpected" 
+                   | "begin new object, expect gettingFieldName; NC" 
+                   ) 
+             )
+           | ( "[" ( "if gettingFieldName" "error - unexpected" 
+                    | "begin new array; NC"
+                   )
+             )
+           | ( ":" ( "if getting field name" "Save field name; set gettingValue; NC" 
+                     | "if in array" "ERROR - no field labels in array"
+                     | "else" "ERROR - unexpected token"
+                  )
+             )
+             | ( "," ( "if getting field name" "error" 
+                     | "if in array" "push previous collected value; NC"
+                     | "if gettingValue" "set previous collected field name to value; NC"
+                     | "else" "ERROR - unexpected token"
+                  )
+             )
+             | ( "]" ( "if in array" "close array, pop context to prior; NC"
+                     )
+               )
+             | ( "}" ( "if gettingValue" "close object, pop prior context; NC" 
+                   | "else" "EEROR"
+                   )
+             )
+             )
+              ( ( '"'| "'" | "`" ) "Begin gather string; NC" )
+                ( ( "\x20"| "\r"| "\n"| "\t"| "#2028"| "#2029" ) ( "[word 0] ignore; NC" | "recover text; end ident" ) )
+               | ( "t" ("[word 0] set word=1" 
+                       |"[word 18] set word=19" 
+                       | "recover text; set ident") )
+               | ( "r" ("[word 1] set word=2" | "recover text; set ident" ) )
+               | ( "u" ("[word 2] set word=3" 
+                       | "[word 8] set word=9"
+                       | "recover text; set ident") )
+               | ( "e" ("[word 3] set value=true, word=99" 
+                       | "[word 7] set value=false, word=99" 
+                       | "recover text; set ident") )
+               | ( "f" ("[word 0] set word=4" 
+                       | "[word 14] set word=15" 
+                       | "recover text; set ident") )
+               | ( "a" ("[word 4] set word=5" 
+                       | "[word 11] set word=12" 
+                       | "recover text; set ident") )
+               | ( "l" ("[word 5] set word=6" 
+                       | "[word 9] set word=10" 
+                       | "[word 10] set value=null, word=99" 
+                       | "recover text; set ident") )
+               | ( "s" ("[word 6] set word=7" | "recover text; set ident") )
+               | ( "n" ("[word 6] set word=8" 
+                       | "[word 13] set word=14" 
+                       | "[word 16] set word=17" 
+                       | "recover text; set ident") )
+               | ( "N" ("[word 0] set word=11" 
+                       | "[word 12] set value=(negative)NaN, word=99" 
+                       | "recover text; set ident") )
+               | ( "I" ("[word 0] set word=13" 
+                       | "recover text; set ident") )
+               | ( "i" ("[word 15] set word=16" 
+                       | "[word 17] set word=18"
+                       | "recover text; set ident") )
+               | ( "y" ("[word 19] set value=(negative)Infinity" 
+                       | "recover text; set ident") )
+               | ( "-" ("[word 0] set negative=!negative" | "ERROR" ) )
+               | ( ( "0-9" | "+" | "." ) ( "[word 0] begin gathering number" 
+                                         | "recover text; set ident" ) )
+               )
+             )
+             ) "open/close object/array, update from ident to value, push collected field/value"   ) 
+          |  
+
+	.
+
+Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
+                  | ( "/" "*" { "character" } "*" "/" )
+                  ))|
+       ( "(whitespace)" ( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" ) ) |
+       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
+       )|
+       ( "(Object)" "{" ( (|"whitespace")ident(|"whitespace") ":" Value ) { "," ( (|"whitespace") ident (|"whitespace") ":" Value) } "}" ) | 
+       ( "(typed-object-def)"  ident "{" (|"whitespace")(ident (|"whitespace"))  { "," (|"whitespace") (ident (|"whitespace"))  } "}" ) | 
+       ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
+       ( "(Array)" "[" ( Value ) { "," Value } "]" ) | 
+       ( "(TypedArray)" ( "a" "b" | "u" "8" | "s" "8" | "u" "c" "8" | "u" "1" "6" | "s" "1" "6" 
+                        | "u" "3" "2" 
+                        | "s" "3" "2" 
+                        | "f" "3" "2" 
+                        | "f" "6" "4" 
+                        ) "[" "base64 ArrayBuffer bytes" "]" ) | 
+       ( "(reference)" "r" "e" "f" "[" ( (|"whitespace")( "ident" | "int" ) (|"whitespace") { ("," (|"whitespace")( "ident" | "int" )(|"whitespace")) }) "]" ) | 
+       ( "(typed-array)" "ident" "[" ( Value ) { "," Value } "]" ) | 
+       ( "(typed-string)" "ident" String ) | 
+        ( |"-") ( "NaN" | "Infinity" | 
+                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Bgin*/"
+                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
+                	"(Number)"( "(int)"( "0" ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
+                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
+                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
+                            ( "0-7" {"0-7"})
+                            )
+	       		  )
+                	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 
+                                                                                   | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "A-F"| "a-f"  ) ) "/*number terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
+                        | "(Date)" ( ( ("0-9" | ":" | "T" | "-" | "+")
+                                       { "0-9" | ":" | "T" | "-" | "+"  }) 
+                                   (  ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "Z"| "T"  ) ) "/*date terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )  
+                                   | ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
+                                   | "Z" ) )                            
+                 )) |
+       ("(String)" ( ( "(Legal Escapes)" ( "b" | "n" | "r" | "f" | "t" | ("'" | '"' | "`")
+                                              | ( "u" ( "{" {"0-9" | "A-F" | "a-f"} "}" | "4 hex digits" ) ) 
+                                              | ( "x" ("0-9" | "A-F" | "a-f") ("0-9" | "A-F" | "a-f") ) 
+                                              | ( "0-2" "0-7" "0-7" )
+                                              )
+                     )|
+                     ( '"' (( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { ( 'character not " or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } '"' ) |
+                     ( "'" ( "character not ' or \"     | ( "\" "'" ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { "character not ' or \"       | ( "\" "'" ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "'" ) |
+                     ( "`" ( "character not ` or \"     | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) { "character not ` or \"      | ( "\" '`' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } "`" ) )
+       )|
+       true | false  | null | undefined ) (|"whitespace").
+
+NumberRule =  ("(Number/Date/BigInt)" 
+		( |"-") ( "NaN" | "Infinity" | 
+                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Bgin*/"
+                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
+                	"(Number)"( "(int)"( "0" ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
+                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
+                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
+                            ( "0-7" {"0-7"})
+                            )
+	       		  )
+                	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 
+                                                                                   | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
+                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "A-F"| "a-f"  ) ) "/*number terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
+                        | "(Date)" ( ( ("0-9" | ":" | "T" | "-" | "+")
+                                       { "0-9" | ":" | "T" | "-" | "+"  }) 
+                                   (  ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "Z"| "T"  ) ) "/*date terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )  
+                                   | ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
+                                   | "Z" ) )                            
+                 ))).
