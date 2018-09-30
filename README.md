@@ -268,6 +268,8 @@ bytes of waste may be included.  That is incomplete values at the end of the str
 Image produced by [EBNF Visualizer (Windows)](http://dotnet.jku.at/applications/Visualizer/#Down)
 from [jsox.ebnf](jsox.ebnf)
 ![JSOX Value BNF](JSOX-Value.GIF "JSOX Values")
+![JSOX Value BNF](Val.GIF "JSOX Values")
+![JSOX Parser BNF](parser.GIF "JSOX Parser")
   
 
 ## Example conversion
