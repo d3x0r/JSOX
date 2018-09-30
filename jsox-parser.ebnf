@@ -3,12 +3,14 @@ Author   = "d3x0r".
 Version  = "1.0".
 
 Level0 =  "gatherString" ( "while string not close; NC" )
+          | "gatherNumber" ( "while '0-9','.','E','e','+','-',':','T','Z'; NC" )
           | "comment" ( "[state 0]" ( | ( "/" "state = 1; NC" ) ) 
-                    | "[state 1]" ( ( "*" "state = 3; NC" ) | ( ( "not /" "error - unexpected character" )
-                                                        | ( "/" "state=2; NC" ) ) 
+                    | "[state 1]" ( ( "*" "state = 3; NC" ) 
+                                  | ( "/" "state=2; NC" )
+                                  | ( "else" "error - unexpected character" )
                                   )
-                    | "[state 2]" ( | ( ("\n" "\r") "state = 0; NC" ) )
-                    | "[state 3]" ( | ( "*" "state=4; NC" ) )
+                    | "[state 2]" ( ( ("\n" | "\r") "state = 0; NC" ) | "NC" )
+                    | "[state 3]" ( ( "*" "state=4; NC" ) | "NC" )
                     | "[state 4]" ( ( "/" "state=0; NC" )
                                   | ( "not *" "state=3; NC" )
                                   | ( "NC" ) )
@@ -39,49 +41,64 @@ Level0 =  "gatherString" ( "while string not close; NC" )
                    | "else" "EEROR"
                    )
              )
-             )
-              ( ( '"'| "'" | "`" ) "Begin gather string; NC" )
-                ( ( "\x20"| "\r"| "\n"| "\t"| "#2028"| "#2029" ) ( "[word 0] ignore; NC" | "recover text; end ident" ) )
-               | ( "t" ("[word 0] set word=1" 
-                       |"[word 18] set word=19" 
+             
+               | ( ( '"'| "'" | "`" ) "Begin gather string; NC" )
+               | ( ( "\x20"| "\r"| "\n"| "\t"| "#2028"| "#2029" ) ( "[word 0] ignore; NC" | "[word 99] ignore; NC" | "recover text; end ident" ) )
+               | ( "t" ("[word 0] set word=1 '[t]rue'" 
+                       |"[word 18] set word=19 'Infini[t]y'" 
                        | "recover text; set ident") )
-               | ( "r" ("[word 1] set word=2" | "recover text; set ident" ) )
-               | ( "u" ("[word 2] set word=3" 
-                       | "[word 8] set word=9"
+               | ( "r" ("[word 1] set word=2 't[r]ue'" | "recover text; set ident" ) )
+               | ( "u" ("[word 2] set word=3 'tr[u]e'" 
+                       | "[word 8] set word=9 'n[u]ll'"
                        | "recover text; set ident") )
-               | ( "e" ("[word 3] set value=true, word=99" 
-                       | "[word 7] set value=false, word=99" 
+               | ( "e" ("[word 3] set value=true, word=99  'tru[e]'" 
+                       | "[word 7] set value=false, word=99 'fals[e]'" 
+                       | "[word 22] set word=23 'und[e]fined'" 
+                       | "[word 26] set word=27 'undefin[e]d'" 
                        | "recover text; set ident") )
-               | ( "f" ("[word 0] set word=4" 
-                       | "[word 14] set word=15" 
+               | ( "f" ("[word 0] set word=4  '[f]alse'"
+                       | "[word 14] set word=15 'In[f]inity'" 
+                       | "[word 23] set word=24 'unde[f]ined'" 
                        | "recover text; set ident") )
-               | ( "a" ("[word 4] set word=5" 
-                       | "[word 11] set word=12" 
+               | ( "a" ("[word 4] set word=5 'f[a]lse'" 
+                       | "[word 11] set word=12 'N[a]N'" 
                        | "recover text; set ident") )
-               | ( "l" ("[word 5] set word=6" 
-                       | "[word 9] set word=10" 
-                       | "[word 10] set value=null, word=99" 
+               | ( "l" ("[word 5] set word=6 'fa[l]se'" 
+                       | "[word 9] set word=10 'nu[l]l" 
+                       | "[word 10] set value=null, word=99  'nul[l]'" 
                        | "recover text; set ident") )
-               | ( "s" ("[word 6] set word=7" | "recover text; set ident") )
-               | ( "n" ("[word 6] set word=8" 
-                       | "[word 13] set word=14" 
-                       | "[word 16] set word=17" 
+               | ( "s" ("[word 6] set word=7 'fal[s]e' "| "recover text; set ident") )
+               | ( "n" ("[word 6] set word=8 '[n]ull'" 
+                       | "[word 13] set word=14 'I[n]finity'" 
+                       | "[word 16] set word=17 'Infi[n]ity'" 
+                       | "[word 20] set word=21 'u[n]defined'" 
+                       | "[word 25] set word=26 'undefi[n]ed'"
                        | "recover text; set ident") )
-               | ( "N" ("[word 0] set word=11" 
-                       | "[word 12] set value=(negative)NaN, word=99" 
+               | ( "u" ("[word 0] set word=20 'n[u]ll'" | "recover text; set ident") )
+               | ( "d" ("[word 21] set word=22 'un[d]efined'" 
+                       | "[word 27] set value=undefined, word=99 'undefine[d]'" 
                        | "recover text; set ident") )
-               | ( "I" ("[word 0] set word=13" 
+               | ( "N" ("[word 0] set word=11 '[N]aN'" 
+                       | "[word 12] set value=(negative)NaN, word=99 'Na[N]'" 
                        | "recover text; set ident") )
-               | ( "i" ("[word 15] set word=16" 
-                       | "[word 17] set word=18"
+               | ( "I" ("[word 0] set word=13 '[I]nfinity" 
                        | "recover text; set ident") )
-               | ( "y" ("[word 19] set value=(negative)Infinity" 
+               | ( "i" ("[word 15] set word=16 'Inf[i]nity'" 
+                       | "[word 17] set word=18 'Infin[i]ty'"
+                       | "[word 24] set word=25 'undef[i]ned'"
+                       | "recover text; set ident") )
+               | ( "y" ("[word 19] set value=(negative)Infinity 'Infinit[y]'" 
                        | "recover text; set ident") )
                | ( "-" ("[word 0] set negative=!negative" | "ERROR" ) )
                | ( ( "0-9" | "+" | "." ) ( "[word 0] begin gathering number" 
                                          | "recover text; set ident" ) )
+               | "else" ( ( "[word 0]" ( "if not unicode-non-identifier, word=50" 
+                              | "error, unepected character" ) )
+                 | ( "[word 50]" ( "add to identifier" ) )
+                 | ( "[word 99]" "recover text; set ident" )
+                 )
                )
-             )
+             ))
              ) "open/close object/array, update from ident to value, push collected field/value"   ) 
           |  
 
