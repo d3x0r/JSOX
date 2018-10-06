@@ -637,9 +637,11 @@ jsox -c path/to/foo.jsox    # generates path/to/foo.json
 This is also implemented as part of npm [sack.vfs](https://www.npmjs.com/package/sack.vfs)
 as a native code node.js addon.  This native javascript version allows usage in browsers.
 
-Possible release of amagamated source, native Node Addon (standalone).
+C/C++ Amalgam version [jsox-wasm](https://www.github.com/d3x0r/jsox-wasm)
 
-Working on a WebAssembly version.
+Possible release of amagamated source, native Node Addon (standalone).  (Amalagmanted source is for now in jsox-wasm repository)
+
+Working on a WebAssembly version. [jsox-wasm](https://www.github.com/d3x0r/jsox-wasm)
 
 ## Benchmarks
 
