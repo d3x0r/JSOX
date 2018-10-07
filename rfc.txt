@@ -778,20 +778,10 @@ Table of Contents
    [RFC7159]  T. Bray, Ed., "The JavaScript Object Notation (JSON)
               Data Interchange Format", RFC 7159, March 2014.
 
+   [RFC7493]  T. Bray, Ed., "The I-JSON Message Format", RFC 7493, 
+              March 2015
 
-
-Appendix A.  Changes from RFC 7159
-
-   o  Changed the reference to [UNICODE] to be not version specific.
-
-
-   o  Modified a note to the "Security Considerations" section pointing out
-      incompatiblity, although for a subset of documents, eval still applies.
-      the risks of using the "eval()" function in JavaScript or any
-      other language in which JSON texts conform to that language's
-      syntax.
-
-   o  Added a reference to RFC 7159.
+Appendix A.
 
 
 Author's Address
