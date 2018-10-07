@@ -1,8 +1,9 @@
 {
     "name": "jsox",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Java Script Object eXchange.",
     "keywords": [
+        "jsox",
         "json",
         "es6",
         "macro",

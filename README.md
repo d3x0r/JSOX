@@ -671,6 +671,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.0.7 - Fixed some stream parsing issues with identifiers.
 - 1.0.6 - just updated build products
 - 1.0.5 
     - Fix streaming ability
