@@ -1,8 +1,8 @@
 card{ author, title }
 { otherCards: { example : card{"jim","jsox"} },
   cards : [ card       { "bob", "book" },  // spaces are legal
-            card{ "tom", "cool" },
-            card{ "ted", "mule" },
+            card { "tom", "cool" },
+            card { "ted", "mule" },
           ],
    out : ref["cards",1]
 }
