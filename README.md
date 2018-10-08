@@ -401,13 +401,11 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |parse| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
 |stringify | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][json-stringify] |
 |stringifier | () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
-|escape | ( string ) | substitutes ", \, ', and ` with backslashed sequences. (prevent 'JSON injection') |
+|escape | ( string ) | substitutes ", \, ', and \` with backslashed sequences. (prevent 'JSON injection') |
 |begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
-|registerToJSOX| (prototype,cb) | Instead of setting prototype extensions, provide a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
-
-| registerToJSOX  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX |
-| registerFromJSOX| (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
-| registerToFrom  | (name,prototype,toCb, fromCb) | register both to and from for the same name |
+|registerToJSOX  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
+|registerFromJSOX| (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
+|registerToFrom  | (name,prototype,toCb, fromCb) | register both to and from for the same name |
 
 
 |Stringifier method | parameters | Description |
