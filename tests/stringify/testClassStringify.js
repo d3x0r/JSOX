@@ -4,7 +4,7 @@ var JSOX = require( "../.." )
 
 var stringifier = JSOX.stringifier();
 
-var obj = { author: "sam", title : "All good books" };
+var obj = { author: "sam", Title : "All good books" };
 var obj2 = { isle: 33, shelf : 4 };
 
 stringifier.defineClass("card",obj);
