@@ -396,23 +396,30 @@ var obj = JSOX.parse('{unquoted:"key",trailing:"comma",}');
 var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace */
 ```
 
-|JSOX Methods | parameters | Description |
+|JSOX Methods | return | parameters | Description |
 |-----|-----|-----|
-|parse| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
-|stringify | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][json-stringify] |
-|stringifier | () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
-|escape | ( string ) | substitutes ", \, ', and \` with backslashed sequences. (prevent 'JSON injection') |
-|begin| (cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
-|registerToJSOX  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
-|registerFromJSOX| (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
-|registerToFrom  | (name,prototype,toCb, fromCb) | register both to and from for the same name |
+|parse| the first value| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
+|stringify| string | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][json-stringify] |
+|stringifier |  Stringifier(methods below)| () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
+|escape | string | ( string ) | substitutes ", \, ', and \` with backslashed sequences. (prevent 'JSON injection') |
+|begin| Parser(methods below) |(cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
+|registerToJSOX  | none | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
+|registerFromJSOX| none | (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
+|registerToFrom  | none | (name,prototype,toCb, fromCb) | register both to and from for the same name |
 
 
-|Stringifier method | parameters | Description |
+|Stringifier method | return | parameters | Description |
 |-------|------|-----|
-|stringify | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][json-stringify] |
-|setQuote | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
-|defineClass | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
+|stringify | string | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][json-stringify] |
+|registerToJSOX | none  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
+|setQuote | none | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
+|defineClass | none | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
+
+|Parser Methods | parameters | Description |
+|-----|-----|-----|
+|write | (buffer) | add data to the parser stream |
+|registerFromJSOX| (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
+
 
 [json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
 [json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
@@ -669,6 +676,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.0 - Added stringifier/parser instance specific registrations for ToJSOX and FromJSOX handlers.
 - 1.0.8 - Sort object fields case insensitively; standardize field ordering.
 - 1.0.7 - Fixed some stream parsing issues with identifiers.
 - 1.0.6 - just updated build products
@@ -684,6 +692,28 @@ tests, and ensure that `npm test` continues to pass.
 - 1.0.2 - Issue with mutiple leading and trailing spaces. Fix collecting streams of numbers.  Fix an issue with nested classes.  Add circular reference support.
 - 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.  Make objects of a class share the same prototype.
 - 1.0.0 - Intial Release.
+
+## Benchmarks
+
+tests/bench/bench1.js 
+Testing vs both minified and original source versions.
+number is N;1 for how much slow this is than the native Node JSON implementation (which is really V8 native code).
+
+Test runs a number of iterations for 2 seconds, and compares the number of stringifications/parsings are done in that time.
+
+|minified/source|version|stringify|parse|
+|-----|-------|-----|----|
+|(min)|node-7.9.0  | 3.6506  | 11.62666  |
+|(raw)|Node 9.6.1(x32) |  1.9586|  4.2622  |
+|(min)|Node 9.6.1(x32) |  2.4322 | 4.5402  |
+|(raw)|Node 10.5(x64)  |  2.3943 | 3.9279  |
+|(min)|Node 10.5(x64) |   1.9431|  3.7633  |
+|(raw)|node 11.0(x32) |  1.9930|  4.3351  |
+|(min)|node 11.0(x32) |  2.3688 | 4.5517  |
+|(raw)|node 11.0(x64) |  2.1390 | 4.0648  |
+|(min)|node 11.0(x64)  | 1.9226 | 3.9686  |
+
+The difference from 1.9x to 2.4x is 20% difference.
 
 
 ## License
