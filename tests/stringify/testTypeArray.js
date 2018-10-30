@@ -1,7 +1,8 @@
 var JSOX=require( "../.." );
+
 var ab = new ArrayBuffer(8);
 var u8 = new Uint8Array(ab);
-for( var n = 0; n < 8; n++ ) u8[n] = n;
+for( var n = 0; n < 8; n++ ) u8[n] = "MNOPQURZ".codePointAt(n);
 
 
 console.log( "MNOP=", JSOX.stringify(JSOX.parse( JSOX.stringify({ab:ab}) )) );
