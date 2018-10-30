@@ -1,7 +1,9 @@
-var JSOX=require("../.." );
+var JSOX=require("../../lib/jsox.js" );
+//var JSOX=require("../../lib/jsox.es6.pretty.js" );
+var sf = JSOX.stringifier();
 
 function runParser( l, p ) {
-	const s = p.stringify;
+	const s = p === JSOX?sf.stringify:p.stringify;
         const parse = p.parse;
         
         var n;

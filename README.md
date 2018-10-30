@@ -506,7 +506,8 @@ completed string; This also requires no space between the unquoted-identifier st
 and the quoted data string.  
 
 Typed-object and typed-arrays also require the identifer or string used for their
-type information not be followed by a space before the opening '{' or '\['. 
+type information not be followed by a space before the opening '{', '\[' or quoted 
+string. 
 
 ### More on Classes/Tags - typed-object and typed-array
 
@@ -676,7 +677,9 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.1.0 - Added stringifier/parser instance specific registrations for ToJSOX and FromJSOX handlers.
+- 1.1.0 
+    - Added stringifier/parser instance specific registrations for ToJSOX and FromJSOX handlers.
+    - removed unicode non-identifier check, prefering instead just the set of structure characters (basically anything which is not caught before the end begins an identifier).  This simplifies testing field names for encoding/stringification.
 - 1.0.8 - Sort object fields case insensitively; standardize field ordering.
 - 1.0.7 - Fixed some stream parsing issues with identifiers.
 - 1.0.6 - just updated build products

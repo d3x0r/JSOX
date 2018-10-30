@@ -2,6 +2,8 @@ const JSOX = require( "../.." );
 
 var FS = require('fs');
 
+//console.log( "Magic?", JSOX.stringify(global,null,3));
+
 function stringTest(init) {
 	var _private = init;
 	Object.assign( this, {	
