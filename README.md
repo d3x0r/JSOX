@@ -303,6 +303,8 @@ multi-line string; but keeps newline',
     negative : ---123,
     to: Infinity,   // and beyond!
 
+    ,,,,,,  // some empty fields...
+
     finally: 'a trailing comma',
     oh: [
         "we shouldn't forget",
@@ -704,6 +706,8 @@ number is N;1 for how much slow this is than the native Node JSON implementation
 
 Test runs a number of iterations for 2 seconds, and compares the number of stringifications/parsings are done in that time.
 
+Numbers shown are multipliers of time for JSOX.  (yes it's 50%-25% the speed depending on operation, but much faster than other JSON external scripts)
+
 |minified/source|version|stringify|parse|
 |-----|-------|-----|----|
 |(min)|node-7.9.0  | 3.6506  | 11.62666  |
@@ -715,9 +719,43 @@ Test runs a number of iterations for 2 seconds, and compares the number of strin
 |(min)|node 11.0(x32) |  2.3688 | 4.5517  |
 |(raw)|node 11.0(x64) |  2.1390 | 4.0648  |
 |(min)|node 11.0(x64)  | 1.9226 | 3.9686  |
+| JSON5 vs Node JSON|  |  | |
+|(raw)|node 11.0(x64) |  1.8150 | 13.6190  | 
+| JSON5 vs JSOX|  |  | |
+|(min)|node 11.0(x64)  |  1.1456 |  0.3 |
 
 The difference from 1.9x to 2.4x is 20% difference.
 
+Example benchmark output Shows resulting stringify result
+
+```
+JSOX String Did 441000 in 2011 {a:123,b:467,c:"1234",d:35.1,e:2018-11-06T06:38:29-08:00}
+JSOX Parse  Did 606000 in 2000
+JSON String Did 954000 in 2000 {"a":123,"b":467,"c":"1234","d":35.1,"e":"2018-11-06T14:38:33.984Z"}
+JSON Parse  Did 2601000 in 2001
+JSON5 String Did 519000 in 2001 {a:123,b:467,c:'1234',d:35.1,e:'2018-11-06T14:38:37.990Z'}
+JSON5 Parse  Did 189000 in 2017
+JSON5 String Did 975000 in 2004 {"a":123,"b":467,"c":"1234","d":35.1,"e":"2018-11-06T14:38:42.012Z"}
+JSON5 Parse  Did 873000 in 2001
+Node JSON v JSOX
+stringify 2.163265306122449
+parse     4.292079207920792
+Node JSON v JSON5
+stringify 1.8381502890173411
+parse     13.761904761904763
+Node JSON v JSON6
+stringify 0.9784615384615385  (JSON6 Same)  (uses same function)
+parse     2.979381443298969
+JSON5 v JSOX
+stringify 1.1768707482993197
+parse     0.3118811881188119  (JSOX Win 3.33x faster)
+JSON5 v JSON6
+stringify 0.5323076923076923  (JSON6 WIN)  (uses same as Node function)
+parse     0.21649484536082475 (JSON6 Win, almost 5x faster)
+JSON6 v JSONX
+stringify 2.2108843537414966
+parse     1.4405940594059405
+```
 
 ## License
 
