@@ -399,7 +399,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 ```
 
 |JSOX Methods | return | parameters | Description |
-|-----|-----|-----|
+|-----|-----|-----|----|
 |parse| the first value| (string [,reviver]) | supports all of the JSOX features listed above, as well as the native [`reviver` argument][json-parse]. |
 |stringify| string | ( value[,replacer[,space]] ) | converts object to JSOX.  [stringify][json-stringify] |
 |stringifier |  Stringifier(methods below)| () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
@@ -411,7 +411,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 
 
 |Stringifier method | return | parameters | Description |
-|-------|------|-----|
+|-------|------|-----|----|
 |stringify | string | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][json-stringify] |
 |registerToJSOX | none  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
 |setQuote | none | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
