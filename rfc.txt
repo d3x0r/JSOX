@@ -227,7 +227,7 @@ Table of Contents
    Identifiers are either a string or any sequence of characters that do not 
    include structural characters or whitespace, and also does not begin with 
    a digit, minus, plus, or decimal-point.  Identifiers were meant to parse
-   as ES6 Identifier, skipping unicode non-identifier characters; at a minimum
+   as ES6 Identifier, MAY end at unicode non-identifier characters; at a minimum
    '(', ')', '<', '>', '=', '+', '-', '*', '/', '.', '&', '|', '!','~','%''^'
    should also be considered structure chracters.
 
@@ -598,7 +598,7 @@ Table of Contents
 
    Person & email address to contact for further information:
       IESG
-      <iesg@ietf.org>
+      <>
 
    Intended usage:  COMMON
 
@@ -610,7 +610,7 @@ Table of Contents
 
    Change controller:
       IESG
-      <iesg@ietf.org>
+      <>
 
    Note:  No "charset" parameter is defined for this registration.
       Adding one really has no effect on compliant recipients.

@@ -688,7 +688,7 @@ tests, and ensure that `npm test` continues to pass.
 - 1.0.5 
     - Fix streaming ability
     - consequtive strings only have whitespace to separate them, so identifiers for defining typed-objects cannot have whitespace between them and '{'.
-    - implement test for non-identifier characters to quote field strings (or not).  Implement reading non-identifier characters, and fault if identifier is unquoted and has such a character.
+    - (reverted)implement test for non-identifier characters to quote field strings (or not).  Implement reading non-identifier characters, and fault if identifier is unquoted and has such a character.
     - implement typed-strings, which can be used to trigger constructors which accept single strings.
     - update readme with typed-strings, typed-arrays, and typed-objects.
     - performance fix; was keeping parser objects forever.
