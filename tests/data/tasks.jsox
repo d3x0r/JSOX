@@ -1,0 +1,115 @@
+task{ name,args,program,path,suspend,exclusive,restart,assumeReadyIn,minLaunchTime,MaxLauncherPerMinTime,require }
+
+{
+   node : "H:/dev2/nodejs/node.exe",
+tasks: [ 
+//suspend startup
+// service is another keyword that should be implememtned 
+
+//[Remote] task <some task name>   #create a new task referenced by name
+
+	task{ "Core"
+        ,  ["--inspect", "--debug=5858", "main.js"]
+        , ref["node"]
+        ,  ".."
+	,  false , false ,  true ,  2500, 250 ,  1
+	, null
+        }
+	,task{ "WebServer"
+	  , ["--inspect", "--debug=5866", "../common/myNode.js"]
+	  , ref["node"]
+	  , "../node/webInterface"
+	  , false, false, true, 2500, 250,  1
+          , [ "Core" ]
+        }
+        , { name: "userDatabase"
+          , args : ["--inspect", "--debug=5859", "../common/myNode.js"]
+          , program:ref["node"]
+          , path : "../node/userDatabase"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+        , { name: "Auth0"
+          , args : ["--inspect", "--debug=5860", "../common/myNode.js"]
+          , program:ref["node"]
+          , path : "../node/Auth0"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+        , { name: "chatAdmin"
+          , args : ["--inspect", "--debug=5861", "../common/myNode.js"]
+          , program:ref["node"]
+          , path : "../node/chatAdmin"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+
+        , { name: "chatCore"
+          , args : ["--inspect", "--debug=5862", "../common/myNode.js"]
+          , program:ref["node"]
+          , path : "../node/chatCore"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+
+        , { name: "groupCore"
+          , args : ["--inspect", "--debug=5863", "../common/myNode.js"]
+          , program:ref["node"]
+          , path : "../node/groupCore"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+
+        , { name: "chatProtocol"
+          , args : ["--inspect", "--debug=5864", "../common/myNode.js"]
+          , program : "H:/dev2/nodejs/node.exe"
+          , path : "../node/chatProtocol"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+
+        , { name: "chatStorage"
+          , args : ["--inspect", "--debug=5865", "../common/myNode.js"]
+          , program : "H:/dev2/nodejs/node.exe"
+          , path : "../node/chatProtocol"
+          , suspend: false
+          , exclusive : false
+          , restart : true
+          , assumeReadyIn: 2500
+          , minLaunchTime : 250
+          , maxLaunchsPerMinTime : 1
+          , require : [ "Core" ]
+        }
+
+]
+}
