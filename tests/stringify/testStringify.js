@@ -1,5 +1,5 @@
 
-var JSOX = require( "../../" )
+var JSOX = require( "../.." )
 
 var stringify = JSOX.stringify;
 var parse = JSOX.parse;
@@ -8,12 +8,18 @@ var parse = JSOX.parse;
 var o;
 var r, r2, r3;
 
+r = stringify( o = { op:"Storage" } );
+console.log( "simple Test:", r );
+
+r = stringify( o = { op:"Storage", data:[] } );
+console.log( "simple Test:", r );
+
 
 r = stringify( o = { "true": "simple object", "false":3, "test extra":new Date(), "This+fails":0, "123":123, 124:123 } );
-	//console.log( "OUTPUT:", r, parse(r) );
+	console.log( "will parse:", r );
 	r2 = stringify( parse( r ) );
 	if( r != r2 )
-		console.log( "identTest:", r );
+console.log( "identTest:", r );
 
 
 r = stringify( o = { a: "simple object", b:3, c:new Date() } );

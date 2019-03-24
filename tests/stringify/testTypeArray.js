@@ -1,4 +1,4 @@
-var JSOX=require( "../.." );
+var JSOX = require( "../.." )
 
 var ab = new ArrayBuffer(8);
 var u8 = new Uint8Array(ab);
