@@ -7,8 +7,8 @@
 compatible output; it would lose all the features anyway; use existing
 `JSON.stringify()` if required, all JSON(JSON3/JSON5/JSON6) is valid JSOX.
 
-JSOX adds BigInt, Date, and TypeArray transport support, and includes
-keywords (5)'Infinity', (5)'NaN', (6)'undefined'.
+JSOX adds Map, BigInt, Date, and TypeArray transport support, cyclic
+objects, and includes keywords (5)'Infinity', (5)'NaN', (6)'undefined'.
 
 JSOX adds optional processing of `typed` data.  Type names can be applied
 to Objects, Arrays and Strings.  Type names are defined and provided with
@@ -30,10 +30,17 @@ names repeated often.
 
  * adds macro/class support for object field names.
  * adds support for bigint numbers; indicated with an 'n' suffix.
- * adds support for Date parsing and stringification.
- * `o === JSOX.parse(JSON.stringify(o))` should always be exactly true.
+ * adds support for Date parsing and stringification; ISO dates as used are a sub-type of Number.
  * adds support for circular references.
  * typed-strings, typed-arrays, and typed-objects, for user defined types and to and from JSOX methods. [more](#jsox-typed-objects-typed-arrays-and-typed-strings)
+ * C style commants; `//` and `/* */`.
+ * string continuations using \ at the end of the line removes the newline; Otherwise strings continue until the next quote.
+ * `"`, `'`, ` `` `, are all valid quote pairings, with no differnce in meaning, other than the quotes they contain.
+ * adds optional underscores in numbers, allowing user formatting of log numbers.
+ * fields are canonically ordered, so all objects that have the same field names will have their names in the same order.  Keys in Map()s are not ordered.
+ * trailing commas are allowed, and silently ignored; however empty comma pairs in arrays will generate empty elements; and (throw an error in objects?).
+ * and of course `o === JSOX.parse(JSON.stringify(o))` should always be exactly true.
+
 
 ### Example Encoding
 
@@ -482,6 +489,27 @@ is passed the string, and can result with a color object.
 In each case, in the following example JSOX, the same 'color' fromJSOX 
 method will be called.  It will be invoked with a string, with an array, 
 with an object, with an object, and with an object respectively.
+
+```
+var JSOX= require( "JSOX" );
+
+function Color() {
+	this.r = 100;
+        this.g = 150;
+        this.b = 20;
+}
+
+// notice that the literal quotes to result as output are returned here.
+// this allows the encoder to use an object {}, an array [] or a string ""
+// to pass to the reviver function. 
+sack.JSOX.registerToFrom( "color", Color.prototype, function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
+           , function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
+           );
+
+var c = new Color();
+
+JSOX.stringify( c ) ); // result is 'color"#649614"'
+JSOX.parse( JSOX.stringify( c ) ); // result is   'Color { r: 100, g: 150, b: 20 }'  (console.log)
 
 ```
 // this are all variations which may be used to revive a color object

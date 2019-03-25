@@ -621,10 +621,10 @@ Table of Contents
    is a subset of JavaScript that excludes expressions.
 
    Since JSOX's syntax deviates from Javascript for class defintions, 
-   it is no longer possible to  use that language's "eval()" function 
-   to parse JSOX texts; although there is a subset of documents, those
-   which do not use typed objects or typed arrays, which can still be
-   resolved using "eval()".
+   it is, in many cases, longer possible to  use that language's 
+   "eval()" function to parse JSOX texts; although there is a subset 
+   of documents, those which do not use typed objects or typed arrays, 
+   which can still be resolved using "eval()".
 
    Streams of JSON or JSOX may generate '][' in a sequence.
 
