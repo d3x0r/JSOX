@@ -679,6 +679,10 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.1
+    - added Map() builtin type for JS which is type 'map'.
+    - Fixed expression which quoted words with 'S' or 's' in them.
+    - Fixed Known array types.
 - 1.1.0 
     - Added stringifier/parser instance specific registrations for ToJSOX and FromJSOX handlers.
     - removed unicode non-identifier check, prefering instead just the set of structure characters (basically anything which is not caught before the end begins an identifier).  This simplifies testing field names for encoding/stringification.

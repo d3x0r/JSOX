@@ -1,5 +1,5 @@
 
-var jsox = require( "./jsox.js" );
+var jsox = require( "../.." );
 console.log( "JSOX:", jsox, Object.getPrototypeOf(jsox) );
 
 var a = jsox.parse( '[Infinity,NaN,undefined,-Infinity,-123, {a:123}]' );
