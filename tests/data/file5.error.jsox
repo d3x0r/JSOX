@@ -7,6 +7,6 @@
 { 
 	company : { name : "Example.com",
         	employees : [ { name:"bob" },{name:"tom"} ],
-                manager : ref["company","employees",0]
+                manager : ref["company","exploees",0]  // should this throw?  Right now it returns undefind from C, and faults in JS
                 }
 }
