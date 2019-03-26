@@ -707,6 +707,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.111
+    - fix packaging.
 - 1.1.101
     - Minor patch to get a long miner version
     - fixed base64 decoding to handle terminations better.
