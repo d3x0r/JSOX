@@ -707,6 +707,9 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.101
+    - Minor patch to get a long miner version
+    - fixed base64 decoding to handle terminations better.
 - 1.1.1
     - added Map() builtin type for JS which is type 'map'.
     - Fixed expression which quoted words with 'S' or 's' in them.

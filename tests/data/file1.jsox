@@ -1,7 +1,11 @@
 { a: "simple object", b:3, c:2018-09-11T09:33:02-07:00, d:123n, e:null, f:undefined, g:NaN, h:Infinity, i:-Infinity, j:-0.302, k:ab[faefa3BDa] 
 , k2:ab[faefa3BDa3]
 , k3:ab[faefa3BDa35]
-, k4:ab[faefa3BDa354] }
+, k4:ab[faefa3BDa354] 
+, k5:ab[faefa3BDa35=] 
+, k6:ab[faefa3BDa3==] 
+, k7:ab[faefa3BDa===] 
+}
 
 /*
   k:
