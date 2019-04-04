@@ -707,7 +707,7 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.1.112
+- 1.1.113
     - fix leftover test code in require.js.
 - 1.1.111
     - fix packaging.
