@@ -1,0 +1,10 @@
+node rawtest.js ./file1.jsox
+node rawtest.js ./file2.jsox
+node rawtest.js ./file3.jsox
+node rawtest.js ./file4.jsox
+node rawtest.js ./file5.jsox
+node rawtest.js ./file6.jsox
+node rawtest.js ./file7.jsox
+node rawtest.js ./file8.jsox
+node rawtest.js ./testReferenceRevive.jsox
+node rawtest.js ./testQuotes.jsox

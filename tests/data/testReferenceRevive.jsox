@@ -1,0 +1,85 @@
+
+
+{
+	data: {
+		data: {
+			groups: [{
+				captain: {
+					children: [],
+					created: 2019-05-16T14:05:10-07:00,
+					name: "Tom",
+					parents: [{
+						children: [ref["data", "data", "groups", 0, "captain"], {
+							children: [],
+							created: 2019-05-16T14:05:10-07:00,
+							name: "Alice",
+							parents: [],
+							siblings: [ref["data", "data", "groups", 0, "captain"], {
+								children: [],
+								created: 2019-05-16T14:05:10-07:00,
+								name: "Bob",
+								parents: [],
+								siblings: [ref["data", "data", "groups", 0, "captain"]
+										, ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1]],
+								spice: [],
+								user_id: "YmZVBB7c1T2D9idyWmc75mWMBJNE$O6u_xOaGp4bwAk="
+							}],
+							spice: [],
+							user_id: "6Q6Q8Ca1fCblmGhZYEzrC_Cbe5qxmyoGVjo1PrBImw0="
+						}, ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1, "siblings", 1]],
+						created: 2019-05-16T14:05:10-07:00,
+						name: "Jerrie",
+						parents: [],
+						siblings: [],
+						spice: [{
+							children: [ref["data", "data", "groups", 0, "captain"]
+									   , ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1]
+									   , ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1, "siblings", 1]],
+							created: 2019-05-16T14:05:10-07:00,
+							name: "Harry",
+							parents: [],
+							siblings: [],
+							spice: [],
+							user_id: "nopYfH9gfEx$XE0nrT5YiRNBc5GeJDcEB031vPLERaI="
+						}, ref["data", "data", "groups", 0, "captain", "parents", 0]],
+						user_id: "L$zZTtjNH6DngoL8tWz7fn6QDKsEd3GpxcCAZIcKmOQ="
+					}, ref["data", "data", "groups", 0, "captain", "parents", 0, "spice", 0]],
+					siblings: [ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1]
+							   	, ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1, "siblings", 1]],
+					spice: [],
+					user_id: "jw56VioAX4E0VSalmDzRyv68gTjqUZp8PmESMZjJVsc="
+				},
+				members: {
+					children: [],
+					created: 2019-05-16T14:05:10-07:00,
+					name: "Barb",
+					parents: [{
+						children: [ref["data", "data", "groups", 0, "members"]],
+						created: 2019-05-16T14:05:10-07:00,
+						name: "Monica",
+						parents: [],
+						siblings: [],
+						spice: [],
+						user_id: "ObPEfWqvehsAStM7HoMNiEdbGSCh2sbU6DmzlVNcevs="
+					}],
+					siblings: [{
+						children: [],
+						created: 2019-05-16T14:05:10-07:00,
+						name: "Nick",
+						parents: [],
+						siblings: [],
+						spice: [],
+						user_id: "GAmo6jep_ZCxWG35m_QhcUN_UR1u5Q0za$Zbe2SqT68="
+					}],
+					spice: [],
+					user_id: "YFLkultOF4hJgODgA56AbXMnYX$63VzuPcTS6vvH318="
+				},
+				name: "Group 1"
+			}],
+			tick: 2019-05-16T05:02:52-07:00,
+			users: [ref["data", "data", "groups", 0, "captain"], ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1], ref["data", "data", "groups", 0, "captain", "parents", 0, "children", 1, "siblings", 1], ref["data", "data", "groups", 0, "captain", "parents", 0], ref["data", "data", "groups", 0, "captain", "parents", 0, "spice", 0], ref["data", "data", "groups", 0, "members"], ref["data", "data", "groups", 0, "members", "siblings", 0], ref["data", "data", "groups", 0, "members", "parents", 0]]
+		},
+		nonce: null
+	},
+	id: "7pXRYvN577MMLA1WS7laY42Hb_USTfRpz5JAVujsVK4="
+}
