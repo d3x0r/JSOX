@@ -707,6 +707,9 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.114
+    - Cricial Fix - clear arrayType when opening a new object or array (circular object decode)
+    - Reference fix when referencing the root node.
 - 1.1.113
     - fix leftover test code in require.js.
 - 1.1.111
