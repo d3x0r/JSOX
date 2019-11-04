@@ -44,7 +44,7 @@ names repeated often.
 
 ### Example Encoding
 
-```
+```js
 r = JSOX.stringify( o = { 
 	a: "simple object"
 	, b:3
@@ -57,7 +57,7 @@ r = JSOX.stringify( o = {
 	, i:-Infinity
 	, j:-0.302 
 	, k:new Uint8Array(9)}, null, 3 );
-cnsole.log( "pretty:", o, "=\n", r );
+console.log( "pretty:", o, "=\n", r );
 
 // -- output --
 pretty:
@@ -246,7 +246,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 - Both inline (single-line using '//' (todo:or '#'?) ) and block (multi-line using \/\* \*\/ ) comments are allowed.
 
 
-```
+```js
 // simple example, array buffer with 8 bytes
 var ab = new ArrayBuffer([0,1,2,3,4,5,6,7]);
 console.log( JSOX.stringify( {ab:new Float32Array(ab)} ) );
@@ -440,9 +440,9 @@ Registers a handler to convert a type to JSOX.  This method is used to avoid mod
 that ojects that have a toJSOX know of the JSOX module instead.  The result of the callback should be a string, and is up to the
 toJSOX method to include quotes if it is a string value.  Any string may result that is valid JSOX.
 
-Regsitering the same name more than once throws an error.
+Registering the same name more than once throws an error.
 
-```
+```js
 JSOX.registerToJSOX( "stringTest", stringTest.prototype, function() { return '"' + this.toString() + '"' } );
 ```
 
@@ -453,7 +453,7 @@ Registers a handler to convert recovered string, array or object from JSOX.  The
 
 Regsitering the same name more than once throws an error.
 
-```
+```js
 // this epects a string, as indicated by the above toJSOX output.
 JSOX.registerFromJSOX( "stringTest", function() {
 	console.log( "Resuurect from String:[%s]", this /*string*/ );
@@ -468,7 +468,7 @@ Internally, calls the above functions with the parameters split as appropriate.
 
 Regsitering the same name more than once for From or To throws an error.
 
-```
+```js
 JSOX.registerToFrom( "stringTest", stringTest.prototype
 	, function() { return '"' + this.toString() + '"' }
 	, function() {
@@ -490,7 +490,7 @@ In each case, in the following example JSOX, the same 'color' fromJSOX
 method will be called.  It will be invoked with a string, with an array, 
 with an object, with an object, and with an object respectively.
 
-```
+```js
 var JSOX= require( "JSOX" );
 
 function Color() {
@@ -510,6 +510,7 @@ var c = new Color();
 
 JSOX.stringify( c ) ); // result is 'color"#649614"'
 JSOX.parse( JSOX.stringify( c ) ); // result is   'Color { r: 100, g: 150, b: 20 }'  (console.log)
+```
 
 ```
 // this are all variations which may be used to revive a color object
