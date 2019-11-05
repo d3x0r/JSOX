@@ -226,12 +226,20 @@ Table of Contents
 
    Identifiers are either a string or any sequence of characters that do not 
    include structural characters or whitespace, and also does not begin with 
-   a digit, minus, plus, or decimal-point.  Identifiers were meant to parse
-   as ES6 Identifier, MAY end at unicode non-identifier characters; at a minimum
-   '(', ')', '<', '>', '=', '+', '-', '*', '/', '.', '&', '|', '!','~','%''^'
-   should also be considered structure chracters.
-
+   a digit, minus, plus, or decimal-point. JSOX keywords OPTIONAL are quoted, but
+   recommended practice to stringification is to quote them.
+   
+   Stringifiers MUST quote any identifiers that contain any JSOX structural 
+   character or whitespace.
+   
+   Stringifiers SHOULD quote these.
+        matches keywords ( [ "true","false","null","NaN","Infinity","undefined"], 
+        matches this regex  /((\n|\r|\t)|[ \{\}\(\)\<\>\!\+\-\*\/\.\:\, ])/
+   
        identifier = ws [ string / not(0-9.+-)  *(not ws and not structure character ) ] ws
+
+   Javascript seems to stringify the values before using them as the object key.
+   It may be that there's an implementation that 'true' and `true` is not the string "true".
 
    When dealing with a JSOX stream, whitespace may be significant to separate
    values, for example the stream '1 2 3 4 5' which are 5 simple numbers.
