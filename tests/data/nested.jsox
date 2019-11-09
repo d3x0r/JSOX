@@ -1,0 +1,85 @@
+{
+    accruals: {
+        activities: [{
+            accrual_activity_id: "WquNzWNPX1g7TcU1",
+            groups: [],
+            inputs: [],
+            name: "Activity 1"
+        }, {
+            accrual_activity_id: "oyZpcHztR_B5C8Re",
+            groups: [{
+                accrual_group_id: "4HR7gVd7Np_4eSWf",
+                activities: [ref["accruals", "activities", 1, "groups", 0]],
+                everyTally: 0,
+                housePercent: 12,
+                inputs: [],
+                last_accrual_id: null,
+                last_accrual_set_id: null,
+                name: "Jackpot 2",
+                pricePerPack: null,
+                startingValue: 150000,
+                thresholds: []
+            }],
+            inputs: [],
+            name: "Activity 12"
+        }, {
+            accrual_activity_id: "e64LHFlm3O4YW4Ut",
+            groups: [],
+            inputs: [],
+            name: "Activity 23"
+        }, {
+            accrual_activity_id: "ui3TyYxtv4_kYjWU",
+            groups: [],
+            inputs: [],
+            name: "Activity 3"
+        }, {
+            accrual_activity_id: "YpO43iXyjdjlAsCn",
+            groups: [],
+            inputs: [],
+            name: "Activity 4"
+        }],
+        groups: [ref["accruals", "activities", 1, "groups", 0], {
+            accrual_group_id: "uzMN2iCOcmp_Az0b",
+            activities: [],
+            everyTally: 0,
+            housePercent: 20,
+            inputs: [],
+            last_accrual_id: null,
+            last_accrual_set_id: null,
+            name: "Jackpot 1",
+            pricePerPack: null,
+            startingValue: 173400,
+            thresholds: []
+        }, {
+            accrual_group_id: "YwOp2uHlYS0E6WnV",
+            activities: [],
+            everyTally: 1,
+            housePercent: 15,
+            inputs: [],
+            last_accrual_id: null,
+            last_accrual_set_id: null,
+            name: "Jackpot 3",
+            pricePerPack: null,
+            startingValue: 432100,
+            thresholds: []
+        }],
+        inputs: [{
+            accrual_input_group_id: "LfCoMyNj0iIXyK7R",
+            defaultAmount: 0,
+            fixedAmount: 12300,
+            groups: [],
+            isDaily: 0,
+            isIncrements: 0,
+            isWeekly: 0,
+            minimum: 3033,
+            name: "Sales 1",
+            scalePrice: 0,
+            sqlStatement: "select 123",
+            useDefault: 0,
+            useMimimum: 0,
+            useMinimum: 1,
+            useScalePrice: 0
+        }]
+    },
+    op: "accruals"
+}
