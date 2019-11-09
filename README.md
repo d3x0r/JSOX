@@ -707,6 +707,10 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.115
+    - Fixes an issue with references in arrays after other objects.
+    - Fixes unclosed ref array state, for `ref[], []`.
+    - Resolves an internal state meaning that overlapped meaning of default and pushed.
 - 1.1.114
     - Cricial Fix - clear arrayType when opening a new object or array (circular object decode)
     - Reference fix when referencing the root node.
