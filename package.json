@@ -2,7 +2,16 @@
     "name": "jsox",
     "version": "1.1.116",
     "description": "Java Script Object eXchange.",
-    "keywords": [],
+    "keywords": [
+        "jsox",
+        "json",
+        "es6",
+        "macro",
+        "template",
+        "class",
+        "recursive",
+        "circular"
+    ],
     "author": "d3x0r <d3x0r@github.com>",
     "contributors": [],
     "@std/esm": "cjs",
@@ -10,7 +19,9 @@
     "main": "lib/jsox.js",
     "browser": "lib/jsox.es6.js.gz",
     "bin": "lib/cli.js",
-    "files": [],
+    "files": [
+        "lib/"
+    ],
     "dependencies": {},
     "devDependencies": {
         "acorn": "^7",
@@ -42,9 +53,5 @@
         "type": "git",
         "url": "https://github.com/d3x0r/jsox"
     },
-    "arrayBuffer": {
-        "0": 1963,
-        "1": 47019,
-        "2": 41515
-    }
+    "arrayBuffer": {}
 }
