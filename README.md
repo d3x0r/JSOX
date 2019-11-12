@@ -707,6 +707,12 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.117
+    - Fixes reviving a class in a class in a map referencing the class in the map, and then finishsing map.class.class before finishing map.class 
+    - Fixes reviving references after another prototype revival.  (map followed by a key with a reference).
+    - restore handling empty object arguments `{,,a:3,,,,,b:4,,,}` results in `{a;3,b:4}`.
+    - Added some tests which caused the above failures; updated ancient tests to account for 
+    - top level `<string><object>` in a stream to seprate with `<string><ws><object>` which is valid for the test.
 - 1.1.116
     - Provides 'browser', and 'module' entry points.  Improves module support.
     - Fixes an issue with references in arrays after other objects.

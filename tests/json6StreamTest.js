@@ -22,7 +22,9 @@ parser.write( "1 " );
 parser.write( "123" );
 parser.write( '"1"' );
 
-parser.write( '{ a:12' );
+// this requires having a space, otherwise 
+// '1' becomes a class identifier for this object.
+parser.write( ' { a:12' );
 parser.write( '34 }' );
 
 parser.write( '{ long');
