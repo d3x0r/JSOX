@@ -155,7 +155,7 @@ can always handle JSON.stringify.
   - ISO date/time Encoding/decoding (as part of Number format)
   - Adds classes/tags to reduce redundant information.
 
-### Summary of Changes from JSON5/JSON
+### Summary of Changes from JSON6/JSON
 
   - Keyword undefined
   - Objects/Strings back-tick quoted strings (no template support, just quotes); Object key names can be unquoted.
@@ -165,6 +165,7 @@ Addtionally support leading 0 to interpret as octal as C, C++ and other language
   - Arrays - empty members
   - Streaming reader interface
   - (Twice the speed of JSON5; subjective)
+  - interprets non-breaking space as a space.
 
 
 ## Additional support above JSON base
@@ -181,13 +182,14 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 ### Objects
 
-- Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace, and do not begin like a number.
+- Object keys can be unquoted if they do not have ':', ']', '[', '{', '}', ',', any quote or whitespace (including non-breaking space, which on the human side of things looks the same), and do not begin like a number.
 
 - Object keys can be single-quoted, (**JSON6**) or back-tick quoted; any valid string 
 
 - Object keys can be double-quoted (original JSON).
 
 - Objects can have a single trailing comma. Excessive commas in objects will cause an exception. '{ a:123,,b:456 }' is invalid.
+
 
 [mdn_variables]: https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Core_Language_Features#Variables
 
@@ -707,6 +709,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.118
+    - treat \u00A0 the same as a ' ' (space).  Visually they are the same, so in the interst of being human readable, it would make sense the machine should read it the same way.
 - 1.1.117
     - Fixes reviving a class in a class in a map referencing the class in the map, and then finishsing map.class.class before finishing map.class 
     - Fixes reviving references after another prototype revival.  (map followed by a key with a reference).

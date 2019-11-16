@@ -218,6 +218,7 @@ Table of Contents
 
       ws = *(
               %x20 /              ; Space
+              %xA0 /              ; Non-breaking Space
               %x09 /              ; Horizontal tab
               %x0A /              ; Line feed or New line
               %x07ec /            ; 2028 LS (Line separator)
