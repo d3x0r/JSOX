@@ -711,6 +711,7 @@ tests, and ensure that `npm test` continues to pass.
 ## Changelog
 - 1.1.118
     - treat \u00A0 the same as a ' ' (space).  Visually they are the same, so in the interst of being human readable, it would make sense the machine should read it the same way.
+    - fix failure to encode millisecond into timestamp.
 - 1.1.117
     - Fixes reviving a class in a class in a map referencing the class in the map, and then finishsing map.class.class before finishing map.class 
     - Fixes reviving references after another prototype revival.  (map followed by a key with a reference).
