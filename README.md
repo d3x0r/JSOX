@@ -709,6 +709,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.120
+    - revert UTC time change; keep accuracy.
 - 1.1.119
     - missed the toFullYear -> toUTCFullYear of the date.
 - 1.1.118
