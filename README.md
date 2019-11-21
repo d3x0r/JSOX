@@ -709,6 +709,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.119
+    - missed the toFullYear -> toUTCFullYear of the date.
 - 1.1.118
     - treat \u00A0 the same as a ' ' (space).  Visually they are the same, so in the interst of being human readable, it would make sense the machine should read it the same way.
     - fix failure to encode millisecond into timestamp.
