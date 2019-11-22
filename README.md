@@ -709,6 +709,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.121
+    - fix parsing {op:f,}.  Generalize unquoted string recovery.
 - 1.1.120
     - revert UTC time change; keep accuracy.
 - 1.1.119
