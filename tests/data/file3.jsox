@@ -1,3 +1,10 @@
 p{  x  ,  y  }
 r{    o    ,    n   }
-r{p{1,2},p{3,4}}
+
+r{p{5,10},p{2,7}}
+{ position: p{1, 2},
+  data : r{ p{ 0,0}, p{1, 0 } }  // nested usage
+}
+
+p:{x,y,z}
+r{p{5,10,-1},p{2,7,1}}
