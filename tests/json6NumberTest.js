@@ -77,6 +77,13 @@ start = Date.now();
 console.log( "took:", Date.now() - start );
 
 
+console.log( JSON.parse( "{a:01234}" ) );
+start = Date.now();
+	for( n = 0; n < 1009000; n++ )
+		JSON.parse( "{a:01234}" );
+console.log( "took:", Date.now() - start );
+
+
 console.log( JSON.parse( "[01234e3]" ) );
 start = Date.now();
 	for( n = 0; n < 1000000; n++ )
