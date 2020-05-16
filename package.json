@@ -1,22 +1,58 @@
 {
     "name": "jsox",
-    "version": "1.1.121",
+    "version": "1.1.122",
     "description": "Java Script Object eXchange.",
-    "keywords": "",
+    "keywords": [
+        "jsox",
+        "json",
+        "es6",
+        "macro",
+        "template",
+        "class",
+        "recursive",
+        "circular"
+    ],
     "author": "d3x0r <d3x0r@github.com>",
-    "contributors": "",
+    "contributors": [],
     "@std/esm": "cjs",
     "module": "lib/jsox.mjs",
     "main": "lib/jsox.js",
     "browser": "lib/jsox.es6.js.gz",
     "bin": "lib/cli.js",
-    "files": "",
-    "dependencies": "",
-    "devDependencies": "",
-    "scripts": "",
+    "files": [
+        "lib/"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "acorn": "^7",
+        "core-js": "^2.6.5",
+        "eslint": "^5.15.3",
+        "eslint-config-standard": "^12.0.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-node": "^8.0.1",
+        "eslint-plugin-promise": "^4.0.1",
+        "eslint-plugin-standard": "^4.0.0",
+        "regenerate": "^1.4.0",
+        "rollup": "^0.64.1",
+        "rollup-plugin-buble": "^0.19.6",
+        "rollup-plugin-commonjs": "^9.2.1",
+        "rollup-plugin-node-resolve": "^3.4.0",
+        "rollup-plugin-terser": "^1.0.1",
+        "sinon": "^6.3.5",
+        "tap": "^12.6.0",
+        "unicode-10.0.0": "^0.7.5",
+        "mocha": "^3.1.0"
+    },
+    "scripts": {
+        "build": "node ./lib/cli.js -c package.jsox && rollup -c",
+        "test": "mocha --ui exports --reporter spec"
+    },
     "homepage": "http://npmjs.org/package/jsox/",
     "license": "MIT",
-    "repository": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/d3x0r/jsox"
+    },
     "arrayBuffer": {
         "0": 1963,
         "1": 47019,

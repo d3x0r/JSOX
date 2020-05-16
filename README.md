@@ -225,7 +225,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - (**JSON6**) Numbers can be octal (base 8).  (0o prefix)
 
-- (**JSON6**) Numbers can be octal (base 8).  (0 prefix followed by more numbers, without a decimal)
+- (**JSON6**) Decimal numbers can have leading zeros.  (0 prefix followed by more numbers, without a decimal)
 
 - Numbers can begin or end with a (leading or trailing) decimal point.
 
@@ -306,7 +306,8 @@ multi-line string; but keeps newline',
     hex: 0xDEAD_beef,
     binary: 0b0110_1001,
     decimal: 123_456_789,
-    octal: 0123,
+    octal: 0o123,
+    decimal: 001234, // with lead 0
     half: .5,
     delta: +10,
     negative : ---123,
@@ -677,9 +678,10 @@ as a native code node.js addon.  This native javascript version allows usage in 
 
 C/C++ Amalgam version [jsox-wasm](https://www.github.com/d3x0r/jsox-wasm)
 
-Possible release of amagamated source, native Node Addon (standalone).  (Amalagmanted source is for now in jsox-wasm repository)
+Possible release of amagamated source, native Node Addon (standalone).  (Amalagmanted source is for now in jsox-wasm repository).
 
 Working on a WebAssembly version. [jsox-wasm](https://www.github.com/d3x0r/jsox-wasm)
+The overhead of the string exchange between WASM and JS (strings, key names of objects), defeats any benefit from 0 garbage collected/managed parsing.
 
 ## Benchmarks
 
@@ -709,6 +711,8 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.122
+    - Remove option SUPPORT_LEAD_ZERO_OCTAL; JS "strict" errors on lead zeros; and Number() converts lead zeros as decimal; removes custom decoding.
 - 1.1.121
     - fix parsing {op:f,}.  Generalize unquoted string recovery.
 - 1.1.120
