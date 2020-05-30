@@ -23,26 +23,31 @@
         "lib/"
     ],
     dependencies: {},
+
     devDependencies: {
-        'acorn' : '^7',
-        'core-js': '^2.6.5',
-        eslint: '^5.15.3',
-        'eslint-config-standard': '^12.0.0',
-        'eslint-plugin-import': '^2.16.0',
-        'eslint-plugin-node': '^8.0.1',
-        'eslint-plugin-promise': '^4.0.1',
-        'eslint-plugin-standard': '^4.0.0',
-        regenerate: '^1.4.0',
-        rollup: '^0.64.1',
-        'rollup-plugin-buble': '^0.19.6',
-        'rollup-plugin-commonjs': '^9.2.1',
-        'rollup-plugin-node-resolve': '^3.4.0',
-        'rollup-plugin-terser': '^1.0.1',
-        sinon: '^6.3.5',
-        tap: '^12.6.0',
-        'unicode-10.0.0': '^0.7.5',
-        mocha: "^3.1.0"
+        core-js: "latest",
+        rollup: "^1.20",
+        eslint: "latest",
+        nyc: "latest",
+        mocha: "^3",
+        chai: "^3",
+        acorn: "^6",
+        "@rollup/plugin-buble": "latest",
+        "@rollup/plugin-commonjs": "latest",
+        "@rollup/plugin-node-resolve": "latest",
+        "@rollup/plugin-strip": "latest",
+        "rollup-plugin-terser": "latest"
     },
+    nyc: {
+        ignore-class-method: [
+            "log"
+        ],
+        reporter: [
+            "lcov",
+            "text"
+        ]
+    },
+
     scripts: {
         build: "node ./lib/cli.js -c package.jsox && rollup -c",
         test: "mocha --ui exports --reporter spec"
