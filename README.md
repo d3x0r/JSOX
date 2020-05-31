@@ -1,6 +1,6 @@
 # JSOX – JavaScript Object eXchange format.
 
-
+[![Build Status](https://travis-ci.org/d3x0r/JSOX.svg?branch=master)](https://travis-ci.org/d3x0r/JSOX)
 [![Join the chat at https://gitter.im/sack-vfs/jsox](https://badges.gitter.im/sack-vfs/jsox.svg)](https://gitter.im/sack-vfs/jsox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 100% Compatible reader for JSON.  JSOX.stringify cannot generate JSON
@@ -246,6 +246,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 ### Comments
 
 - Both inline (single-line using '//' (todo:or '#'?) ) and block (multi-line using \/\* \*\/ ) comments are allowed.
+- (**JSOX**) single line comments using '#'; imposes required quoting for '#' as a field name.
 
 
 ```
