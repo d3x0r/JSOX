@@ -10,7 +10,7 @@ describe('JSON streaming', function () {
 		const parser = JSON6.begin(function (val) {
 			lastval = val;
 			if( !skip_out ) {
-				console.log( "got value:", val );
+				//console.log( "got value:", val );
 				results.push(val);
 			}
 		});
@@ -35,7 +35,7 @@ describe('JSON streaming', function () {
 		for( let n = 1; n < complexSplitString.length; n++ ) {
 			const a = complexSplitString.substr( 0, n );
 			const b = complexSplitString.substr( n );
-			// console.log( "parse:\n", JSON.stringify( a ), "\n", JSON.stringify(b));
+			//console.log( "parse:\n", JSON.stringify( a ), "\n", JSON.stringify(b));
 			if( !a || !b ) continue;
 			parser.write( a );
 			parser.write( b );
@@ -47,7 +47,7 @@ describe('JSON streaming', function () {
 					'\n Original:\n' + testOut
 				).to.be.true;
 			}
-			// console.log( "Tested:", JSON.stringify(a), JSON.stringify(b));
+			//console.log( "Tested:", JSON.stringify(a), JSON.stringify(b));
 		}
 
 		skip_out = false;

@@ -28,7 +28,7 @@ describe('Numbers', function () {
 	it('Decimal ending prematurely (throws)', function () {
 		expect(function () {
 			JSON.parse( '14g' );
-		}).to.throw(Error);
+		}).to.throw(Error,/fault while parsing number|Extra data/);
 	});
 
 	it('Decimal with bad scientific notation (throws)', function () {

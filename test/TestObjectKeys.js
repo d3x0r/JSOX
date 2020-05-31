@@ -71,7 +71,7 @@ describe('Object keys', function () {
 		it('Key with quote not at beginning', function () {
 			expect(function () {
 				JSON6.parse( "{A': 3}" );
-			}).to.throw(Error, /Incomplete string at /);
+			}).to.throw(Error, /Incomplete string at|Pending value could not complete/);
 		});
 	});
 

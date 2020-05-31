@@ -97,7 +97,16 @@ describe('Stream testing', function () {
 		} catch( err ){
 			// Ignore
 		}
-		parser.write( '} 0 ' );
+                try {
+                	console.log( "this should be an invalid open..." );
+			parser.write( '} 0 ' );
+                        		
+                } catch(err ) {
+                	console.log( "Expecing error:", err );
+                }
+		//expect( function() {
+		//	parser.write( '} 0 ' );
+		//}).to.throw( Error );
 		parser.reset( );
 		parser.write( '"OK"' );
 	});

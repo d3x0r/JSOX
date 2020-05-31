@@ -6,13 +6,17 @@ let o;
 
 describe('Bad tests', function () {
 
-	it('space error', function () {
+	it('space error "tr "', function () {
 		o = parse( "tr " );
 		expect(o).to.equal("tr");
+	} );
 
+	it('space error "[tr ]"', function () {
 		o = parse( "[tr ]" );
 		expect(o).to.deep.equal(["tr"]);
+	} );
 		
+	it('space error "{a:tr }"', function () {
 			o = parse( "{a:tr }" );
 			console.log( "got back:", o );
 		expect(o).to.deep.equal({a:"tr"});
@@ -26,14 +30,14 @@ describe('Bad tests', function () {
 		}).to.throw(Error);
 	});
 
-	it('Missing colon?', function () {
+	it('Missing colon array?', function () {
 		expect(function () {
 			o = parse( "{ a[3], b:1 }" );
 			console.log( "got back:", o );
 		}).to.throw(Error);
 	});
 
-	it('Missing colon?', function () {
+	it('Missing colon object?', function () {
 		expect(function () {
 			o = parse( "{ a{c:3}, b:1 }" );
 			console.log( "got back:", o );
@@ -64,7 +68,7 @@ describe('Bad tests', function () {
 	it('Throws with comma outside objects', function () {
 		expect(function () {
 			parse( "," );
-		}).to.throw(Error, /excessive commas/);
+		}).to.throw(Error, /excessive commas|fault while parsing/);
 	});
 
 	it('Throws with curly bracket outside objects', function () {
@@ -87,7 +91,6 @@ describe('Bad tests', function () {
 	it('comma after object field and : ', function () {
 		expect(function () {
 			o = parse( "{a:,}" );
-			console.log( "got back:", o );
 		}).to.throw(Error);
 	});
 
@@ -116,13 +119,13 @@ describe('Bad tests', function () {
 	it('throws with quoted field name after no comma : ', function () {
 		expect(function () {
 			o = parse( '{ "a": { "a": 5 }   "abc": { "a": 5  } }' );
-		}).to.throw(Error,/String unexpected/);
+		}).to.throw(Error,/String unexpected|outside any object, got colon out of string /);
 	});
 
 	it('throws with unquoted field name after no comma: ', function () {
 		expect(function () {
 			o = parse( '{ "a": { "a": 5 }   abc: { "a": 5  } }' );
-		}).to.throw(Error,/String unexpected/);
+		}).to.throw(Error,/String unexpected|outside any object, got colon out of string/);
 	});
 
 

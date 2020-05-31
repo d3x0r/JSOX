@@ -10,7 +10,7 @@ describe('Streaming', function () {
 	it('Streams various objects', function () {
 		const results = [];
 		const parser = JSON6.begin(function (val) {
-			console.log( "Got Object:", val );
+			//console.log( "Got Object:", val );
 			results.push(val);
 		});
 
@@ -33,19 +33,19 @@ describe('Streaming', function () {
 	it('Converts non-string to string and attempts to process', function () {
 		const results = [];
 		const parser = JSON6.begin(function (val) {
-			console.log( "Got Object:", val );
+			//console.log( "Got Object:", val );
 			results.push(val);
 		});
 
 		expect(function () {
 			parser.write({});
 		//}).to.throw(Error, /fault parsing 'o' unexpected/);
-		}).to.throw(Error, /Referenced class object has not been /);
+		}).to.throw(Error, /This is like doublestring revival|Referenced class object has not been/);
 	});
 	it('handles incomplete string key in chunks', function () {
 		const results = [];
 		const parser = JSON6.begin(function (val) {
-			console.log( "Got Object:", val );
+			//console.log( "Got Object:", val );
 			results.push(val);
 		});
 
@@ -62,7 +62,7 @@ describe('Streaming', function () {
 	it('Supports reviver', function () {
 		const results = [];
 		const parser = JSON6.begin(function (val) {
-			console.log( "Got Object:", val );
+			//console.log( "Got Object:", val );
 		}, function (a, b) {
 			results.push([a, b]);
 			if (a === 'd') {
