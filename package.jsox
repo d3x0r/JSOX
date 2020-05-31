@@ -8,8 +8,7 @@
     description: "Java Script Object eXchange.",
     keywords: [
         "jsox","json",
-        "es6",
-	"macro","template","class","recursive","circular"
+	"macro","template","class","recursive","circular","cyclic"
     ],
     author: "d3x0r <d3x0r@github.com>",
     contributors: [
@@ -25,32 +24,41 @@
     dependencies: {},
 
     devDependencies: {
-        core-js: "latest",
+        "core-js": "latest",
         rollup: "^1.20",
         eslint: "latest",
         nyc: "latest",
         mocha: "^3",
         chai: "^3",
         acorn: "^6",
+        "lint-staged": "^10.2.2",
+	// '/' is a comment character, and needs quotes
         "@rollup/plugin-buble": "latest",
         "@rollup/plugin-commonjs": "latest",
         "@rollup/plugin-node-resolve": "latest",
         "@rollup/plugin-strip": "latest",
         "rollup-plugin-terser": "latest"
     },
-    nyc: {
-        ignore-class-method: [
+    "nyc": {
+        "ignore-class-method": [
             "log"
         ],
-        reporter: [
+        "reporter": [
             "lcov",
             "text"
         ]
     },
 
     scripts: {
-        build: "node ./lib/cli.js -c package.jsox && rollup -c",
-        test: "mocha --ui exports --reporter spec"
+       prepack: "npm run test-lite",
+       lint: "eslint --cache .",
+       mocha-lite: "mocha --require test/bootstrap/node",
+       mocha: "mocha --require test/bootstrap/node --recursive",
+       nyc-lite: "nyc npm run mocha-lite",
+       nyc: "nyc npm run mocha",
+       test-lite: "npm run lint && npm run build && npm run nyc-lite",
+       test: "npm run lint && npm run build && npm run nyc",
+       build: "node ./lib/cli.js -c package.jsox && rollup -c",
     },
     homepage: "http://npmjs.org/package/jsox/",
     license: "MIT",
