@@ -712,6 +712,11 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.1.123
+    - Added automated mocha tests; (ported from JSON6).
+    - Fixed some parsing issues exposed by tests around unicode whitespace handling and more.  
+    - Throw an error when a invalid date is created.
+    - Most fixes were in handling badly formatted data either with exceptions, or accepting more badly formatted input as valid.
 - 1.1.122
     - Remove option SUPPORT_LEAD_ZERO_OCTAL; JS "strict" errors on lead zeros; and Number() converts lead zeros as decimal; removes custom decoding.
 - 1.1.121
@@ -838,3 +843,6 @@ MIT. See [LICENSE.md](./LICENSE.md) for details.
 (http://github.com/json5/json5)  Inspring this project.
 
 [json_parse.js]: https://github.com/douglascrockford/JSON-js/blob/master/json_parse.js
+
+
+
