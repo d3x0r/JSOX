@@ -20,18 +20,18 @@ stringTest.prototype.toString = function() {
 	return '"' + this.Value + '"';
 }
 
-JSOX.registerFromJSOX( "stringTest", function() {
+JSOX.fromJSOX( "stringTest", function() {
 	//console.log( "Resuurect from String:[%s]", this );
 	return new stringTest( this );
 } );
 
-JSOX.registerToJSOX( "stringTest", stringTest.prototype, stringTest.prototype.toString );
+JSOX.registerToJSOX( "stringTest", stringTest, stringTest.prototype.toString );
 
-JSOX.registerFromJSOX( "arrayTest", function() {
+JSOX.fromJSOX( "arrayTest", function() {
 	//console.log( "Resuurect from Array:[%s]", this );
 	return this;
 } );
-JSOX.registerFromJSOX( "objectTest", function() {
+JSOX.fromJSOX( "objectTest", function() {
 	//console.log( "Resuurect from Object:[%s]", this );
 	return this;
 } );
@@ -50,7 +50,7 @@ function Color(init) {
 	this.toString = function() { return '"' + (this.r*0x10000 + this.g*0x100 + this.b) + '"' }
 }
 
-JSOX.registerToFrom( "color", Color.prototype
+JSOX.addType( "color", Color
 	, function() { return this.toString(); }
 	, function() { return new Color(this); }
 );
