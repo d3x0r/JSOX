@@ -40,7 +40,7 @@ describe('Streaming', function () {
 		expect(function () {
 			parser.write({});
 		//}).to.throw(Error, /fault parsing 'o' unexpected/);
-		}).to.throw(Error, /This is like doublestring revival|Referenced class object has not been/);
+		}).to.throw(Error, /Double string error, no constructor for: new object\(Object\)/);
 	});
 	it('handles incomplete string key in chunks', function () {
 		const results = [];
