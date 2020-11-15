@@ -1,4 +1,5 @@
 *~
+lib/*~
 tests
 makeUnicodeNonIdent.js
 parser.md
