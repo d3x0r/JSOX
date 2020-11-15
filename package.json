@@ -1,6 +1,6 @@
 {
     "name": "jsox",
-    "version": "1.1.122",
+    "version": "1.2.101",
     "description": "Java Script Object eXchange.",
     "keywords": [
         "jsox",
@@ -25,13 +25,13 @@
     "dependencies": {},
     "devDependencies": {
         "core-js": "latest",
-        "rollup": "^1.20",
+        "rollup": "latest",
         "eslint": "latest",
         "nyc": "latest",
-        "mocha": "^3",
-        "chai": "^3",
-        "acorn": "^6",
-        "lint-staged": "^10.2.2",
+        "mocha": "latest",
+        "chai": "latest",
+        "acorn": "latest",
+        "lint-staged": "latest",
         "@rollup/plugin-buble": "latest",
         "@rollup/plugin-commonjs": "latest",
         "@rollup/plugin-node-resolve": "latest",
@@ -64,5 +64,9 @@
         "type": "git",
         "url": "https://github.com/d3x0r/jsox"
     },
-    "arrayBuffer": {}
+    "arrayBuffer": {
+        "0": 1963,
+        "1": 47019,
+        "2": 41515
+    }
 }

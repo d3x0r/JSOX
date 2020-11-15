@@ -1,6 +1,5 @@
-const resolve = require('rollup-plugin-node-resolve')
-const commonjs = require('rollup-plugin-commonjs')
-const buble = require('rollup-plugin-buble')
+const resolve = require('@rollup/plugin-node-resolve')
+const commonjs = require('@rollup/plugin-commonjs')
 const terser = require('rollup-plugin-terser').terser
 const pkg = require('./package.json')
 
@@ -13,7 +12,7 @@ module.exports = [
             format: 'esm',
         },
         plugins: [
-            resolve(),
+            resolve.nodeResolve(),
             commonjs(),
         ],
     },
@@ -25,7 +24,7 @@ module.exports = [
             format: 'esm',
         },
         plugins: [
-            resolve(),
+            resolve.nodeResolve(),
             commonjs(),
             terser(),
         ],
