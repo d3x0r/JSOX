@@ -700,24 +700,24 @@ var n;
 var o = 0;
 var p = 0;
 var val = 0;
-for( var n = 0; n < nonIdentifiers8.length; n++ ) {
+for( n = 0; n < nonIdentifiers8.length; n++ ) {
 
 	if( n && ( n % 24 ) === 0 ) {		
-        	nonIdent[p][ o++ ] = val;
+		nonIdent[p][ o++ ] = val;
 		if( o == 16 ) { p++; o=0; nonIdent[p] = []; }
-                val = 0;
-        }
+		val = 0;
+	}
 	if( nonIdentifiers8[n] )
-        	val |= ( 1 << ( n % 24 ) );
+		val |= ( 1 << ( n % 24 ) );
 }
 
 var m = 0;
-for( var n = 256; n < nonIdentifiers[nonIdentifiers.length-1]+1; n++ ) {
+for( n = 256; n < nonIdentifiers[nonIdentifiers.length-1]+1; n++ ) {
 
 	if( ( n % 24 ) === 0 ) {
-        	//nonIdent[((n/24)/16)|0] [n/24] = val;
-        	nonIdent[p][ o++ ] = val;
-		
+		//nonIdent[((n/24)/16)|0] [n/24] = val;
+		nonIdent[p][ o++ ] = val;
+
 		if( o == 16 ) { 
 			var x;
 			for( x = 0; x < 16; x++ ) {
@@ -728,11 +728,11 @@ for( var n = 256; n < nonIdentifiers[nonIdentifiers.length-1]+1; n++ ) {
 			o=0;
 			nonIdent[p] = []
 		}
-                val = 0;
-        }
+		val = 0;
+	}
 //console.log( "is %d == %d", n, nonIdentifiers[m] );
 	if( n === nonIdentifiers[m] ) {
-	        val |= ( 1 << ( n % 24 ) );
+		val |= ( 1 << ( n % 24 ) );
 		m++;
 	}
 }
@@ -749,14 +749,14 @@ for( n = 0; n < nonIdent.length; n++ ) {
 }
 console.log( "]" );
 
-var str = '{';
+str = '{';
 for( n = 0; n < nonIdent.length; n++ ) {
 	if( nonIdent[n] ) {
 		str += "{"+n*16*24+","+(n*16+16)*24+",{" + nonIdent[n].map( val=>"0x"+val.toString(16) ).join(",") +"}}"; 
 		str += ",";
 	} else  {
-		;//str += "{"+n+",0,{}}";
-		;//str += ",";
+		//str += "{"+n+",0,{}}";
+		//str += ",";
 	}
 	if( str )
 	console.log( str );
