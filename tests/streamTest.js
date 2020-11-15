@@ -8,6 +8,8 @@ var parser = JSON6.begin( (val)=>{
 	console.log( "Got Object:", val );
 })
 
+			parser.write({});
+
 for( var result = parser.write( msg );
 	result > 0; parser.write() );
 
