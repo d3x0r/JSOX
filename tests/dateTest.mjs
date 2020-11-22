@@ -1,5 +1,5 @@
 
-const JSOX = require('..');
+import {JSOX} from "../lib/jsox.mjs";
 
 console.log( "Date:", JSOX.stringify( new Date() ) );
 const wasDate = JSOX.parse( "2020-11-22T11:08:09.415-08:00" );
