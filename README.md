@@ -712,7 +712,9 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.1.123
+- 1.2.102(TBD)
+    - added automated test notes
+- 1.1.123 (1.2.101)
     - Added automated mocha tests; (ported from JSON6).
     - Fixed some parsing issues exposed by tests around unicode whitespace handling and more.  
     - Throw an error when a invalid date is created.
