@@ -712,9 +712,11 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.2.102(TBD)
+- 1.2.103(In Progress)
+- 1.2.102
     - added automated test notes
-- 1.1.123 (1.2.101)
+    - Added formal reference revival test; a different recursive variation of reference which failed.
+- 1.1.123 (published as 1.2.101)
     - Added automated mocha tests; (ported from JSON6).
     - Fixed some parsing issues exposed by tests around unicode whitespace handling and more.  
     - Throw an error when a invalid date is created.
