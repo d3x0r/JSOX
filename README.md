@@ -712,7 +712,9 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.2.103(In Progress)
+- 1.2.104(In Progress)
+- 1.2.103
+    - additional reference path revival fix.
 - 1.2.102
     - added automated test notes
     - Added formal reference revival test; a different recursive variation of reference which failed.
