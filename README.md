@@ -716,6 +716,7 @@ tests, and ensure that `npm test` continues to pass.
 - 1.2.102
     - added automated test notes
     - Added formal reference revival test; a different recursive variation of reference which failed.
+    - refactored to remove 'element_array' special case tracking variable; standardize on just 'elements' instead.
 - 1.1.123 (published as 1.2.101)
     - Added automated mocha tests; (ported from JSON6).
     - Fixed some parsing issues exposed by tests around unicode whitespace handling and more.  
