@@ -5,7 +5,7 @@ describe('Stream testing', function () {
 	it('Receives various values via `write`', function () {
 		let results = [];
 		const parser = JSON6.begin(function (obj) {
-			console.log( "Got value:", typeof obj, ":", obj );
+			//console.log( "Got value:", typeof obj, ":", obj );
 			results.push(obj);
 		});
 

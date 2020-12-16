@@ -6,14 +6,14 @@ describe('Object keys', function () {
 		it('Unencapsulated hyphenated key with space', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ my- key:3}" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
 		it('Unencapsulated hyphenated key with spaces', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ my -  key:3}" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
@@ -36,35 +36,35 @@ describe('Object keys', function () {
 		it('Unencapsulated key with nested array', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ [ my-key:3 } }" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
 		it('Unencapsulated key with opening array bracket', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ my-key[:3 } }" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
 		it('Unencapsulated key with closing array bracket', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ my-key]:3 } }" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
 		it('Unencapsulated key with opening array bracket and space', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ my-key [:3 } }" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
 		it('Unencapsulated key with closing array bracket and space', function () {
 			expect(function () {
 				const result = JSON6.parse( "{ my-key ]:3 } }" );
-				console.log( "result:", result );
+				//console.log( "result:", result );
 			}).to.throw(Error);
 		});
 
@@ -79,7 +79,7 @@ describe('Object keys', function () {
 		it('Parses encapsulated key', function () {
 			const result = JSON6.parse( "{ 'my  -  key':3}" );
 
-			console.log( "result:", result );
+			//console.log( "result:", result );
 			expect(result).to.deep.equal({
 				'my  -  key': 3
 			});
@@ -88,7 +88,7 @@ describe('Object keys', function () {
 		it('Parses encapsulated key with carriage return', function () {
 			const result = JSON6.parse( "{ '\\\rmy  -  key':3}" );
 
-			console.log( "result:", result );
+			//console.log( "result:", result );
 			expect(result).to.deep.equal({
 				'my  -  key': 3
 			});
@@ -96,7 +96,7 @@ describe('Object keys', function () {
 
 		it('Parses key with special characters but no spaces', function () {
 			const result = JSON6.parse( "{ my-key\\m&m+*|:3}" );
-			console.log( "result:", result );
+			//console.log( "result:", result );
 			expect(result).to.deep.equal({
 				'my-key\\m&m+*|' : 3
 			});
@@ -104,7 +104,7 @@ describe('Object keys', function () {
 
 		it('Parses key with special characters and comment', function () {
 			const result = JSON6.parse( "{ my-key //test \n :3}" );
-			console.log( "result:", result );
+			//console.log( "result:", result );
 			/*
 			{ my-key //test
 			   :3}   // valid
@@ -116,7 +116,7 @@ describe('Object keys', function () {
 
 		it('Parses key with special characters and multi-line comment', function () {
 			const result = JSON6.parse( "{ my-key /*test */ :3}" );
-			console.log( "result:", result );
+			//console.log( "result:", result );
 
 			/*
 			{ my-key /*test * / :3}  // valid

@@ -1,0 +1,1 @@
+mocha --require bootstrap/node %*
