@@ -713,6 +713,10 @@ tests, and ensure that `npm test` continues to pass.
 
 ## Changelog
 - 1.2.104(In Progress)
+  - Throw error while parser is in error state and new writes() are called.
+  - allow '+' prefix to numbers
+  - Fix fromJSOX class revival handling; call per-field.
+  - Added beginning of stringify tests (coverage).
 - 1.2.103
     - additional reference path revival fix.
 - 1.2.102
