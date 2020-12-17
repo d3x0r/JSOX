@@ -18,7 +18,7 @@ describe('Bad tests', function () {
 		
 	it('space error "{a:tr }"', function () {
 			o = parse( "{a:tr }" );
-			console.log( "got back:", o );
+			//console.log( "got back:", o );
 		expect(o).to.deep.equal({a:"tr"});
 	} );
 
@@ -26,28 +26,28 @@ describe('Bad tests', function () {
 	it('Unquoted space in identifier', function () {
 		expect(function () {
 			o = parse( "{ a b:1 }" );
-			console.log( "got back:", o );
+			//console.log( "got back:", o );
 		}).to.throw(Error);
 	});
 
 	it('Missing colon array?', function () {
 		expect(function () {
 			o = parse( "{ a[3], b:1 }" );
-			console.log( "got back:", o );
+			//console.log( "got back:", o );
 		}).to.throw(Error);
 	});
 
 	it('Missing colon object?', function () {
 		expect(function () {
 			o = parse( "{ a{c:3}, b:1 }" );
-			console.log( "got back:", o );
+			//console.log( "got back:", o );
 		}).to.throw(Error);
 	});
 
 	it('String unquoted?', function () {
 		expect(function () {
 			o = parse( "{ a  : no quote }" );
-			console.log( "got back:", o );
+			//console.log( "got back:", o );
 		}).to.throw(Error);
 	});
 

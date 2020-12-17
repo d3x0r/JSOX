@@ -96,10 +96,12 @@ describe('Stream testing', function () {
 			parser.write( '{ this is an error' );
 		} catch( err ){
 			// Ignore
+			console.log( "Error state in parser?", err );
 		}
                 try {
                 	console.log( "this should be an invalid open..." );
 			parser.write( '} 0 ' );
+			console.log( "FAIL" );
                         		
                 } catch(err ) {
                 	console.log( "Expecing error:", err );
