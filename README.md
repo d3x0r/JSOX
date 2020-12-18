@@ -91,7 +91,7 @@ and **works with all existing JSON content**. Some features allowed in JSOX
 are not directly supported by Javascript; although all javascript parsable
 features can be used in JSOX, except functions or any other code construct, 
 transporting only data save as JSON.  Most ES6 structure can be parsed, 
-with the extension of classes/tags the reverse is not true.  It was true for
+with the extension of classes/macro-tags the reverse is not true.  It was true for
 JSON6.
 
 JSOX is a proprosal for an official successor to JSON, and JSOX stringified 
@@ -141,8 +141,7 @@ available for the timestamp(timezone).
 
  - Supports encode and decode of BigInt numbers with no application overhead. 
  - reduces overhead from none-requires quotes for identifiers.
- - can further reduce overall output size by using class tags ( Needs internal
-implementation; although users can generate output simply ).
+ - can further reduce overall output size by using macro tags.
 
 ## Caveats
 
@@ -153,7 +152,7 @@ can always handle JSON.stringify.
 
   - BigInt encoding
   - ISO date/time Encoding/decoding (as part of Number format)
-  - Adds classes/tags to reduce redundant information.
+  - Adds classes(revive user types) and macro tags to reduce redundant information.
 
 ### Summary of Changes from JSON6/JSON
 
@@ -176,7 +175,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 ### ArrayBuffer/TypedArray
 
-- (**JSOX**) Support transporting ArrayBuffer and TypedArray fields. This is implemented with constants as tags applied prefixing and opening brace '\[' and encoding the binary data as a base64 string(without quotes) before the closing ']'.
+- (**JSOX**) Support transporting ArrayBuffer and TypedArray fields. This is implemented with constants as class user types applied prefixing and opening brace '\[' and encoding the binary data as a base64 string(without quotes) before the closing ']'.
   - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
   - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
 
@@ -416,26 +415,23 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |stringifier |  Stringifier(methods below)| () | Gets a utility object that can stringify.  The object can have classes defined on it for stringification |
 |escape | string | ( string ) | substitutes ", \, ', and \` with backslashed sequences. (prevent 'JSON injection') |
 |begin| Parser(methods below) |(cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
-|registerToJSOX  | none | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
-|registerFromJSOX| none | (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
-|registerToFrom  | none | (name,prototype,toCb, fromCb) | register both to and from for the same name |
+|toJSOX  | none | (name,Function/Class,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and will throw an exception if duplicate set happens. |
+|fromJSOX| none | (name,Function/Class,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. Will throw an exception if duplicate set happens. |
+|registerToFrom  | none | (name,Function/Class,toCb, fromCb) | register both to and from for the same name |
 
 
 |Stringifier method | return | parameters | Description |
 |-------|------|-----|----|
 |stringify | string | (value[,replacer[,space]] ) | converts object to JSOX attempting to match objects to classes defined in stringifier.  [stringify][json-stringify] |
-|registerToJSOX | none  | (name,prototype,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and need only be set once. |
+|toJSOX  | none | (name,Function/Class,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These only applied to this one stringifier instance, and will throw an exception if duplicate set happens. |
 |setQuote | none | ( quote ) | the argument passed is used as the default quote for strings and identifiers as required. |
 |defineClass | none | ( name, object ) | Defines a class using name 'name' and the fields in 'object'.  This allows defining for some pre-existing object; it also uses the prototype to test (if not Object), otherwise it matches based on they Object.keys() array. |
+
 
 |Parser Methods | parameters | Description |
 |-----|-----|-----|
 |write | (buffer) | add data to the parser stream |
-|registerFromJSOX| (name,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. |
-
-
-[json-parse]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
-[json-stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+|fromJSOX| (name,Function/Class,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. Will throw an exception if duplicate set happens. |
 
 
 #### registerToJSOX
@@ -446,8 +442,17 @@ toJSOX method to include quotes if it is a string value.  Any string may result 
 
 Regsitering the same name more than once throws an error.
 
-```
-JSOX.registerToJSOX( "stringTest", stringTest.prototype, function() { return '"' + this.toString() + '"' } );
+``` js
+function stringTest() {
+	this.a = 3;
+	this.b = 4;
+}
+stringifierTest.prototype.toString = function(stringifier) {
+	// 
+	return `a is ${this.a} b is ${this.b}`;
+}
+
+JSOX.toJSOX( "stringTest", stringTest, function() { return '"' + this.toString() + '"' } );
 ```
 
 #### registerFromJSOX
@@ -457,23 +462,37 @@ Registers a handler to convert recovered string, array or object from JSOX.  The
 
 Regsitering the same name more than once throws an error.
 
-```
+``` js
 // this epects a string, as indicated by the above toJSOX output.
-JSOX.registerFromJSOX( "stringTest", function() {
-	console.log( "Resuurect from String:[%s]", this /*string*/ );
-	return new stringTest( this );
-} );
+
+function stringTest() {
+}
+
+// if a field callback is specified, the function must either result with
+// undefined, which prevents setting the value internally, or return the same
+// or a new value for the value.
+// if the field is 'undefined' then must instead return 'this' or a new object 
+// to take the place of this one.
+
+stringTest.fromJSOX = function(field,val) {
+	if( field ) {
+		console.log( "Resuurect from String:[%s]", this /*string*/ );
+	} else
+		return new stringTest( this );
+}
+JSOX.fromJSOX( "stringTest", stringTest, stringTest.fromJSOX );
 ```
 
-#### registerToFrom
+#### Register toJSOX and fromJSOX for the same type
 
 Registers both to and from methods or a spsecified name, using the specified prototype to match during stringify.
 Internally, calls the above functions with the parameters split as appropriate.
 
 Regsitering the same name more than once for From or To throws an error.
 
-```
-JSOX.registerToFrom( "stringTest", stringTest.prototype
+``` js
+
+JSOX.registerToFrom( "stringTest", stringTest
 	, function() { return '"' + this.toString() + '"' }
 	, function() {
 		console.log( "Resuurect from String:[%s]", this /*string*/ );
@@ -516,6 +535,9 @@ JSOX.stringify( c ) ); // result is 'color"#649614"'
 JSOX.parse( JSOX.stringify( c ) ); // result is   'Color { r: 100, g: 150, b: 20 }'  (console.log)
 
 ```
+
+```
+
 // this are all variations which may be used to revive a color object
 color"0x12345678"                   // typed-string
 color[0x12,0x34,0x56,0x78]          // typed-array
@@ -537,29 +559,38 @@ Typed strings have a caveat; at a root level, strings which are typed, MUST have
 unquoted-identifier strings indicating their type.  Because the closing quote is 
 a definitive end-of-data marker, quoted strings at a root level always emit as a 
 completed string; This also requires no space between the unquoted-identifier string
-and the quoted data string.  
+and the quoted data string. 
 
 Typed-object and typed-arrays also require the identifer or string used for their
 type information not be followed by a space before the opening '{', '\[' or quoted 
 string. 
 
-### More on Classes/Tags - typed-object and typed-array
+### More on Classes/Macro Tags - typed-object and typed-array
 
-(constant initializers on typed-objects are not yet supported?)
+Macro Tags are similar to class names, but define a set of field names to use for each subsequent use of the same number.
+The names used for class names and for Macro tags may overlap, and then the macro objects are also revived as specified
+user types.  If only a Macro Tag is used, then all objects revived with that tag have the same prototype, which may be 
+extended in-place for all such objects.
 
-The definition of a class is an identifer at the top level (before the JSON data) followed immediately by an open brace ('{'),
-whitespace is not allowed.  Within the open brace '{' until the close '}' is a list of names seprated by commas, and of
-constants indicated by an identifier followed by a colon and a value.
+The definition of a Macro Tag is an identifer at the top level (before the JSOX data) followed immediately by an open brace ('{'),
+whitespace is not allowed.  Within the open brace '{' until the close brace '}' is a list of names separated by commas.
+If a colon(`:`) is encountered before the first comma(`,`) , then instead of behaving as a Macro definition, the
+object is revived as a named user type class instead. 
+
+All subsequent references to the defined tag are `<identifier>` followed by '{' until the close '}', is a list of comma separated values.  
+Each value is assign the name in the order it was defined at the definition.  This is effectively a 'zip' operation between the names
+specfied at the start, and the values specified later.
 
 All objects created with a class/tag definition shares the same prototype.
 
-```
-
+``` bnf
 tagdef : identifier '{' identifier [ ',' identifier ] ... '}'
-tagdef : identifier '{' constant_initializer [ ',' identifier ] ... '}' (TBI)
 
-constant_initializer : identifier ':' value 
+```
+A class revival is similar, but includes both the identifer and value for each entry.
 
+``` bnf
+userType : identifier '{' identifier ':' value [ ',' identifier ':' value ] ... '}'
 ```
 
 Usage of tags is done by specifing their identifer followed by an open brace '{' in the value 
@@ -567,13 +598,15 @@ field of an object definition; or at a top level referencing the same tag name a
 For each field defined in the class, a value is expected.  If a value is not found, the field
 will not be added, as if receiving `field:undefined`.
 
+``` bnf
+tag usage : ':' identifier '{' value [ ',' value ]... '}' 
 ```
 
-tag usage : ':' identifier '{' value [ ',' value ]... '}' 
 
+``` js
 //-- the following...
-a { firstField, secondField }
-a { 1, 2 }
+a{ firstField, secondField }
+a{ 1, 2 }
 //-- results as
 { firstField : 1, secondField : 2 }
 
@@ -589,7 +622,7 @@ a { firstField, secondField }
 Implementation of tags allows apply a class to arrays.  Arrays have a class of ArrayBuffer, or other TypedArray type.  The
 representation path in an array and a reference type for the array. This allows circular encoding.
 
-```
+``` js
 // this is a string with a reference.
 {company:{name:"Example.com",employees:[{name:"bob"},{name:"tom"}],manager:ref["company","employees",0]}}
 
@@ -618,7 +651,7 @@ A Parser that returns objects as they are encountered in a stream can be created
 | usePrototype | (className,protoType) | configure what prototypes to use for class recovery |
 
 
-```js
+``` js
    // This is (basically) the internal loop that write() uses.
    var result
    for( result = this._write(msg,false); result > 0; result = this._write() ) {
@@ -628,7 +661,7 @@ A Parser that returns objects as they are encountered in a stream can be created
    }
 ```
 
-```js
+``` js
 // Example code using write
 function dataCallback( value ) {
 	console.log( "Value from stream:", value );
@@ -713,10 +746,10 @@ tests, and ensure that `npm test` continues to pass.
 
 ## Changelog
 - 1.2.104(In Progress)
-  - Throw error while parser is in error state and new writes() are called.
-  - allow '+' prefix to numbers
-  - Fix fromJSOX class revival handling; call per-field.
-  - Added beginning of stringify tests (coverage).
+    - Throw error while parser is in error state and new writes() are called.
+    - allow '+' prefix to numbers
+    - Fix fromJSOX class revival handling; call per-field.
+    - Added beginning of stringify tests (coverage).
 - 1.2.103
     - additional reference path revival fix.
 - 1.2.102
@@ -785,75 +818,15 @@ tests, and ensure that `npm test` continues to pass.
 - 1.0.1 - Removed modification of object prototypes; instead track object prototype to formatting function in a WeakMap().  Fixed class expansion.  Make objects of a class share the same prototype.
 - 1.0.0 - Intial Release.
 
-## Benchmarks
-
-tests/bench/bench1.js 
-Testing vs both minified and original source versions.
-number is N;1 for how much slow this is than the native Node JSON implementation (which is really V8 native code).
-
-Test runs a number of iterations for 2 seconds, and compares the number of stringifications/parsings are done in that time.
-
-Numbers shown are multipliers of time for JSOX.  (yes it's 50%-25% the speed depending on operation, but much faster than other JSON external scripts)
-
-|minified/source|version|stringify|parse|
-|-----|-------|-----|----|
-|(min)|node-7.9.0  | 3.6506  | 11.62666  |
-|(raw)|Node 9.6.1(x32) |  1.9586|  4.2622  |
-|(min)|Node 9.6.1(x32) |  2.4322 | 4.5402  |
-|(raw)|Node 10.5(x64)  |  2.3943 | 3.9279  |
-|(min)|Node 10.5(x64) |   1.9431|  3.7633  |
-|(raw)|node 11.0(x32) |  1.9930|  4.3351  |
-|(min)|node 11.0(x32) |  2.3688 | 4.5517  |
-|(raw)|node 11.0(x64) |  2.1390 | 4.0648  |
-|(min)|node 11.0(x64)  | 1.9226 | 3.9686  |
-| JSON5 vs Node JSON|  |  | |
-|(raw)|node 11.0(x64) |  1.8150 | 13.6190  | 
-| JSON5 vs JSOX|  |  | |
-|(min)|node 11.0(x64)  |  1.1456 |  0.3 |
-
-The difference from 1.9x to 2.4x is 20% difference.
-
-Example benchmark output Shows resulting stringify result
-
-```
-JSOX String Did 441000 in 2011 {a:123,b:467,c:"1234",d:35.1,e:2018-11-06T06:38:29-08:00}
-JSOX Parse  Did 606000 in 2000
-JSON String Did 954000 in 2000 {"a":123,"b":467,"c":"1234","d":35.1,"e":"2018-11-06T14:38:33.984Z"}
-JSON Parse  Did 2601000 in 2001
-JSON5 String Did 519000 in 2001 {a:123,b:467,c:'1234',d:35.1,e:'2018-11-06T14:38:37.990Z'}
-JSON5 Parse  Did 189000 in 2017
-JSON5 String Did 975000 in 2004 {"a":123,"b":467,"c":"1234","d":35.1,"e":"2018-11-06T14:38:42.012Z"}
-JSON5 Parse  Did 873000 in 2001
-Node JSON v JSOX
-stringify 2.163265306122449
-parse     4.292079207920792
-Node JSON v JSON5
-stringify 1.8381502890173411
-parse     13.761904761904763
-Node JSON v JSON6
-stringify 0.9784615384615385  (JSON6 Same)  (uses same function)
-parse     2.979381443298969
-JSON5 v JSOX
-stringify 1.1768707482993197
-parse     0.3118811881188119  (JSOX Win 3.33x faster)
-JSON5 v JSON6
-stringify 0.5323076923076923  (JSON6 WIN)  (uses same as Node function)
-parse     0.21649484536082475 (JSON6 Win, almost 5x faster)
-JSON6 v JSONX
-stringify 2.2108843537414966
-parse     1.4405940594059405
-```
-
 ## License
 
 MIT. See [LICENSE.md](./LICENSE.md) for details.
 
-
 ## Credits
 
-(http://github.com/json5/json5)  Inspring this project.
+http://github.com/json5/json5  Inspiring this JSON6 and subsequently this project.
 
-[json_parse.js]: https://github.com/douglascrockford/JSON-js/blob/master/json_parse.js
+[Douglous Crockford json parse]: https://github.com/douglascrockford/JSON-js/blob/master/json_parse.js
 
 
 
