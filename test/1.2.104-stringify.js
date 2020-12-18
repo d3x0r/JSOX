@@ -1,18 +1,18 @@
 'use strict';
-const JSON6 = require( ".." );
+const JSOX = require( ".." );
 
-describe('JSON6 stringify', function () {
+describe('JSOX stringify', function () {
 
 	it('stringifies Infinity', function () {
-		expect( JSON6.stringify( { d:Infinity } ) ).to.equal( '{d:Infinity}' );
+		expect( JSOX.stringify( { d:Infinity } ) ).to.equal( '{d:Infinity}' );
 	} );
 
 	it('stringifies NaN', function () {
-		expect( JSON6.stringify( { e:NaN } ) ).to.equal( '{e:NaN}' );
+		expect( JSOX.stringify( { e:NaN } ) ).to.equal( '{e:NaN}' );
 	} );
 
 	it('basically stringifies', function () {
-		expect( JSON6.stringify( { a:1
+		expect( JSOX.stringify( { a:1
 			, b:"123"
 			, c:null
 			, d:Infinity, e:NaN
@@ -22,7 +22,7 @@ describe('JSON6 stringify', function () {
 	} );
 
 	it('canonically stringifies', function () {
-		expect( JSON6.stringify( { z:1
+		expect( JSOX.stringify( { z:1
 			, y:"123"
 			, x:null
 			, w:Infinity
@@ -35,7 +35,7 @@ describe('JSON6 stringify', function () {
 	} );
 
 	it('can skip non-enumerable', function () {
-		const stringifier = JSON6.stringifier();
+		const stringifier = JSOX.stringifier();
 		stringifier.ignoreNonEnumerable = true;
 		const obj = { z:1
 			, y:"123"
