@@ -1,6 +1,6 @@
 {
     "name": "jsox",
-    "version": "1.2.103",
+    "version": "1.2.104",
     "description": "Java Script Object eXchange.",
     "keywords": [
         "jsox",
@@ -18,9 +18,20 @@
     "module": "lib/jsox.mjs",
     "main": "lib/jsox.js",
     "browser": "lib/jsox.es6.js.gz",
+    "exports": {
+        "JSOX": {
+            "import": "./lib/jsox.mjs",
+            "require": "./lib/jsox.js",
+            "browser": "./lib/jsox.js"
+        }
+    },
     "bin": "lib/cli.js",
     "files": [
-        "lib/"
+        "lib/jsox.js",
+        "lib/jsox.mjs",
+        "lib/jsox.es6.js.gz",
+        "lib/cli.js",
+        "lib/require.js"
     ],
     "dependencies": {},
     "devDependencies": {
