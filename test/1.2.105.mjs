@@ -18,7 +18,13 @@ function expect(a) { if( "function" === typeof a ) { try { threw = null; a(); } 
 */
 
 function World() {}
-JSOX.addType( "~Wr", World );
+World.fromString = function( field, value ) {
+	if( field ) {
+		this[field] = value;
+		return undefined;
+	}else return this;
+}
+JSOX.addType( "~Wr", World, null, World.fromString );
 
 function Line() {}
 JSOX.addType( "~L", Line );
