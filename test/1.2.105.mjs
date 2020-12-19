@@ -20,8 +20,15 @@ function expect(a) { if( "function" === typeof a ) { try { threw = null; a(); } 
 function World() {}
 World.fromString = function( field, value ) {
 	if( field ) {
-		this[field] = value;
+		// returning undefined for arrays is fatal... you lose all values in the array.
+		// would have to trust that you somehow kept the value, but this does not assign
+		// the field on returning; which also shouldn't FAIL (previous to 1.2.105 pushing array content
+		// to new 'undefined' value did not work, and results with an obscure thrown error)
 		return undefined;
+		// the proper result would be something like... 
+		//return this[field] = [];
+		// Or maybe from some other source...
+		//return this.#internalField;
 	}else return this;
 }
 JSOX.addType( "~Wr", World, null, World.fromString );
