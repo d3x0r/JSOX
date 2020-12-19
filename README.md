@@ -434,9 +434,16 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |fromJSOX| (name,Function/Class,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. Will throw an exception if duplicate set happens. |
 
 
-#### registerToJSOX
+#### Registering `toJSOX` : `JSOX.toJSOX()` or `stringifier.toJSOX()`
 
-Registers a handler to convert a type to JSOX.  This method is used to avoid modification of prototypes; would require instead 
+`function toJSOX( name, Type, customEmitterCallback )`
+
+  - name is a string
+  - Type is the type which should be encoded as this name.
+  - customEmitterCallback is called when one of these types is encountered.  The callback should return a string
+    to emit.
+
+`toJSOX()` registers a handler to convert a type to JSOX.  This method is used to avoid modification of prototypes; would require instead 
 that ojects that have a toJSOX know of the JSOX module instead.  The result of the callback should be a string, and is up to the
 toJSOX method to include quotes if it is a string value.  Any string may result that is valid JSOX.
 
@@ -452,10 +459,23 @@ stringifierTest.prototype.toString = function(stringifier) {
 	return `a is ${this.a} b is ${this.b}`;
 }
 
-JSOX.toJSOX( "stringTest", stringTest, function() { return '"' + this.toString() + '"' } );
+JSOX.toJSOX( "stringTest", stringTest, function(stringifier) { return '"' + this.toString() + '"' } );
 ```
 
-#### registerFromJSOX
+The callback specified is passed the current value to stringify as `this`, and the current stringifier is passed
+as the first argument.  If the structure contains cyclic references, the provided stringifier is required to be used
+instead of `JSOX.stringify()` or a new instance of a stringifier when encoding the sub-members of this object; otherwise,
+the references do not properly refer to the root of the object.
+
+
+#### Registering `fromJSOX` : `JSOX.fromJSOX()` or `parser.fromJSOX()`
+
+`fromJSOX( name, type, callback )`
+
+  - name is the tag text which triggers reviving this type.
+  - type is the class or function used to create a `new type()`.  The instance is always created with empty parameters.
+  - callback(field,val)  is called with `this` set to the object of the type specified, and `field` set as the current field name being revived, `val` is the value being set into the field.
+    If field is `undefined` then this is the end of all fields being added to the object, and the `this` object may be changed to a different object; usually `if( field === undefined ) return this;`.
 
 Registers a handler to convert recovered string, array or object from JSOX.  The converted data from the JSOX stream is passed as
 'this'.  The result of the callback may be any type of value; the resulting value is used instead of the data converted from JSOX.
@@ -745,7 +765,10 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
-- 1.2.104(In Progress)
+- 1.2.105(In Progress)
+    - Fix losing array containting typed objects.
+    - Pass stringifier to toJSOX method.
+- 1.2.104
     - Throw error while parser is in error state and new writes() are called.
     - allow '+' prefix to numbers
     - Fix fromJSOX class revival handling; call per-field.
