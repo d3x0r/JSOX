@@ -19,11 +19,9 @@
     "main": "lib/jsox.js",
     "browser": "lib/jsox.es6.js.gz",
     "exports": {
-        "JSOX": {
-            "import": "./lib/jsox.mjs",
-            "require": "./lib/jsox.js",
-            "browser": "./lib/jsox.js"
-        }
+        "import": "./lib/jsox.mjs",
+        "require": "./lib/jsox.js",
+        "browser": "./lib/jsox.es6.js.gz"
     },
     "bin": "lib/cli.js",
     "files": [
