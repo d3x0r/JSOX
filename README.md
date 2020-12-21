@@ -766,7 +766,7 @@ tests, and ensure that `npm test` continues to pass.
 
 ## Changelog
 - 1.2.105
-    - Fix losing array containting typed objects.
+    - Fix losing array containing typed objects.
     - Pass stringifier to toJSOX method.
     - Added compatibility tests between sack.vfs node plugin and JS version.
     - Fixed issues reviving references (new test), and replacing/providing values.
