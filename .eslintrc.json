@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "overrides": [
+    {
+      "files": [ "lib/cli.js" ],
+      "env": {
+      	"node":true,
+        "es2021": true
+      }
+    }
+  ],
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+    	"no-mixed-spaces-and-tabs": ["error","smart-tabs"]
+    }
+}
