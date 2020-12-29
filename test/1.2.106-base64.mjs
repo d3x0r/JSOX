@@ -47,6 +47,7 @@ describe('Added in 1.0.106 (base64)', function () {
 				}).to.throw(Error );
            const buf = JSOX.parse( '{buf:ab[$_$_] }' );
 				expect( JSOX.stringify(buf ) ).to.equal( '{buf:ab[$_$_]}' );
+				expect( JSOX.stringify(JSOX.parse('{buf:ab["+/+/"] }') ) ).to.equal( '{buf:ab[$_$_]}' );
 				//console.log( "Buf is currently:", JSOX.stringify(buf ) );
 				// fault while parsing; '+' unexpected at 11 (near '[+/[+]/] }') [1:12] 
         } )
