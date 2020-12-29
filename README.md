@@ -257,6 +257,30 @@ console.log( JSOX.stringify( {ab:new Float32Array(ab)} ) );
 {ab:f32[AAECAwQFBgc=]}
 ```
 
+#### Base64 Character Set
+
+The following defines the characters used for base64 encoding and decoding.
+
+```
+	const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_'
+   // previous to 1.2.106
+	//const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+	const decodings = { '~':-1
+		,'=':-1
+		,'$':62
+		,'_':63
+		,'+':62
+		,'-':62
+		,'.':62
+		,'/':63
+		,',':63
+	};
+
+```
+
+The high value characters have multiple possible variations based on evaluation of what was used in wikipedia; forming the most inclusive subset.
+`~` or `=` may be used for string termination, or early string length.
+
 
 #### Base64 vs UTF-8 Encoding
 
@@ -765,6 +789,10 @@ tests, and ensure that `npm test` continues to pass.
 
 
 ## Changelog
+- 1.2.106
+    - fix regression in stringifying binary array objects; removing the quotes caused the '/' to be interpreted as a comment.
+    - update documentation about base64 encoding
+    - replace '+/' with '$_' as the high value strings emitted.  Older versions will already accept this encoding.
 - 1.2.105
     - Fix losing array containing typed objects.
     - Pass stringifier to toJSOX method.
