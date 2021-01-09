@@ -1,7 +1,6 @@
 # JSOX – JavaScript Object eXchange format.
 
 [![Build Status](https://travis-ci.org/d3x0r/JSOX.svg?branch=master)](https://travis-ci.org/d3x0r/JSOX)
-[![Join the chat at https://gitter.im/sack-vfs/jsox](https://badges.gitter.im/sack-vfs/jsox.svg)](https://gitter.im/sack-vfs/jsox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 100% Compatible reader for JSON.  JSOX.stringify cannot generate JSON
 compatible output; it would lose all the features anyway; use existing
@@ -787,8 +786,19 @@ Feel free to [file issues](https://github.com/d3x0r/jsox/issues) and submit
 welcome. If you do submit a pull request, please be sure to add or update the
 tests, and ensure that `npm test` continues to pass.
 
+## Continuous Integration Testing
+
+Travis CI is used to automatically test the package when pushed to github. Recently .mjs tests have been
+added, and rather than build a switch to test `mocha/test/*.js`  instead of just `*`, and depending on node version
+switch the test command which is run, the older platforms were removed from testing.
+
+The product of this should run on very old platforms also, especially `node_modules/jsox/lib/jsox.min.js`.
+
 
 ## Changelog
+- 1.2.107
+    - Updated document about CI tests.
+    - Enable Travis CI integration.
 - 1.2.106
     - fix regression in stringifying binary array objects; removing the quotes caused the '/' to be interpreted as a comment.
     - update documentation about base64 encoding
