@@ -1,5 +1,6 @@
 lib/*es3*
 lib/*es6*
+lib/*.min.*
 test.js
 test/*
 tests/*
