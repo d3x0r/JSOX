@@ -799,6 +799,8 @@ The product of this should run on very old platforms also, especially `node_modu
 - 1.2.107
     - Updated document about CI tests.
     - Enable Travis CI integration.
+    - Reference arrays don't result with the same object; reduce frequency of warning message.
+    - Remove automatic guess promoting numbers to bigints, floats can also be pretty big.
 - 1.2.106
     - fix regression in stringifying binary array objects; removing the quotes caused the '/' to be interpreted as a comment.
     - update documentation about base64 encoding
