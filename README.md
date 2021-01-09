@@ -1,6 +1,6 @@
 # JSOX – JavaScript Object eXchange format.
 
-[![Build Status](https://travis-ci.org/d3x0r/JSOX.svg?branch=master)](https://travis-ci.org/d3x0r/JSOX)
+[![Build Status](https://travis-ci.com/d3x0r/JSOX.svg?branch=master)](https://travis-ci.com/d3x0r/JSOX)
 
 100% Compatible reader for JSON.  JSOX.stringify cannot generate JSON
 compatible output; it would lose all the features anyway; use existing
