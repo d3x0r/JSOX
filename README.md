@@ -798,6 +798,7 @@ The product of this should run on very old platforms also, especially `node_modu
 ## Changelog
 - 1.2.108
     - Refix base64, which failed to quote strings that looked like numbers.
+    - Clear array buffer typed variable when resolving the typed array; leaked to next parse.
 - 1.2.107
     - Updated document about CI tests.
     - Enable Travis CI integration.
