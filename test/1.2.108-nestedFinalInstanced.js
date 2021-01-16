@@ -21,15 +21,16 @@ function expect(a) { if( "function" === typeof a ) { try { threw = null; a(); } 
 
 describe('Added in 1.2.108', function () {
 
-	it( 'Performs operations in the right order', function() {
+
+
+	it( 'Performs operations in the right order (on instance)', function() {
 			JSOX.reset();
-        
         	const content = 'O{sub:s{inner:"VALUE",a:[1,2,3]},a:123,b:345,c:[5,6,7]}'
                 const processed = [];
 					const array = [];
                 class SubO {
 						inner = "value";
-						a = [1,2,3];
+						a=[1,2,3];
 						constructor(newval) { 
                         	processed.push( "Constructed subO" );
 							if( newval ) this.inner = newval };
@@ -72,16 +73,24 @@ describe('Added in 1.2.108', function () {
 
                 }
 
-                JSOX.fromJSOX( "s", SubO, subFromJSOX );
-                JSOX.fromJSOX( "O", O, fromJSOX );
-                const object = JSOX.parse( content );
+			const parser = JSOX.begin( result );
 			
-                               processed.forEach( (val,idx)=>{ 
-						if( val instanceof Array ) if( "object" === typeof val[1] ) {
-								val[1] = JSON.stringify(val[1]); 
-							processed[idx] = val.join();
-						}
-} );
+                parser.fromJSOX( "s", SubO, subFromJSOX );
+                parser.fromJSOX( "O", O, fromJSOX );
+				let  object = null
+                parser.write( content );
+			
+			function result( obj ) {
+					object = obj;
+					//console.log( "Got callback?", obj, processed );
+                  processed.forEach( (val,idx)=>{ 
+							if( val instanceof Array ) if( "object" === typeof val[1] ) {
+									val[1] = JSON.stringify(val[1]); 
+								processed[idx] = val.join();
+							}
+						} );
+				
+			}
 
 		//console.log( "Process:\n", processed.join("\n") );
 		expect( processed.join("\n") ).to.equal( `Constructed subO
