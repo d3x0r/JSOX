@@ -440,7 +440,8 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |begin| Parser(methods below) |(cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
 |toJSOX  | none | (name,Function/Class,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and will throw an exception if duplicate set happens. |
 |fromJSOX| none | (name,Function/Class,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. Will throw an exception if duplicate set happens. |
-|registerToFrom  | none | (name,Function/Class,toCb, fromCb) | register both to and from for the same name |
+|registerToFrom  | none | (name,Function/Class,toCb, fromCb) | register both to and from for the same name. |
+|reset| none | () | Reset to/from types on JSOX global parser and stringifier. (should be reserved for tests) |
 
 
 |Stringifier method | return | parameters | Description |
@@ -500,10 +501,12 @@ the references do not properly refer to the root of the object.
   - callback(field,val)  is called with `this` set to the object of the type specified, and `field` set as the current field name being revived, `val` is the value being set into the field.
     If field is `undefined` then this is the end of all fields being added to the object, and the `this` object may be changed to a different object; usually `if( field === undefined ) return this;`.
 
+The callback is called after objects are completely revived; it is called when an array value is initially created, or immediately after resolving any other value.
+
 Registers a handler to convert recovered string, array or object from JSOX.  The converted data from the JSOX stream is passed as
 'this'.  The result of the callback may be any type of value; the resulting value is used instead of the data converted from JSOX.
 
-Regsitering the same name more than once throws an error.
+Registering the same name more than once throws an error.
 
 ``` js
 // this epects a string, as indicated by the above toJSOX output.
@@ -796,6 +799,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
+- 1.2.109 (inprogress)
+    - added reset() method for tests to reset global JSOX type registrations.
+    - added 1.2.108 named tests.
 - 1.2.108
     - Refix base64, which failed to quote strings that looked like numbers.
     - Clear array buffer typed variable when resolving the typed array; leaked to next parse.
