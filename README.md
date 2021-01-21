@@ -802,6 +802,8 @@ The product of this should run on very old platforms also, especially `node_modu
 - 1.2.109 (inprogress)
     - added reset() method for tests to reset global JSOX type registrations.
     - added 1.2.108 named tests.
+    - Added `RegExp` support; ~~encodes as `Ρεχ` string type;  `JSOX.parses("Ρεχ'a+'") === /a+/`~~
+       - encode as `regex` instead of `Ρεχ`; is actually 1 byte shorter, and more familiar. `JSOX.parses("regex'a+'") === /a+/`, `JSOX.stringify(/a+/) === /"regex'a+'"/`
 - 1.2.108
     - Refix base64, which failed to quote strings that looked like numbers.
     - Clear array buffer typed variable when resolving the typed array; leaked to next parse.
