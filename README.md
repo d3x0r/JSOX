@@ -455,6 +455,9 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |Parser Methods | parameters | Description |
 |-----|-----|-----|
 |write | (buffer) | add data to the parser stream |
+|reset| () | When an error is thrown from parsing a stream, the parser must be reset using `reset()`, otherwise it will continue throwing an error. |
+|parse | (buffer) | use a parser instance to parse a single message |
+|currentRef | () | Returns an object containing `{o:, f:}` where `o` is the object containing the field being revived, and `f` is the name of the field being revive; together this pair makes a reference to a value.  |
 |fromJSOX| (name,Function/Class,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. Will throw an exception if duplicate set happens. |
 
 
