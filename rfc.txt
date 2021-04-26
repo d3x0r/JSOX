@@ -5,7 +5,7 @@
 
 
                                                             	 Jim B.
-Request for Comments: !??!                        Independant Developer
+Request for Comments: !??!                        Independent Developer
                                                               Sep, 2018
 Category: Standards Track
 ISSN: ???
@@ -127,20 +127,35 @@ Table of Contents
    JavaScript Object eXchange (JSOX) is a text format for the
    serialization of structured data.  It is derived from JSON and
    the object literals of JavaScript, as defined in the ECMAScript
-   Programming Language Standard, Version 7 [ECMA-262].
+   Programming Language Standard, Version 7 [ECMA-262].  JSOX parsing
+   accepts all legal JSON.
 
-   JSOX can represent seven primitive types (strings, numbers, booleans,
-   null, Dates, and BigInt, TypedArrays) and two structured types
-   (objects and arrays).
+   JSOX's design goals were to extend and enhance JSON adding more
+   features for human clarity, while keeping JSON's original goals
+   for it to be minimal, portable, textual, and a subset of JavaScript.
+   Additionally, encoding for basic types like TypedArrays, which are
+   actually a set of 12 classes of array, and support for encoding
+   cyclic structures.
+
+   JSOX values represent eight primitive types (strings, numbers, 
+   booleans, Dates, BigInt, and TypedArrays(binary data)), two structured
+   types (objects and arrays), and two place holding values (null and undefined).
 
    A string is a sequence of zero or more Unicode characters [UNICODE].
    Note that this citation references the latest version of Unicode
    rather than a specific release.  It is not expected that future
-   changes in the UNICODE specification will impact the syntax of JSON.
+   changes in the UNICODE specification will impact the syntax of JSON. 
+   An identifier is a string that does not require quotes.
 
-   An object is an unordered collection of zero or more name/value
-   pairs, where a name is a string or identifier 
-   and a value is a string, number, boolean, null, object, or array.
+   An object is a collection of zero or more name/
+   value pairs, where a name is a string or identifier 
+   and a value.  Lexicographic order of the name may be required for
+   applications; and they should be able to expect such ordering.
+
+   JSOX allows identifiers in all places that JSON requires a string,
+   except as a value.  All places that take an identifier WILL also
+   take a string.
+
    
    An array is an ordered sequence of zero or more values.
 
@@ -156,16 +171,7 @@ Table of Contents
       [google search 'class definition' 1]
 
 
-   JSOX's design goals were to extend and enhance JSON adding more
-   features for human clarity, while keeping JSON's original goals
-   for it to be minimal, portable, textual, and a subset of JavaScript.
-   Additionally, encoding for basic types like TypedArrays, which are
-   actually a set of 12 classes of array, and support for encoding
-   cyclic structures.
 
-   JSOX allows identifiers in all places that JSON requires a string,
-   except as a value.  All places that take an identifier WILL also
-   take a string.
 
 1.1.  Conventions Used in This Document
 
