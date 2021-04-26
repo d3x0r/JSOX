@@ -1,5 +1,9 @@
 *~
+lib/mk.bat
 lib/*~
 tests
+test
+coverage
+
 makeUnicodeNonIdent.js
 parser.md

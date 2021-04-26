@@ -349,6 +349,24 @@ Table of Contents
    arrays contain strings and integer numbers, which define the path in the
    current object or array to the value to use.  A 'ref' type array may NOT
    occur as a primitive value.
+
+5.1 Base 64 Encoding
+	uses 
+		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_
+	accepts '=' as a nul terminator.
+   The following characters are accepted at the final encoding, but most
+	will require quoting.  With the above defined sequence quotes may be
+   omitted on binary typed array information.
+
+		'$':62
+		'+':62
+		'-':62
+		'.':62
+
+		'_':63
+		'/':63
+		',':63
+
    
 
 6.  Numbers

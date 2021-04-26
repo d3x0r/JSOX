@@ -3,7 +3,7 @@
 const JSOX = require( ".." );
 
 
-describe('Bad tests', function () {
+describe('Issue 9', function () {
 
 	it( 'parses 1',  function() {
         	expect( JSOX.parse('{a:"",b:[{c:[{d:false}]}],e:"TEST"}' )).to.deep.equal({a:"",b:[{c:[{d:false}]}],e:"TEST"}) 

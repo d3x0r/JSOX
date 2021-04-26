@@ -1,10 +1,28 @@
 'use strict';
-const JSON6 = require( ".." );
+const JSOX = require( ".." );
+
+const parse = JSOX.parse;
+
+
+/*
+process.on("beforeExit", ()=>{ console.log( "EXITING" ) } );
+process.on("uncaughtException",(a,b)=>{
+	console.log( "test", a, b );
+} );
+
+function describe(a,b) { return b() };
+function it(a,b) { return b() };
+let threw = null;
+function expect(a) { if( "function" === typeof a ) { try { threw = null; a(); } catch(err){threw=err}; }
+					 return ({ to: {deep:{  equal(a) { } }
+				  , throw(a) {console.log( "Success:error?", threw ) } } }); }
+*/
+
 
 describe('Stream testing', function () {
 	it('Receives various values via `write`', function () {
 		let results = [];
-		const parser = JSON6.begin(function (obj) {
+		const parser = JSOX.begin(function (obj) {
 			//console.log( "Got value:", typeof obj, ":", obj );
 			results.push(obj);
 		});
@@ -34,9 +52,9 @@ describe('Stream testing', function () {
 		parser.write( 'key:1234 }' );
 
 		parser.write( '{ a:1234 }' );
-		console.log( "4 objects..." );
+		//console.log( "4 objects..." );
 		parser.write( '{ a:1234 }{ b:34 }{c:1}{d:123}' );
-		console.log( "got 4 objects?" );
+		//console.log( "got 4 objects?" );
 
 		expect(results).to.deep.equal([
 			'This is a Test',
@@ -56,8 +74,10 @@ describe('Stream testing', function () {
 		]);
 
 		results = [];
-
+		try {
+			
 		parser.reset();
+}	catch(err ) { console.log("Reset Failed?", err ) };
 		parser.write( '1_234 0x55_33_22_11 0x1234 ' );
 		expect(results).to.deep.equal([
 			1234,
@@ -89,23 +109,16 @@ describe('Stream testing', function () {
 		parser.write( '5' );
 		parser.write( ' ' );
 
-
 		// this is a test to trigger coverage.
 		results = [];
-		try {
+		expect( function() {
 			parser.write( '{ this is an error' );
-		} catch( err ){
-			// Ignore
-			console.log( "Error state in parser?", err );
-		}
-                try {
-                	console.log( "this should be an invalid open..." );
+		}). to.throw( Error );
+
+		expect( function() {
 			parser.write( '} 0 ' );
-			console.log( "FAIL" );
-                        		
-                } catch(err ) {
-                	console.log( "Expecing error:", err );
-                }
+		}). to.throw( Error );
+
 		//expect( function() {
 		//	parser.write( '} 0 ' );
 		//}).to.throw( Error );
@@ -113,3 +126,4 @@ describe('Stream testing', function () {
 		parser.write( '"OK"' );
 	});
 });
+
