@@ -137,7 +137,7 @@ Table of Contents
    actually a set of 12 classes of array, and support for encoding
    cyclic structures.
 
-   JSOX values represent eight primitive types (strings, numbers, 
+   JSOX values represent seven primitive types (strings, numbers, 
    booleans, Dates, BigInt, and TypedArrays(binary data)), two structured
    types (objects and arrays), and two place holding values (null and undefined).
 
@@ -146,21 +146,19 @@ Table of Contents
    rather than a specific release.  It is not expected that future
    changes in the UNICODE specification will impact the syntax of JSON. 
    An identifier is a string that does not require quotes.
+   JSOX allows identifiers to be used for object field names, and for
+   application type extensions.
 
    An object is a collection of zero or more name/
    value pairs, where a name is a string or identifier 
-   and a value.  Lexicographic order of the name may be required for
-   applications; and they should be able to expect such ordering.
-
-   JSOX allows identifiers in all places that JSON requires a string,
-   except as a value.  All places that take an identifier WILL also
-   take a string.
+   and a value.
 
    
    An array is an ordered sequence of zero or more values.
 
-   A class is a list of identifiers or strings which define the field
-   names of a set of objects.  
+   JSOX also introduces macros.  A macro is a list of identifiers 
+   or strings which define the field names of a set of objects.  
+   Later, a macro reference 
 
 
    The terms "object" and "array" come from the conventions of
@@ -220,7 +218,12 @@ Table of Contents
       value-separator = ws %x2C ws  ; , comma
 
    Insignificant whitespace is allowed before or after any of the six
-   structural characters.
+   structural characters.  Whitespace characters explicitly end a previous token
+   and any following non-whitespace characters will begin a new token.  All 
+   whitespace is optional, except where syntax requirements impose requirement;
+   although some required whitespace can also be resolved using quotes around
+   identifiers, a stream of numbers requires whitespace separation.
+   
 
       ws = *(
               %x20 /              ; Space
@@ -272,9 +275,9 @@ Table of Contents
 
       Infinity = [ minus ] %x49.6e.66.69.6e.69.7f.79  ; [-]Infinity
 
-      number = [ plus minus ] int [ radix ] [ time-symbol ] [ frac ] [ exp ] [ bigint-suffix ]
+      number = *[ plus | minus ] int [ radix ] [ time-symbol ] [ frac ] [ exp ] [ bigint-suffix ]
 
-      NaN = [ minus ] %x4e.61.4e                      ; [-]NaN
+      NaN = %x4e.61.4e                      ; NaN
 
       undefined = %x75.6e.64.65.66.69.6e.65.64   ; undefined
 

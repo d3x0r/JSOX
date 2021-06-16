@@ -13,7 +13,7 @@ module.exports = [
             format: 'esm',
         },
         plugins: [
-            resolve.nodeResolve(),
+            resolve(),//.nodeResolve(),
             commonjs(),
         ],
     },
@@ -25,7 +25,7 @@ module.exports = [
             format: 'esm',
         },
         plugins: [
-            resolve.nodeResolve(),
+            resolve(),//.nodeResolve(),
             commonjs(),
             terser(),
         ],

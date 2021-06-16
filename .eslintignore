@@ -4,3 +4,5 @@ lib/*.min.*
 test.js
 test/*
 tests/*
+lib/jsox.js
+rollup.config.js
