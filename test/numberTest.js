@@ -50,8 +50,8 @@ describe('Numbers', function () {
 	});
 
 	it('Hexadecimal', function () {
-		const n = 0x123;
-		const result = JSON.parse( '0x123' );
+		const n = 0x123DEADbeef;
+		const result = JSON.parse( '0x123DEADbeef' );
 		expect(result).to.equal(n);
 	});
 
