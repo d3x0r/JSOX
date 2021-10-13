@@ -802,7 +802,10 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.109 (inprogress)
+- 1.2.110 (inprogress)
+- 1.2.109
+    - fixed vertical tab character parsing.
+    - fixed hex numbers with `[a-f][A-F]` characters.
     - added reset() method for tests to reset global JSOX type registrations.
     - added 1.2.108 named tests.
     - Added `RegExp` support; ~~encodes as `Ρεχ` string type;  `JSOX.parses("Ρεχ'a+'") === /a+/`~~
