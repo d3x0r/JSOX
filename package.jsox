@@ -61,8 +61,8 @@
     scripts: {
        xprepack: "npm run test-lite",
        lint: "eslint --cache .",
-       mocha-lite: "mocha  --require ./lib/require.js --require test/bootstrap/node", // --experimental-loader=./lib/import.mjs
-       mocha: "mocha  --require ./lib/require.js --require test/bootstrap/node --recursive",  // --experimental-loader=./lib/import.mjs 
+       mocha-lite: "mocha --experimental-loader=./lib/import.mjs --require ./lib/require.js --require test/bootstrap/node", // --experimental-loader=./lib/import.mjs
+       mocha: "mocha  --experimental-loader=./lib/import.mjs --require ./lib/require.js --require test/bootstrap/node --recursive",  // --experimental-loader=./lib/import.mjs 
        nyc-lite: "nyc npm run mocha-lite",
        nyc: "nyc npm run mocha",
        test-lite: "npm run lint && npm run build && npm run nyc-lite",
