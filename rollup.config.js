@@ -1,4 +1,5 @@
 const resolve = require('@rollup/plugin-node-resolve')
+console.log( "RESOLVE IS:", resolve );
 const commonjs = require('@rollup/plugin-commonjs')
 //const closure = require('rollup-plugin-closure-compiler' );
 const terser = require('rollup-plugin-terser').terser
