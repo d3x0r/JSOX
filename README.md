@@ -802,7 +802,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.110 (inprogress)
+- 1.2.111 (inprogress)
+- 1.2.110
+    - Fix packaging error.
 - 1.2.109
     - fixed vertical tab character parsing.
     - fixed hex numbers with `[a-f][A-F]` characters.
