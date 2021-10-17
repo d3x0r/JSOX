@@ -802,7 +802,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.111 (inprogress)
+- 1.2.112 (inprogress)
+- 1.2.111
+    - fixes travis tests; latest mocha/coverage slows benchmark tests by 10x.
 - 1.2.110
     - Fix packaging error.
 - 1.2.109
