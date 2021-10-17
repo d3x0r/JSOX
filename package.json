@@ -1,6 +1,6 @@
 {
     "name": "jsox",
-    "version": "1.2.110",
+    "version": "1.2.111",
     "description": "Java Script Object eXchange.",
     "keywords": [
         "jsox",
@@ -62,7 +62,7 @@
         "mocha-lite": "mocha --experimental-loader=./lib/import.mjs --require ./lib/require.js --require test/bootstrap/node",
         "mocha": "mocha  --experimental-loader=./lib/import.mjs --require ./lib/require.js --require test/bootstrap/node --recursive",
         "nyc-lite": "nyc npm run mocha-lite",
-        "nyc": "nyc npm run mocha",
+        "nyc": "nyc npm run mocha-lite",
         "test-lite": "npm run lint && npm run build && npm run nyc-lite",
         "test": "npm run lint && npm run build && npm run nyc",
         "build": "node ./lib/cli.js -c package.jsox && rollup -c"
