@@ -802,7 +802,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.112 (inprogress)
+- 1.2.113 (inprogress)
+- 1.2.112
+    - add check for `\ufeff` in stringifier for identifiers; because of BOM legacy usage unquoted ZWNBSP has to be counted as just whitespace. (especially considering multiple files might have been concatenated?)
 - 1.2.111
     - fixes travis tests; latest mocha/coverage slows benchmark tests by 10x.
 - 1.2.110
