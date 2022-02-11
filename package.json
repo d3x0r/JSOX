@@ -29,7 +29,8 @@
         "lib/jsox.mjs",
         "lib/jsox.es6.js.gz",
         "lib/cli.js",
-        "lib/require.js"
+        "lib/require.js",
+        "lib/import.mjs"
     ],
     "dependencies": {},
     "devDependencies": {

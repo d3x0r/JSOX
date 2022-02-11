@@ -803,6 +803,7 @@ The product of this should run on very old platforms also, especially `node_modu
 
 ## Changelog
 - 1.2.114 (inprogress)
+    - import.mjs is not included in npm publish (fixed)
 - 1.2.113
     - Add higher resolution Date type called DateNS; which adds a 'ns' field which is a number of additional nanoseconds on top of the timestamp.  (JS Specific issue; ISO-8601 date format may be of any precision)
 - 1.2.112
