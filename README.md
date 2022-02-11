@@ -802,7 +802,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.113 (inprogress)
+- 1.2.114 (inprogress)
+- 1.2.113
+    - Add higher resolution Date type called DateNS; which adds a 'ns' field which is a number of additional nanoseconds on top of the timestamp.  (JS Specific issue; ISO-8601 date format may be of any precision)
 - 1.2.112
     - add check for `\ufeff` in stringifier for identifiers; because of BOM legacy usage unquoted ZWNBSP has to be counted as just whitespace. (especially considering multiple files might have been concatenated?)
 - 1.2.111
