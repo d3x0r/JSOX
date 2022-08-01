@@ -109,7 +109,7 @@ is represented.
 
 This also aims to provide support for BigInt and Date format for less work
 at the application layer.  **A method for handling typed array object members
-should also be impelemented**
+should also be implemented**
 
 (Historic Why below)
 
