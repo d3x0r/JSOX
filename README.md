@@ -802,7 +802,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.115 (inprogress)
+- 1.2.116 (inprogress)
+- 1.2.115
+    - Strings starting with 'N' not followed by 'a' for 'NaN' did not recover the right string.
 - 1.2.114
     - import.mjs is not included in npm publish (fixed)
     - Fix errors found when reviving referneces; (assumed a field in object meant THE object; checked wrong array length; cleanup duplicate variables)
