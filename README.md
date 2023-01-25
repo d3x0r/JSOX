@@ -802,7 +802,10 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.116 (inprogress)
+- 1.2.117 (inprogress)
+- 1.2.116
+    - Fix parsing negative ISO-8601 Dates.
+    - generate specific timestamp for `new Date( "0000-01-01T00:00:00.000Z" ).getTime()` to return that string anyway.
 - 1.2.115
     - Strings starting with 'N' not followed by 'a' for 'NaN' did not recover the right string.
 - 1.2.114
