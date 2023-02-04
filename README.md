@@ -802,7 +802,10 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.117 (inprogress)
+- 1.2.118 (inprogress)
+- 1.2.117
+    - Fix decoding number as first argument in a reference.
+    - update non-module version with 116 changes too.
 - 1.2.116
     - Fix parsing negative ISO-8601 Dates.
     - generate specific timestamp for `new Date( "0000-01-01T00:00:00.000Z" ).getTime()` to return that string anyway.
@@ -927,4 +930,4 @@ http://github.com/json5/json5  Inspiring this JSON6 and subsequently this projec
 [Douglous Crockford json parse]: https://github.com/douglascrockford/JSON-js/blob/master/json_parse.js
 
 
-
++
