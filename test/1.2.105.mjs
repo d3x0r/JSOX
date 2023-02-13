@@ -67,7 +67,7 @@ describe('Added in 1.2.105', function () {
 		// will lose the type names?
 		const output = `
 {
-   op: "world",
+   op: world,
    world: ~Wr{
       lines: [
          ~L{
@@ -138,7 +138,7 @@ describe('Added in 1.2.105', function () {
             },
             to: 5
          }
-],
+      ],
       names: [
          ~N{
             flags: {
@@ -147,7 +147,7 @@ describe('Added in 1.2.105', function () {
             id: 0,
             name: "Default"
          }
-],
+		],
       sectors: [
          ~S{
             id: 0,
@@ -204,7 +204,7 @@ describe('Added in 1.2.105', function () {
                start_at_end: false
             }
          }
-]
+      ]
    }
 }`
 		expect( str2 ).to.equal( output );
@@ -301,7 +301,7 @@ const str1 =                  `~Wr{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{
 		stringifier.toJSOX( "v3", Vector );
 		stringifier.toJSOX( "r", Ray );
 		const mockStr = stringifier.stringify( world );
-		const mockExpect = '~Wr2{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},id:0,name:"Default"}],sectors:[~S{id:0,r:r{n:v3{x:0,y:0,z:0},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["names",0]},wall:~Wl{end:~Wl{end:~Wl{end:ref["sectors",0,"wall","end"],line:ref["lines",3],start:~Wl{end:ref["sectors",0,"wall","end","end"],line:ref["lines",2],start:ref["sectors",0,"wall"]}},line:ref["lines",1],start:ref["sectors",0,"wall"]},line:ref["lines",0],start:ref["sectors",0,"wall","end","end","start"]}}],walls:[ref["sectors",0,"wall"],ref["sectors",0,"wall","end"],ref["sectors",0,"wall","end","end","start"],ref["sectors",0,"wall","end","end"]]}';
+		const mockExpect = '~Wr2{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},id:0,name:Default}],sectors:[~S{id:0,r:r{n:v3{x:0,y:0,z:0},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["names",0]},wall:~Wl{end:~Wl{end:~Wl{end:ref["sectors",0,"wall","end"],line:ref["lines",3],start:~Wl{end:ref["sectors",0,"wall","end","end"],line:ref["lines",2],start:ref["sectors",0,"wall"]}},line:ref["lines",1],start:ref["sectors",0,"wall"]},line:ref["lines",0],start:ref["sectors",0,"wall","end","end","start"]}}],walls:[ref["sectors",0,"wall"],ref["sectors",0,"wall","end"],ref["sectors",0,"wall","end","end","start"],ref["sectors",0,"wall","end","end"]]}';
 	        
 		
 		const fromMock = JSOX.parse( mockStr );
