@@ -802,7 +802,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.118 (inprogress)
+- 1.2.119 (inprogress)
+- 1.2.118
+	- Fix stringify with prettify option.
 - 1.2.117
     - Fix decoding number as first argument in a reference.
     - update non-module version with 116 changes too.
