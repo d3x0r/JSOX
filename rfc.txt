@@ -654,7 +654,7 @@ Table of Contents
 13.  Security Considerations
 
    Generally, there are security issues with scripting languages.  JSOX
-   is a subset of JavaScript that excludes expressions.
+   is a subset of JavaScript that excludes code expressions.
 
    Since JSOX's syntax deviates from Javascript for class defintions, 
    it is, in many cases, longer possible to  use that language's 
