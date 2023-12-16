@@ -11,10 +11,10 @@ export namespace JSOX {
         reset            (): void;
         usePrototype     (className: string, protoType: any): void;
         write            (msg: string): void;
-        parse            (msg: string, reviver: reviver_cb ): any;
-        _write           (msg: string, complete_at_end: boolean): number | void;
+        parse            (msg: string, reviver?: reviver_cb ): any;
+        _write           (msg: string, complete_at_end?: boolean): number | void;
     };
-    export function parse           (msg: string, reviver: reviver_cb): any;
+    export function parse           (msg: string, reviver?: reviver_cb): any;
     export function defineClass     (name: string, obj: any): void;
     export function toJSOX          (name: string, ptype: any, f: any): void;
     export function registerToJSOX  (name: string, ptype: any, f: any): void;
@@ -27,16 +27,16 @@ export namespace JSOX {
         setDefaultObjectToJSOX (cb: any): void;
         isEncoding             (o: any): boolean;
         encodeObject           (o: any): string;
-        stringify              (o: any, r: array | reviver_cb, s: string): string;
+        stringify              (object: any, replacer?: array | reviver_cb, space?: string): string;
         setQuote               (q: string): void;
         registerToJSOX         (n: string, p: any, f: any): void;
         toJSOX                 (name: string, ptype: any, f: any): void;
         ignoreNonEnumerable: boolean;
     };
-    export function stringify(object: any, replacer: array | replacer_cb, space: string): string;
+    export function stringify(object: any, replacer?: array | replacer_cb, space?: string): string;
 }
 declare class DateNS extends Date {
-    constructor(a: any, b: any);
+    constructor(a: Date, b: number);
     ns: number;
 }
 declare function resetJSOX(): void;
