@@ -802,9 +802,12 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.119 (inprogress)
+- 1.2.120 (inprogress)
+- 1.2.119
+    - Provide typescript definitions.
+    - Provide JSOX as a import name; see issue #13.
 - 1.2.118
-	- Fix stringify with prettify option.
+    - Fix stringify with prettify option.
 - 1.2.117
     - Fix decoding number as first argument in a reference.
     - update non-module version with 116 changes too.
@@ -932,4 +935,3 @@ http://github.com/json5/json5  Inspiring this JSON6 and subsequently this projec
 [Douglous Crockford json parse]: https://github.com/douglascrockford/JSON-js/blob/master/json_parse.js
 
 
-+
