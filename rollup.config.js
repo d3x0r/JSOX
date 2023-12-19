@@ -16,19 +16,19 @@ module.exports = [
         },
         plugins: [
             commonjs(),
-            append('module.exports = JSOX'),
+            append('module.exports = (JSOX.JSOX = JSOX);'),
         ],
     },
     // CommonJS Minified
     {
-        input: pkg.main,
+        input: pkg.module,
         output: {
             file: pkg.main.replace(/\.js$/, '.min.js'),
-            exports : 'default',
             format: 'cjs',
         },
         plugins: [
             commonjs(),
+            append('module.exports = (JSOX.JSOX = JSOX);'),
             terser(),
         ],
     },

@@ -17,17 +17,16 @@
     "@std/esm": "cjs",
     "module": "lib/jsox.mjs",
     "main": "lib/jsox.js",
-    "browser": "lib/jsox.es6.js.gz",
+    "browser": "lib/jsox.mjs",
+    "types": "lib/jsox.d.ts",
     "exports": {
-        "import": "./lib/jsox.mjs",
         "require": "./lib/jsox.js",
-        "browser": "./lib/jsox.es6.js.gz"
+        "default": "./lib/jsox.mjs"
     },
     "bin": "lib/cli.js",
     "files": [
         "lib/jsox.js",
         "lib/jsox.mjs",
-        "lib/jsox.es6.js.gz",
         "lib/cli.js",
         "lib/require.js",
         "lib/import.mjs"
@@ -44,7 +43,8 @@
         "lint-staged": "latest",
         "@rollup/plugin-commonjs": "latest",
         "rollup-plugin-insert": "latest",
-        "rollup-plugin-terser": "latest"
+        "rollup-plugin-terser": "latest",
+        "typescript": "latest"
     },
     "nyc": {
         "ignore-class-method": [
@@ -64,7 +64,7 @@
         "nyc": "nyc npm run mocha-lite",
         "test-lite": "npm run lint && npm run build && npm run nyc-lite",
         "test": "npm run lint && npm run build && npm run nyc",
-        "build": "node ./lib/cli.js -c package.jsox && rollup -c"
+        "build": "node ./lib/cli.js -c package.jsox && rollup -c && tsc --allowJs --declaration --emitDeclarationOnly lib/jsox.mjs && tsc --allowJs --declaration --emitDeclarationOnly lib/jsox.js"
     },
     "homepage": "http://npmjs.org/package/jsox/",
     "license": "MIT",
