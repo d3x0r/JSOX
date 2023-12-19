@@ -1,46 +1,34 @@
-const nodeResolve = require('@rollup/plugin-node-resolve')
-const resolve = ("function" === typeof nodeResolve )?nodeResolve:nodeResolve.nodeResolve;
 const commonjs = require('@rollup/plugin-commonjs')
-//const closure = require('rollup-plugin-closure-compiler' );
-const terser = require('rollup-plugin-terser').terser
+const { append } = require('rollup-plugin-insert')
+const { terser } = require('rollup-plugin-terser')
 const pkg = require('./package.json')
 
+/**
+ * @type {import('rollup').RollupOptions[]}
+ */
 module.exports = [
-    // ES6 Modules Non-minified
+    // CommonJS Non-minified
     {
-        input: 'lib/index.js',
+        input: pkg.module,
         output: {
-            file: pkg.browser.replace(/\.js$/, '.mjs'),
-            format: 'esm',
-        },
-        plugins: [
-            resolve(),//.nodeResolve(),
-            commonjs(),
-        ],
-    },
-    // ES6 Modules Minified
-    {
-        input: 'lib/index.js',
-        output: {
-            file: pkg.browser.replace(/\.js$/, '.min.mjs'),
-            format: 'esm',
-        },
-        plugins: [
-            resolve(),//.nodeResolve(),
-            commonjs(),
-            terser(),
-        ],
-    },
-    // ES6 Modules Minified
-    {
-        input: 'lib/jsox.mjs',
-        output: {
-            file: pkg.main.replace(/\.js$/, '.min.js'),
-				exports : 'named',
+            file: pkg.main,
             format: 'cjs',
         },
         plugins: [
             commonjs(),
+            append('module.exports = (JSOX.JSOX = JSOX);'),
+        ],
+    },
+    // CommonJS Minified
+    {
+        input: pkg.module,
+        output: {
+            file: pkg.main.replace(/\.js$/, '.min.js'),
+            format: 'cjs',
+        },
+        plugins: [
+            commonjs(),
+            append('module.exports = (JSOX.JSOX = JSOX);'),
             terser(),
         ],
     },
