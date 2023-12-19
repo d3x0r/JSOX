@@ -43,10 +43,8 @@
         acorn: "latest",
         "lint-staged": "latest",
 	// '/' is a comment character, and needs quotes
-        "@rollup/plugin-buble": "latest",
         "@rollup/plugin-commonjs": "latest",
-        "@rollup/plugin-node-resolve": "latest",
-        "@rollup/plugin-strip": "latest",
+        "rollup-plugin-insert": "latest",
         "rollup-plugin-terser": "latest"
     },
     "nyc": {

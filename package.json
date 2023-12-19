@@ -42,10 +42,8 @@
         "chai": "latest",
         "acorn": "latest",
         "lint-staged": "latest",
-        "@rollup/plugin-buble": "latest",
         "@rollup/plugin-commonjs": "latest",
-        "@rollup/plugin-node-resolve": "latest",
-        "@rollup/plugin-strip": "latest",
+        "rollup-plugin-insert": "latest",
         "rollup-plugin-terser": "latest"
     },
     "nyc": {
