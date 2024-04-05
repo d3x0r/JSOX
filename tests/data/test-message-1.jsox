@@ -1,0 +1,1 @@
+{id:QHVXQmJqAT$UFk__,op:updateTask,task:{altbin:'',arg:'',args:["--experimental-loader=sack.vfs/import.mjs","main.mjs"],bin:node,dependson:'',env:{'':daubbers,SITE:''},name:"Daubbers Launcher (8120)",noautorun:false,restarts:false,serviceName:'',work:"..\\daubbers"}}
