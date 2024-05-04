@@ -297,7 +297,7 @@ bytes of waste may be included.  That is incomplete values at the end of the str
 
 ## Pretty Images
 
-[Updated Images](https://d3x0r.github.io/EBNF-Visualizer?https://github.com/d3x0r/JSOX/raw/master/jsox2.ebnf)
+[Updated Images](https://d3x0r.github.io/EBNF-Visualizer?https://d3x0r.github.io/JSOX/jsox2.ebnf)
 
 Image produced by [EBNF Visualizer (Windows)](http://dotnet.jku.at/applications/Visualizer/#Down)
 from [jsox.ebnf](jsox.ebnf)
