@@ -65,7 +65,7 @@ require.extensions['.jsox'] = function (module, filename) {
 
 for( var n = 2; n < process.argv.length; n++ ) {
 	var object = require( process.argv[n] );
-	//console.log( "OUT:", process.argv[n], object );
+	console.log( "OUT:", process.argv[n], object );
 	var fileagain = JSOX.stringify( object );
 	var object2 = JSOX.parse( fileagain );
 	var fileagain2 = JSOX.stringify( object2 );

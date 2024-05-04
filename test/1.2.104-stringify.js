@@ -31,7 +31,7 @@ describe('JSOX stringify', function () {
 			, '':''
 			, get g() { return 0; }
 			, t:true } ) )
-			.to.equal( '{\'\':"",f:false,g:0,t:true,v:NaN,w:Infinity,x:null,y:"123",z:1}' );
+			.to.equal( '{\"\":"",f:false,g:0,t:true,v:NaN,w:Infinity,x:null,y:"123",z:1}' );
 	} );
 
 	it('can skip non-enumerable', function () {

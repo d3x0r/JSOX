@@ -88,7 +88,7 @@ describe('Added in 1.2.104; toJSOX, fromJSOX', function () {
 		const instance = stringifier.stringify( expected );
 		const simple = JSOX.stringify( expected );
 	        
-		expect( instance ).to.equal( '[A{a:555,name:"A"},B{b:134},X{name:"X",x:map{field:"value"}},Y{val:555}]' );
-		expect( simple ).to.equal( `[A{a:555,name:"A"},B{b:134},{name:"X",x:map{field:"value"}},{name:"Y",val:555,y:${JSOX.stringify(now)}}]` );
+		expect( instance ).to.equal( '[A{a:555,name:A},B{b:134},X{name:X,x:map{field:value}},Y{val:555}]' );
+		expect( simple ).to.equal( `[A{a:555,name:A},B{b:134},{name:X,x:map{field:value}},{name:Y,val:555,y:${JSOX.stringify(now)}}]` );
 	} );
 } );

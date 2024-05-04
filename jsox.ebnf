@@ -1,5 +1,5 @@
 Name     = "JSON Grammar".
-Author   = "someone".
+Author   = "d3x0r".
 Version  = "1.0".
 Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
                   | ( "/" "*" { "character" } "*" "/" )
@@ -26,8 +26,8 @@ Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n 
                 	"(Number)"( "(int)"( "0" ( 
                             ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
                             ( ( "o" | "O" ) "0-7" { "0-7" } ) |
-                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
-                            ( "0-7" {"0-7"})
+                            ( ( "b" | "B" ) "0-1" { "0-1" } ) |
+                            ( "0-9" {"0-9"})
                             )
 	       		  )
                 	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 
@@ -58,8 +58,8 @@ NumberRule =  ("(Number/Date/BigInt)"
                 	"(Number)"( "(int)"( "0" ( 
                             ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
                             ( ( "o" | "O" ) "0-7" { "0-7" } ) |
-                            ( ( "b" | "B" ) "0-1" { "0-1" ) |
-                            ( "0-7" {"0-7"})
+                            ( ( "b" | "B" ) "0-1" { "0-1" } ) |
+                            ( "0-9" {"0-9"})
                             )
 	       		  )
                 	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 

@@ -70,140 +70,140 @@ describe('Added in 1.2.105', function () {
    op: world,
    world: ~Wr{
       lines: [
-         ~L{
-            from: -5,
-            id: 0,
-            r: {
-               n: v3{
-                  x: 0,
-                  y: 1,
-                  z: 0
-               },
-               o: v3{
-                  x: -5,
-                  y: 0,
-                  z: 0
-               }
+      ~L{
+         from: -5,
+         id: 0,
+         r: {
+            n: v3{
+               x: 0,
+               y: 1,
+               z: 0
             },
-            to: 5
+            o: v3{
+               x: -5,
+               y: 0,
+               z: 0
+            }
          },
-         ~L{
-            from: -5,
-            id: 1,
-            r: {
-               n: v3{
-                  x: 1,
-                  y: 0,
-                  z: 0
-               },
-               o: v3{
-                  x: 0,
-                  y: 5,
-                  z: 0
-               }
+         to: 5
+      },
+      ~L{
+         from: -5,
+         id: 1,
+         r: {
+            n: v3{
+               x: 1,
+               y: 0,
+               z: 0
             },
-            to: 5
+            o: v3{
+               x: 0,
+               y: 5,
+               z: 0
+            }
          },
-         ~L{
-            from: -5,
-            id: 2,
-            r: {
-               n: v3{
-                  x: 1,
-                  y: 0,
-                  z: 0
-               },
-               o: v3{
-                  x: 0,
-                  y: -5,
-                  z: 0
-               }
+         to: 5
+      },
+      ~L{
+         from: -5,
+         id: 2,
+         r: {
+            n: v3{
+               x: 1,
+               y: 0,
+               z: 0
             },
-            to: 5
+            o: v3{
+               x: 0,
+               y: -5,
+               z: 0
+            }
          },
-         ~L{
-            from: -5,
-            id: 3,
-            r: {
-               n: v3{
-                  x: 0,
-                  y: 1,
-                  z: 0
-               },
-               o: v3{
-                  x: 5,
-                  y: 0,
-                  z: 0
-               }
+         to: 5
+      },
+      ~L{
+         from: -5,
+         id: 3,
+         r: {
+            n: v3{
+               x: 0,
+               y: 1,
+               z: 0
             },
-            to: 5
-         }
+            o: v3{
+               x: 5,
+               y: 0,
+               z: 0
+            }
+         },
+         to: 5
+      }
       ],
       names: [
-         ~N{
-            flags: {
-               vertical: false
-            },
-            id: 0,
-            name: "Default"
-         }
-		],
+      ~N{
+         flags: {
+            vertical: false
+         },
+         id: 0,
+         name: Default
+      }
+      ],
       sectors: [
-         ~S{
-            id: 0,
-            name: null,
-            r: {
-               n: v3{
-                  x: 0,
-                  y: 0,
-                  z: 1
-               },
-               o: v3{
-                  x: 0,
-                  y: 0,
-                  z: 0
-               }
+      ~S{
+         id: 0,
+         name: null,
+         r: {
+            n: v3{
+               x: 0,
+               y: 0,
+               z: 1
             },
-            texture: ~T{
-               flags: {
-                  color: true
-               },
-               name: ref["world","names",0]
+            o: v3{
+               x: 0,
+               y: 0,
+               z: 0
+            }
+         },
+         texture: ~T{
+            flags: {
+               color: true
             },
-            wall: ~Wl{
+            name: ref["world","names",0]
+         },
+         wall: ~Wl{
+            end: ~Wl{
                end: ~Wl{
-                  end: ~Wl{
-                     end: ref["world","sectors",0,"wall","end"],
-                     end_at_end: true,
-                     id: 3,
-                     into: null,
-                     line: ref["world","lines",3],
-                     start: ~Wl{
-                        end: ref["world","sectors",0,"wall","end","end"],
-                        end_at_end: false,
-                        id: 2,
-                        into: null,
-                        line: ref["world","lines",2],
-                        start: ref["world","sectors",0,"wall"],
-                        start_at_end: false
-                     },
-                     start_at_end: true
-                  },
-                  end_at_end: false,
-                  id: 1,
+                  end: ref["world","sectors",0,"wall","end"],
+                  end_at_end: true,
+                  id: 3,
                   into: null,
-                  line: ref["world","lines",1],
-                  start: ref["world","sectors",0,"wall"],
+                  line: ref["world","lines",3],
+                  start: ~Wl{
+                     end: ref["world","sectors",0,"wall","end","end"],
+                     end_at_end: false,
+                     id: 2,
+                     into: null,
+                     line: ref["world","lines",2],
+                     start: ref["world","sectors",0,"wall"],
+                     start_at_end: false
+                  },
                   start_at_end: true
                },
                end_at_end: false,
-               id: 0,
+               id: 1,
                into: null,
-               line: ref["world","lines",0],
-               start: ref["world","sectors",0,"wall","end","end","start"],
-               start_at_end: false
-            }
+               line: ref["world","lines",1],
+               start: ref["world","sectors",0,"wall"],
+               start_at_end: true
+            },
+            end_at_end: false,
+            id: 0,
+            into: null,
+            line: ref["world","lines",0],
+            start: ref["world","sectors",0,"wall","end","end","start"],
+            start_at_end: false
          }
+      }
       ]
    }
 }`
