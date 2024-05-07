@@ -2,7 +2,7 @@ Name     = "JSON Grammar".
 Author   = "d3x0r".
 Version  = "1.0".
 
-WS =  "(whitespace)"  ( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" ) { "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" }  .
+WS =  "(whitespace)"  ( "\\x20" | "\\r" | "\\n" | "\\t" | "\\u07ec" | "\\u07ed" ) { "\\x20" | "\\r" | "\\n" | "\\t" | "\\u07ec" | "\\u07ed" }  .
 
 LegalEscapes =  "(Legal Escapes)" ( "b" | "n" | "r" | "f" | "t" | ("'" | '"' | "`")
                                               | ( "u" ( "{" {"0-9" | "A-F" | "a-f"} "}" | "4 hex digits" ) ) 
@@ -10,16 +10,20 @@ LegalEscapes =  "(Legal Escapes)" ( "b" | "n" | "r" | "f" | "t" | ("'" | '"' | "
                                               | ( "0-2" "0-7" "0-7" )
                                               ).
 
-Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n or \r" } ("\r"|"\n") )
+Val =  "(Value)" ( 
+       ("(Comment)" ( ( "/" "/" { "character not \\n or \\r" } ("\\r"|"\\n") )
                   | ( "/" "*" { "character" } "*" "/" )
-                  )|
-       ( "(whitespace)" {( "\x20" | "\r" | "\n" | "\t" | "\u07ec" | "\u07ed" )} ) |
-       ("(String)" ( '"'|  "'"| "`") ( ( 'character not open-quote or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) ) 
-                                     { ( 'character not open-quote or \ ' ) | ( '\' '"' ) | ("\" "\" ) | ( "\" "Legal Escapes" ) } 
+       )|
+       ( "(whitespace)" {( "\\x20" | "\\r" | "\\n" | "\\t" | "\\u07ec" | "\\u07ed" )} ) |
+       ("(String)" ( '"'|  "'"| "`") ( ( 'character not open-quote or \\ ' ) | ( '\\' '"' ) | ("\\" "\\" ) | ( "\\" "Legal Escapes" ) ) 
+                                     { ( 'character not open-quote or \\ ' ) | ( '\\' '"' ) | ("\\" "\\" ) | ( "\\" "Legal Escapes" ) } 
                         )
         ( '"'|  "'"| "`") )|
-       ( "(ident)" ( "String" | ( "non-digit" | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" ) { | "non-operator" | "not { [ ( ) ] } , : double-quote ' `" | "unicode non-identifier characters" | "a-z" "A-Z" "0-9" } )
-       )|
+       ( "(ident)" ( "String" |  ( ( "not \\u{FEFF}" | "non-digit" | "not { [ ( < > ) ] } , : \" ' ` ~ ! + - * / ." | "a-z" "A-Z" ) 
+                                   { "not \\u{FEFF}" | "non-digit" | "not { [ ( < > ) ] } , : \" ' ` ~ ! + - * / ." | "a-z" "A-Z" "0-9" } 
+                                 ) 
+                   )
+       )
        ( "(Object)" "{" ( (|"whitespace")ident(|"whitespace") ":" Value ) { "," ( (|"whitespace") ident (|"whitespace") ":" Value) } "}" ) | 
        ( "(typed-object-def)"  ident object ) | 
        ( "(typed-object-use)"  ident "{" ( Value ) { "," (Value) } "}" ) | 
@@ -27,25 +31,23 @@ Val =  "(Value)" (|"whitespace") ( ("(Comment)" ( ( "/" "/" { "character not \n 
        ( "(typed-array)" "ident" "Array" ) | 
        ( "(typed-string)" "ident" String ) | 
         ( |"-") ( "NaN" | "Infinity" | 
-                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Bgin*/"
-                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
-                	"(Number)"( "(int)"( {"0"|"_"} ( 
-                            ( ( "x" | "X" ) { "0-9" | "A-F" | "a-f" |"_"} ) |
+                ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Begin*/"
+                ( ( "(BigInt)" (("0-9"){ "0-9"|"_" }) "n" ) |
+                	"(Number)"( "(int)" (   ( "if 0" {"_"} ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f" |"_") {"0-9" | "A-F" | "a-f" |"_"} ) |
                             ( ( "o" | "O" ) ("0-7"|"_") { "0-7"|"_" } ) |
-                            ( ( "b" | "B" ) ("0-1"|"_") { "0-1"|"_" } ) |
-                            ( ("0-9"|"_") {"0-9"|"_"})
-                            )
-	       		  )
-                	  | "(float)" ( "0-9" | "." |"_") { "0-9" | "."|"_"} ( "(int) if no . " 
-                                                                                   | ( ( "e" | "E" ) {|"+"|"-"|"_"}  ("0-9"|"_") { "0-9"|"_" } ) )
-                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "A-F"| "a-f"  ) ) "/*number terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
-                        | "(Date)" ( ( ("0-9" | ":" | "T" | "-" | "+")
-                                       { "0-9" | ":" | "T" | "-" | "+"  }) 
-                                   (  ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "Z"| "T"  ) ) "/*date terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )  
-                                   | ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
-                                   | "Z" ) )                            
+                            ( ( "b" | "B" ) ("0-1"|"_") { "0-1"|"_" } ) ) )
+                            | ( ("0-9"|"_") {"0-9"|"_"} (| "(float)" (| "." { "0-9" |"_"} ) (| ( ( "e" | "E" ) (|"+"|"-"|"_")  ("0-9"|"_") { "0-9"|"_" } ) ) ) )
+								               )
+               
+                )
+                        | "(Date)" ( ( ( "0-9" |"-"){"0-9"|"-"} "T" ( "0-9" |":"){"0-9"|":"} (|"." ("0-9"){"0-9"} )) 
+                                  (  
+                                   |  "/*Timezone*/" ( ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
+                                   | "Z" ) ) )
+           
                  )) |
-       true | false  | null | undefined ) (|"whitespace").
+       true | false  | null | undefined ).
 
 PredefinedTypes = (
 		       ( "(TypedArray)" ( "ab" | "u8" | "s8" | "u8" | "u16" | "s16" 
@@ -60,21 +62,19 @@ PredefinedTypes = (
 
 NumberRule =  ("(Number/Date/BigInt)" 
 		( |"-") ( "NaN" | "Infinity" | 
-                  ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Bgin*/"
-                    ( "/*  underscore '_' between any following sequence's symbols */"   | ( "(BigInt)" { "0-9" } "n" ) |
-                	"(Number)"( "(int)"( "0" ( 
-                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f") { "0-9" | "A-F" | "a-f" } ) |
-                            ( ( "o" | "O" ) "0-7" { "0-7" } ) |
-                            ( ( "b" | "B" ) "0-1" { "0-1" } ) |
-                            ( "0-9" {"0-9"})
-                            )
-	       		  )
-                	  | "(float)" ( "0-9" | "." ) { "0-9" | "."} ( "(int) if no . " 
-                                                                                   | ( ( "e" | "E" ) ( "0-9" | "+" "0-9" | "-" "0-9" ) { "0-9" } ) )
-                        ) ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "A-F"| "a-f"  ) ) "/*number terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )
-                        | "(Date)" ( ( ("0-9" | ":" | "T" | "-" | "+")
-                                       { "0-9" | ":" | "T" | "-" | "+"  }) 
-                                   (  ( |"NOT THESE:" ( "0-9"| "-"| ":"| "+" | "Z"| "T"  ) ) "/*date terminator*/" ( "," | "}" | "]" | "whitespace /* outside of array or object */" )  
-                                   | ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
-                                   | "Z" ) )                            
+                ( ( "-" | "+" ) { "-" | "+" } | ("0-9")  ) "/*Number Parser Begin*/"
+                ( ( "(BigInt)" (("0-9"){ "0-9"|"_" }) "n" ) |
+                	"(Number)"( "(int)" (   ( "if 0" {"_"} ( 
+                            ( ( "x" | "X" ) ("0-9" | "A-F" | "a-f" |"_") {"0-9" | "A-F" | "a-f" |"_"} ) |
+                            ( ( "o" | "O" ) ("0-7"|"_") { "0-7"|"_" } ) |
+                            ( ( "b" | "B" ) ("0-1"|"_") { "0-1"|"_" } ) ) )
+                            | ( ("0-9"|"_") {"0-9"|"_"} (| "(float)" (| "." { "0-9" |"_"} ) (| ( ( "e" | "E" ) (|"+"|"-"|"_")  ("0-9"|"_") { "0-9"|"_" } ) ) ) )
+								               )
+               
+                )
+                        | "(Date)" ( ( ( "0-9" |"-"){"0-9"|"-"} "T" ( "0-9" |":"){"0-9"|":"} (|"." ("0-9"){"0-9"} )) 
+                                  (  
+                                   |  "/*Timezone*/" ( ( |"+"|"-") "0-9" "0-9" ":" "0-9" "0-9" 
+                                   | "Z" ) ) )
+           
                  ))).
