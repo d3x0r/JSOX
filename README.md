@@ -15,8 +15,8 @@ to/from JSOX handlers by users of this library.   The data, decoded as
 the object '{}', array '[]', or string '""' is passed to the fromJSOX 
 handler, and the resulting value returned as the decoded object.
  
-Typed-objects may also be emitted as a class-defintition and then class-references.
-A class-defintition defines the fields in the object, and a class-reference would
+Typed-objects may also be emitted as a class-definition and then class-references.
+A class-definition defines the fields in the object, and a class-reference would
 provide the values for each field respectively.
 
 A typed-object example: `v{ x, y } { a : v{1,2} }`, which decodes as `{ a : {x:1,y:2} }`.
@@ -33,10 +33,10 @@ names repeated often.
  * adds support for circular references.
  * typed-strings, typed-arrays, and typed-objects, for user defined types and to and from JSOX methods. [more](#jsox-typed-objects-typed-arrays-and-typed-strings)
  * C style commants; `//` and `/* */`.
- * string continuations using \ at the end of the line removes the newline; Otherwise strings continue until the next quote.
+ * string continuations using `\` at the end of the line removes the newline; Otherwise strings continue until the next quote.
  * `"`, `'`, ` `` `, are all valid quote pairings, with no differnce in meaning, other than the quotes they contain.
  * adds optional underscores in numbers, allowing user formatting of log numbers.
- * fields are canonically ordered, so all objects that have the same field names will have their names in the same order.  Keys in Map()s are not ordered.
+ * fields are canonically ordered, so all objects that have the same field names will have their names in the same order.  Keys in `Map()`s are not ordered.
  * trailing commas are allowed, and silently ignored; however empty comma pairs in arrays will generate empty elements; and (throw an error in objects?).
  * and of course `o === JSOX.parse(JSON.stringify(o))` should always be exactly true.
 
@@ -89,13 +89,13 @@ JSOX is a **(super-sub)set of JavaScript**, although adds **no new data types**,
 and **works with all existing JSON content**. Some features allowed in JSOX
 are not directly supported by Javascript; although all javascript parsable
 features can be used in JSOX, except functions or any other code construct, 
-transporting only data save as JSON.  Most ES6 structure can be parsed, 
+transporting only data saved as JSON.  Most ES6 structure can be parsed, 
 with the extension of classes/macro-tags the reverse is not true.  It was true for
 JSON6.
 
-JSOX is a proprosal for an official successor to JSON, and JSOX stringified 
+JSOX is a proposal for an official successor to JSON, and JSOX stringified 
 content *will not* work with existing JSON parsers. For this reason, JSOX 
-files use a new .jsox extension. *(TODO: new MIME type needed too.)*
+files use a new `.jsox` extension. *(TODO: new MIME type needed too.)*
 
 The code is a **reference JavaScript implementation** for both Node.js
 and all browsers. The code is derrived from JSON-6 sources.
@@ -138,28 +138,28 @@ JSOX. **All of these are optional**.
  - Concise representation of dates and times including as much information as is
 available for the timestamp(timezone).  
 
- - Supports encode and decode of BigInt numbers with no application overhead. 
+ - Supports encode and decode of `BigInt` numbers with no application overhead. 
  - reduces overhead from none-requires quotes for identifiers.
  - can further reduce overall output size by using macro tags.
 
 ## Caveats
 
-JSOX.stringify will produce output that JSON.parse cannot handle; JSOX.parse
-can always handle JSON.stringify.
+`JSOX.stringify` will produce output that `JSON.parse` cannot handle; `JSOX.parse`
+can always handle `JSON.stringify`.
 
 ### Summary of Changes from JSON6
 
-  - BigInt encoding
-  - ISO date/time Encoding/decoding (as part of Number format)
+  - `BigInt` encoding
+  - ISO date/time Encoding/decoding (as part of `Number` format)
   - Adds classes(revive user types) and macro tags to reduce redundant information.
 
 ### Summary of Changes from JSON6/JSON
 
-  - Keyword undefined
+  - Keyword `undefined`
   - Objects/Strings back-tick quoted strings (no template support, just quotes); Object key names can be unquoted.
-  - Strings - generous multiline string definition; all javascript character escapes work. \(\x##, \0###, \u####, \u\{\} \)
+  - Strings - generous multiline string definition; all javascript character escapes work. \(`\x##`, `\0###`, `\u####`, `\u\{\}` \)
   - Numbers - underscore digit separation in numbers, octal and binary formats; all javascript number notations.
-Addtionally support leading 0 to interpret as octal as C, C++ and other languages support.
+Addtionally support leading `0` to interpret as octal as C, C++ and other languages support.
   - Arrays - empty members
   - Streaming reader interface
   - (Twice the speed of JSON5; subjective)
@@ -174,9 +174,9 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 ### ArrayBuffer/TypedArray
 
-- (**JSOX**) Support transporting ArrayBuffer and TypedArray fields. This is implemented with constants as class user types applied prefixing and opening brace '\[' and encoding the binary data as a base64 string(without quotes) before the closing ']'.
-  - these are prefix tags that can be applied.  u8, u16, cu8, u32, s8,s16, s32, f32, f64, ab; the array is a base64 string without quotes.
-  - Base64 is as dense as is feasible; it's a 33% loss; where utf8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
+- (**JSOX**) Support transporting `ArrayBuffer` and `TypedArray` fields. This is implemented with constants as class user types applied prefixing an opening bracket '`[`' and encoding the binary data as a base64 string(without quotes) before the closing '`]`'.
+  - these are prefix tags that can be applied.  `u8`, `u16`, `cu8`, `u32`, `s8`, `s16`, `s32`, `f32`, `f64`, `ab`; the array is a base64 string without quotes.
+  - Base64 is as dense as is feasible; it's a 33% loss; where UTF-8 encoding of random bytes is 50% loss.  Something like base127 would be 7 bytes to 8 encoded bytes; and potential length penalty of 5 bytes.
 
 ### Objects
 
@@ -186,7 +186,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - Object keys can be double-quoted (original JSON).
 
-- Objects can have a single trailing comma. Excessive commas in objects will cause an exception. '{ a:123,,b:456 }' is invalid.
+- Objects can have a single trailing comma. Excessive commas in objects will cause an exception. '`{ a:123,,b:456 }`' is invalid.
 
 
 [mdn_variables]: https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Core_Language_Features#Variables
@@ -195,7 +195,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - Arrays can have trailing commas. If more than 1 is found, additional empty elements will be added.
 
-- (**JSON6**) Arrays can have comma ( ['test',,,'one'] ), which will result with empty values in the empty places.
+- (**JSON6**) Arrays can have comma ( `['test',,,'one']` ), which will result with empty values in the empty places.
 
 ### Strings
 
@@ -203,7 +203,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - Strings can be single-quoted.
 
-- Strings can be back-tick (\`) ([grave accent](https://en.wikipedia.org/wiki/Grave_accent)) -quoted.
+- Strings can be back-tick (`` ` ``) ([grave accent](https://en.wikipedia.org/wiki/Grave_accent)) -quoted.
 
 - Strings can be split across multiple lines; just prefix each newline with a
   backslash. [ES5 [§7.8.4](http://es5.github.com/#x7.8.4)]
@@ -213,17 +213,17 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 ### Numbers
 
-- (**JSOX**) BitInt numbers are stringified with suffix of 'n' as in ES(?), and implemented in V8(google/chrome/node) 2018/09/12.  BigInt number parsed with 'n' suffix.
+- (**JSOX**) `BigInt` numbers are stringified and parsed as integers with a suffix of '`n`' per [ES2020](https://github.com/tc39/proposal-bigint).
 
-- (**JSON6**) Numbers can have underscores separating digits '_' these are treated as zero-width-non-breaking-space. ([Proposal](https://github.com/tc39/proposal-numeric-separator) with the exception that _ can preceed or follow . and may be trailing.)
+- (**JSON6**) Numbers can have underscores separating digits '`_`' these are treated as zero-width-non-breaking-space. ([Proposal](https://github.com/tc39/proposal-numeric-separator) with the exception that `_` can preceed or follow `.` and may be trailing.)
 
-- Numbers can be hexadecimal (base 16).  ( 0x prefix )
+- Numbers can be hexadecimal (base 16).  ( `0x` prefix )
 
-- (**JSON6**) Numbers can be binary (base 2).  (0b prefix)
+- (**JSON6**) Numbers can be binary (base 2).  (`0b` prefix)
 
-- (**JSON6**) Numbers can be octal (base 8).  (0o prefix)
+- (**JSON6**) Numbers can be octal (base 8).  (`0o` prefix)
 
-- (**JSON6**) Decimal numbers can have leading zeros.  (0 prefix followed by more numbers, without a decimal)
+- (**JSON6**) Decimal numbers can have leading zeros.  (`0` prefix followed by more numbers, without a decimal)
 
 - Numbers can begin or end with a (leading or trailing) decimal point.
 
@@ -231,7 +231,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - Numbers can begin with an explicit plus sign.
 
-- Numbers can begin with multiple minus signs. For example '----123' === 123.
+- Numbers can begin with multiple minus signs. For example, `----123` parses to `123`.
 
 ### Dates
 
@@ -239,12 +239,12 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 ### Keyword Values
 
-- (**JSON6**) supports 'undefined' in addition to 'true', 'false', 'null'.
+- (**JSON6**) supports '`undefined`' in addition to '`true`', '`false`', '`null`'.
 
 ### Comments
 
-- Both inline (single-line using '//' (todo:or '#'?) ) and block (multi-line using \/\* \*\/ ) comments are allowed.
-- (**JSOX**) single line comments using '#'; imposes required quoting for '#' as a field name.
+- Both inline (single-line using '`//`' (todo:or '#'?) ) and block (multi-line using `/* ... */` ) comments are allowed.
+- (**JSOX**) single line comments using '`#`'; imposes required quoting for '`#`' as a field name.
 
 
 ```
@@ -283,12 +283,12 @@ The high value characters have multiple possible variations based on evaluation 
 
 #### Base64 vs UTF-8 Encoding
 
-UTF-8, for character 0-127 requires 1 byte; 128-255 requires 2 bytes.  For random data 0-255, 1.5 bytes will, on average, bt used
+UTF-8, for character 0-127 requires 1 byte; 128-255 requires 2 bytes.  For random data 0-255, 1.5 bytes will, on average, be used
 to represent the string.  So this is 150% larger than the original string.  Even if like a base 2^40 bits, which would encode 5 bytes 
 into a single (very extended) utf8 encoding, each byte has the prefix of 2 bits `10xx xxxx`, which gives 6 bits per byte used.
 
-Base64 is 6 bits per byte used, so instead of having a complex encoder, base64 is the optimal of 3:4 byte expasion (133%) which is 
-the ideal that extra-long UTF8 encoding coule reach.
+Base64 is 6 bits per byte used, so instead of having a complex encoder, base64 is the optimal of 3:4 byte expansion (133%) which is 
+the ideal that extra-long UTF-8 encoding could reach.
 
 An alternative might be a base128 encoding, which would be close to utf-8, but would actually require 129 characters, one to indicate
 the bytes that are unused.  7 bytes expand to 8, gathering the top bit of each of the 7 bytes of each one into one more byte; it could
@@ -539,14 +539,14 @@ JSOX.fromJSOX( "stringTest", stringTest, stringTest.fromJSOX );
 Registers both to and from methods or a spsecified name, using the specified prototype to match during stringify.
 Internally, calls the above functions with the parameters split as appropriate.
 
-Regsitering the same name more than once for From or To throws an error.
+Registering the same name more than once for From or To throws an error.
 
 ``` js
 
 JSOX.registerToFrom( "stringTest", stringTest
 	, function() { return '"' + this.toString() + '"' }
 	, function() {
-		console.log( "Resuurect from String:[%s]", this /*string*/ );
+		console.log( "Resurrect from String:[%s]", this /*string*/ );
 		return new stringTest( this );  // some stringTest class with string initializer
 	}
 );
@@ -555,8 +555,8 @@ JSOX.registerToFrom( "stringTest", stringTest
 ### JSOX typed-objects, typed-arrays, and typed-strings
 
 typed-data is represented in the JSOX stream as \<identifier\>\[data\].  For objects, this is a document compression technique,
-which reduces the size of data to process.  For arrays, internally, fixed types represent ES6 TypedArray types (u8,s8, u16,f32,etc);
-Another internal type is 'ref' which uses the array to have a list of element identifiers that define the path to the original object
+which reduces the size of data to process.  For arrays, internally, fixed types represent ES6 TypedArray types (`u8`, `s8`, `u16`, `f32`, etc);
+Another internal type is '`ref`' which uses the array to have a list of element identifiers that define the path to the original object
 reference.  Another, simple variation is to implement typed-strings, which allows `color"0x1234568"` to have a `fromJSOX` method that
 is passed the string, and can result with a color object.
 
@@ -564,8 +564,8 @@ In each case, in the following example JSOX, the same 'color' fromJSOX
 method will be called.  It will be invoked with a string, with an array, 
 with an object, with an object, and with an object respectively.
 
-```
-var JSOX= require( "JSOX" );
+```js
+var JSOX = require( "JSOX" );
 
 function Color() {
 	this.r = 100;
@@ -576,7 +576,7 @@ function Color() {
 // notice that the literal quotes to result as output are returned here.
 // this allows the encoder to use an object {}, an array [] or a string ""
 // to pass to the reviver function. 
-sack.JSOX.registerToFrom( "color", Color.prototype, function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
+JSOX.registerToFrom( "color", Color.prototype, function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
            , function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
            );
 
@@ -587,7 +587,7 @@ JSOX.parse( JSOX.stringify( c ) ); // result is   'Color { r: 100, g: 150, b: 20
 
 ```
 
-```
+```js
 
 // this are all variations which may be used to revive a color object
 color"0x12345678"                   // typed-string
@@ -599,7 +599,7 @@ color[0x12,0x34,0x56,0x78]          // typed-array
 color{r,g,b,a}            // typed-object definition
 color{0x12,34,0x56,0x78}  // typed-object subsequent usage
 
-// if no typed-object definition is rquired, then 
+// if no typed-object definition is required, then 
 // the typed-object must never be used at a root level.
 
 { a : color{r:0x12,g:0x34,b:0x56,a:0x78} } // object containing typed-object fromJSOX only, no pre-field-definition
@@ -623,12 +623,12 @@ The names used for class names and for Macro tags may overlap, and then the macr
 user types.  If only a Macro Tag is used, then all objects revived with that tag have the same prototype, which may be 
 extended in-place for all such objects.
 
-The definition of a Macro Tag is an identifer at the top level (before the JSOX data) followed immediately by an open brace ('{'),
-whitespace is not allowed.  Within the open brace '{' until the close brace '}' is a list of names separated by commas.
+The definition of a Macro Tag is an identifer at the top level (before the JSOX data) followed immediately by an open brace ('`{`'),
+whitespace is not allowed.  Within the open brace '`{`' until the close brace '`}`' is a list of names separated by commas.
 If a colon(`:`) is encountered before the first comma(`,`) , then instead of behaving as a Macro definition, the
 object is revived as a named user type class instead. 
 
-All subsequent references to the defined tag are `<identifier>` followed by '{' until the close '}', is a list of comma separated values.  
+All subsequent references to the defined tag are `<identifier>` followed by '`{`' until the close '`}`', is a list of comma separated values.  
 Each value is assign the name in the order it was defined at the definition.  This is effectively a 'zip' operation between the names
 specfied at the start, and the values specified later.
 
