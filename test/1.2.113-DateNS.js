@@ -2,10 +2,10 @@
 const JSOX = require( "../lib/jsox.js" );
 
 describe('Added in 1.2.113 (DateNS)', function () {
-	const t = JSOX.DateNS("2022-01-01T00:00:00Z").toISOString();
+	const t = JSOX.stringify( new JSOX.DateNS("2022-01-01T00:00:00Z"));
 	const plus = t.lastIndexOf( "+" );
 	const minus = t.lastIndexOf( "-" );
-	const Z = t.lastINdexOf( "Z" );
+	const Z = t.lastIndexOf( "Z" );
 	const pos = ( plus > minus )?(plus>Z)?plus:Z:(minus>Z)?minus:Z;
 	const tz = t.substr( pos );
 	it( 'handles stringify', function() {
