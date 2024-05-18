@@ -1,6 +1,7 @@
 # JSOX – JavaScript Object eXchange format.
 
-[![Build Status](https://travis-ci.com/d3x0r/JSOX.svg?branch=master)](https://travis-ci.com/d3x0r/JSOX)
+[![buddy pipeline](https://app.buddy.works/d3ck0r-1/jsox/pipelines/pipeline/493635/badge.svg?token=60065f4e65bb4060abba4ed78e886e269a135fdbc7f1ae03ccc0e79af3cffe76 "buddy pipeline")](https://app.buddy.works/d3ck0r-1/jsox/pipelines/pipeline/493635)
+
 
 100% Compatible reader for JSON.  JSOX.stringify cannot generate JSON
 compatible output; it would lose all the features anyway; use existing
