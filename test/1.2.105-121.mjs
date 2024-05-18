@@ -300,7 +300,6 @@ const str1 =                  `"~Wr"{lines:["~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o
 
 		const stringifier = JSOX.stringifier();
 	        
-console.log( "Reigstering Wr2 with the stringifier..." );
 		stringifier.toJSOX( "~Wr2", World );
 		stringifier.toJSOX( "~L", Line );
 		stringifier.toJSOX( "~Wl", Wall );
@@ -311,13 +310,11 @@ console.log( "Reigstering Wr2 with the stringifier..." );
 		stringifier.toJSOX( "r", Ray );
 		const mockStr = stringifier.stringify( world );
 		const mockExpect = '"~Wr2"{lines:["~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:["~N"{flags:{vertical:false},id:0,name:Default}],sectors:["~S"{id:0,r:r{n:v3{x:0,y:0,z:0},o:v3{x:0,y:0,z:0}},texture:"~T"{flags:{color:true},name:ref["names",0]},wall:"~Wl"{end:"~Wl"{end:"~Wl"{end:ref["sectors",0,"wall","end"],line:ref["lines",3],start:"~Wl"{end:ref["sectors",0,"wall","end","end"],line:ref["lines",2],start:ref["sectors",0,"wall"]}},line:ref["lines",1],start:ref["sectors",0,"wall"]},line:ref["lines",0],start:ref["sectors",0,"wall","end","end","start"]}}],walls:[ref["sectors",0,"wall"],ref["sectors",0,"wall","end"],ref["sectors",0,"wall","end","end","start"],ref["sectors",0,"wall","end","end"]]}';
-	console.log( "This is the testpoint?" );	        
 		
 		const fromMock = JSOX.parse( mockStr );
 	expect( fromMock ).to.deep.equal( world );
 		const fromMockStr = stringifier.stringify(  fromMock );
 		//	console.log( "mockstr should be close?", "\n",mockStr, "\n",mockExpect,  "\n",fromMockStr );
-		console.log( "Testing what?", fromMockStr );	
 		expect( mockStr ).to.equal( mockExpect );
 		expect( fromMockStr ).to.equal( mockExpect );
 
@@ -328,7 +325,6 @@ console.log( "Reigstering Wr2 with the stringifier..." );
 		const str = '{op:world,world:~Wr{lines:[{flags:{vertical:false},id:0,name:"Default"}],names:ref["lines"]}}'
 		expect( function() {
 	                const obj = JSOX.parse( str );
-        	        console.log( "OBJ" );
 		// Error is like 'Path did not resolve properly.lines at lines(0)'
 		} ).to.throw( Error );
         } );
