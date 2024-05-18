@@ -57,10 +57,8 @@ JSOX.addType( "v3", Vector );
 function Ray() { this.n = new Vector(); this.o = new Vector(); }
 JSOX.addType( "r", Ray );
 
-describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
-	// the stringifier now includes ~ as a quote requirement, generating "~L" instead of ~L previously.
-   // while the latter is still valid, the stringifier fails this test - a replacment test was added.
-	return true;
+describe('Added in 1.2.105', function () {
+
 	it( 'Handles Arrays of Typed Items', function() {
 		const str1 = '{op:world,world:~Wr{lines:[~L{from:-5,id:0,r:{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},~L{from:-5,id:1,r:{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},~L{from:-5,id:2,r:{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},~L{from:-5,id:3,r:{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},id:0,name:Default}],sectors:[~S{id:0,name:null,r:{n:v3{x:0,y:0,z:1},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["world","names",0]},wall:~Wl{end:~Wl{end:~Wl{end:ref["world","sectors",0,"wall","end"],end_at_end:true,id:3,into:null,line:ref["world","lines",3],start:~Wl{end:ref["world","sectors",0,"wall","end","end"],end_at_end:false,id:2,into:null,line:ref["world","lines",2],start:ref["world","sectors",0,"wall"],start_at_end:false},start_at_end:true},end_at_end:false,id:1,into:null,line:ref["world","lines",1],start:ref["world","sectors",0,"wall"],start_at_end:true},end_at_end:false,id:0,into:null,line:ref["world","lines",0],start:ref["world","sectors",0,"wall","end","end","start"],start_at_end:false}}],walls:[ref["world","sectors",0,"wall"],ref["world","sectors",0,"wall","end"],ref["world","sectors",0,"wall","end","end","start"],ref["world","sectors",0,"wall","end","end"]]}}'
 		const obj1 = JSOX.parse( str1 );
@@ -70,9 +68,9 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
 		const output = `
 {
    op: world,
-   world: ~Wr{
+   world: "~Wr"{
       lines: [
-      ~L{
+      "~L"{
          from: -5,
          id: 0,
          r: {
@@ -89,7 +87,7 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
          },
          to: 5
       },
-      ~L{
+      "~L"{
          from: -5,
          id: 1,
          r: {
@@ -106,7 +104,7 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
          },
          to: 5
       },
-      ~L{
+      "~L"{
          from: -5,
          id: 2,
          r: {
@@ -123,7 +121,7 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
          },
          to: 5
       },
-      ~L{
+      "~L"{
          from: -5,
          id: 3,
          r: {
@@ -142,7 +140,7 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
       }
       ],
       names: [
-      ~N{
+      "~N"{
          flags: {
             vertical: false
          },
@@ -151,7 +149,7 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
       }
       ],
       sectors: [
-      ~S{
+      "~S"{
          id: 0,
          name: null,
          r: {
@@ -166,21 +164,21 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
                z: 0
             }
          },
-         texture: ~T{
+         texture: "~T"{
             flags: {
                color: true
             },
             name: ref["world","names",0]
          },
-         wall: ~Wl{
-            end: ~Wl{
-               end: ~Wl{
+         wall: "~Wl"{
+            end: "~Wl"{
+               end: "~Wl"{
                   end: ref["world","sectors",0,"wall","end"],
                   end_at_end: true,
                   id: 3,
                   into: null,
                   line: ref["world","lines",3],
-                  start: ~Wl{
+                  start: "~Wl"{
                      end: ref["world","sectors",0,"wall","end","end"],
                      end_at_end: false,
                      id: 2,
@@ -214,13 +212,13 @@ describe('Added in 1.2.105(deprecated in 1.2.121)', function () {
 
 
 	it( 'Handles Arrays of Typed Items(2)', function() {
-		const str2a = '{op:world,world:~Wr2{lines:[~L{from:-5,id:0,r:{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},~L{from:-5,id:1,r:{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},~L{from:-5,id:2,r:{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},~L{from:-5,id:3,r:{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},id:0,name:Default}],sectors:[~S{id:0,name:null,r:{n:v3{x:0,y:0,z:1},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["world","names",0]},wall:~Wl{end:~Wl{end:~Wl{end:ref["world","sectors",0,"wall","end"],end_at_end:true,id:3,into:null,line:ref["world","lines",3],start:~Wl{end:ref["world","sectors",0,"wall","end","end"],end_at_end:false,id:2,into:null,line:ref["world","lines",2],start:ref["world","sectors",0,"wall"],start_at_end:false},start_at_end:true},end_at_end:false,id:1,into:null,line:ref["world","lines",1],start:ref["world","sectors",0,"wall"],start_at_end:true},end_at_end:false,id:0,into:null,line:ref["world","lines",0],start:ref["world","sectors",0,"wall","end","end","start"],start_at_end:false}}],walls:[ref["world","sectors",0,"wall"],ref["world","sectors",0,"wall","end"],ref["world","sectors",0,"wall","end","end","start"],ref["world","sectors",0,"wall","end","end"]]}}'
-const str1 =                  `~Wr{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},name:Default}],sectors:[~S{id:0,name:null,r:r{n:v3{x:0,y:0,z:1},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["names",0]}
-,wall:~Wl{end:
-	~Wl{end:
-		~Wl{end:ref["sectors",0,"wall","end"],end_at_end:true,id:3,into:null,line:ref["lines",3],
+		const str2a = '{op:world,world:~Wr2{lines:["~L"{from:-5,id:0,r:{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},"~L"{from:-5,id:1,r:{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},"~L"{from:-5,id:2,r:{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},"~L"{from:-5,id:3,r:{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},id:0,name:Default}],sectors:[~S{id:0,name:null,r:{n:v3{x:0,y:0,z:1},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["world","names",0]},wall:"~Wl"{end:"~Wl"{end:"~Wl"{end:ref["world","sectors",0,"wall","end"],end_at_end:true,id:3,into:null,line:ref["world","lines",3],start:"~Wl"{end:ref["world","sectors",0,"wall","end","end"],end_at_end:false,id:2,into:null,line:ref["world","lines",2],start:ref["world","sectors",0,"wall"],start_at_end:false},start_at_end:true},end_at_end:false,id:1,into:null,line:ref["world","lines",1],start:ref["world","sectors",0,"wall"],start_at_end:true},end_at_end:false,id:0,into:null,line:ref["world","lines",0],start:ref["world","sectors",0,"wall","end","end","start"],start_at_end:false}}],walls:[ref["world","sectors",0,"wall"],ref["world","sectors",0,"wall","end"],ref["world","sectors",0,"wall","end","end","start"],ref["world","sectors",0,"wall","end","end"]]}}'
+const str1 =                  `"~Wr"{lines:["~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},name:Default}],sectors:[~S{id:0,name:null,r:r{n:v3{x:0,y:0,z:1},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["names",0]}
+,wall:"~Wl"{end:
+	"~Wl"{end:
+		"~Wl"{end:ref["sectors",0,"wall","end"],end_at_end:true,id:3,into:null,line:ref["lines",3],
 			start:
-			~Wl{end:ref["sectors",0,"wall","end","end"],end_at_end:false,id:2,into:null,line:ref["lines",2],start:ref["sectors",0,"wall"],start_at_end:false
+			"~Wl"{end:ref["sectors",0,"wall","end","end"],end_at_end:false,id:2,into:null,line:ref["lines",2],start:ref["sectors",0,"wall"],start_at_end:false
 			   },start_at_end:true
                    },
             end_at_end:false,id:1,into:null,line:ref["lines",1],
@@ -303,7 +301,7 @@ const str1 =                  `~Wr{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{
 		stringifier.toJSOX( "v3", Vector );
 		stringifier.toJSOX( "r", Ray );
 		const mockStr = stringifier.stringify( world );
-		const mockExpect = '~Wr2{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:[~N{flags:{vertical:false},id:0,name:Default}],sectors:[~S{id:0,r:r{n:v3{x:0,y:0,z:0},o:v3{x:0,y:0,z:0}},texture:~T{flags:{color:true},name:ref["names",0]},wall:~Wl{end:~Wl{end:~Wl{end:ref["sectors",0,"wall","end"],line:ref["lines",3],start:~Wl{end:ref["sectors",0,"wall","end","end"],line:ref["lines",2],start:ref["sectors",0,"wall"]}},line:ref["lines",1],start:ref["sectors",0,"wall"]},line:ref["lines",0],start:ref["sectors",0,"wall","end","end","start"]}}],walls:[ref["sectors",0,"wall"],ref["sectors",0,"wall","end"],ref["sectors",0,"wall","end","end","start"],ref["sectors",0,"wall","end","end"]]}';
+		const mockExpect = '"~Wr2"{lines:["~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5},"~L"{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}],names:["~N"{flags:{vertical:false},id:0,name:Default}],sectors:["~S"{id:0,r:r{n:v3{x:0,y:0,z:0},o:v3{x:0,y:0,z:0}},texture:"~T"{flags:{color:true},name:ref["names",0]},wall:"~Wl"{end:"~Wl"{end:"~Wl"{end:ref["sectors",0,"wall","end"],line:ref["lines",3],start:"~Wl"{end:ref["sectors",0,"wall","end","end"],line:ref["lines",2],start:ref["sectors",0,"wall"]}},line:ref["lines",1],start:ref["sectors",0,"wall"]},line:ref["lines",0],start:ref["sectors",0,"wall","end","end","start"]}}],walls:[ref["sectors",0,"wall"],ref["sectors",0,"wall","end"],ref["sectors",0,"wall","end","end","start"],ref["sectors",0,"wall","end","end"]]}';
 	        
 		
 		const fromMock = JSOX.parse( mockStr );
