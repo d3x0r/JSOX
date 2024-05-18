@@ -806,6 +806,9 @@ The product of this should run on very old platforms also, especially `node_modu
 ## Changelog
 - 1.2.120 (inprogress)
     - Add JSDoc comments to provide some type information.
+    - fix quoting the string `'[]'`; ended up unquoted.
+    - Fragmented changelog.
+    - Change external testing tool.
 - 1.2.119
     - Provide typescript definitions.
     - Provide JSOX as a import name; see issue #13.
