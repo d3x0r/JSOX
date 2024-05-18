@@ -1,0 +1,4 @@
+'use strict';
+import('chai').then( (module)=>{
+	global.expect = module.expect 
+});
