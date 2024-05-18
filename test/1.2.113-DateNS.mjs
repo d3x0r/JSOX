@@ -17,7 +17,7 @@ describe('Added in 1.2.113 (DateNS)', function () {
 			if( tz[0] == '-' && tz !== '-00:00' )
                 expect( str ).to.match( new RegExp("2021-12-31T\\d*:00:00.000000123.*" ) );
 			else 
-                expect( str ).to.match( new RegExp("2021-01-01T\\d*:00:00.000000123.*" ) );
+                expect( str ).to.match( new RegExp("2022-01-01T\\d*:00:00.000000123.*" ) );
                 //expect( str ).to.equal( "2021-12-31T16:00:00.000000123"+tz );
         } );
 
@@ -26,7 +26,7 @@ describe('Added in 1.2.113 (DateNS)', function () {
 			if( tz[0] == '-' && tz !== '-00:00' )
                 expect( str ).to.match( new RegExp("2021-12-31T\\d*:00:00.000000123.*" ) );
 			else 
-                expect( str ).to.match( new RegExp("2021-01-01T\\d*:00:00.000000123.*" ) );
+                expect( str ).to.match( new RegExp("2022-01-01T\\d*:00:00.000000123.*" ) );
                 //expect( str ).to.equal( "2021-12-31T21:00:00.000000123"+tz );
         } );
 
