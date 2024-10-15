@@ -27,6 +27,10 @@
     "files": [
         "lib/jsox.js",
         "lib/jsox.mjs",
+        "lib/jsox.min.js",
+        "lib/jsox.min.mjs",
+        "lib/jsox.min.js.gz",
+        "lib/jsox.min.mjs.gz",
         "lib/jsox.es6.js.gz",
         "lib/cli.js",
         "lib/require.js",
