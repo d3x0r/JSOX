@@ -47,7 +47,8 @@
         "@rollup/plugin-commonjs": "latest",
         "@rollup/plugin-node-resolve": "latest",
         "@rollup/plugin-strip": "latest",
-        "rollup-plugin-terser": "latest"
+        "rollup-plugin-terser": "latest",
+        "rollup-plugin-gzip": "latest"
     },
     "nyc": {
         "ignore-class-method": [
