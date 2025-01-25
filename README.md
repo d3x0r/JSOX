@@ -805,7 +805,10 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.121 (inprogress)
+- 1.2.122 (inprogress)
+    - Fix parsing `{op:f}`; partial keyword state, at close of bracket.
+- 1.2.121
+    - hotfix on 1.2.120 - dropped module JSOX declaration.
 - 1.2.120
     - Add JSDoc comments to provide some type information.
     - fix quoting the string `'[]'`; ended up unquoted.
@@ -813,6 +816,7 @@ The product of this should run on very old platforms also, especially `node_modu
     - Change external testing tool.
     - Quote strings that have a '#' in them.
     - allow '#' to start a comment until end-of-line.
+    - fix cummulative error in column count on a comma after a number.
 - 1.2.119
     - Provide typescript definitions.
     - Provide JSOX as a import name; see issue #13.

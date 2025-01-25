@@ -4,7 +4,7 @@
 
 {
     name: "jsox",
-    version: "1.2.120",
+    version: "1.2.122",
     description: "Java Script Object eXchange.",
     keywords: [
         "jsox","json",
@@ -26,6 +26,10 @@
     files: [
         "lib/jsox.js",
         "lib/jsox.mjs",
+        "lib/jsox.min.js",
+        "lib/jsox.min.mjs",
+        "lib/jsox.min.js.gz",
+        "lib/jsox.min.mjs.gz",
         "lib/jsox.es6.js.gz",
         "lib/cli.js",
         "lib/require.js",
@@ -47,7 +51,8 @@
         "@rollup/plugin-commonjs": "latest",
         "@rollup/plugin-node-resolve": "latest",
         "@rollup/plugin-strip": "latest",
-        "rollup-plugin-terser": "latest"
+        "@rollup/plugin-terser": "latest",
+        "rollup-plugin-gzip": "latest"
     },
     "nyc": {
         "ignore-class-method": [
