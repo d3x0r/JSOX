@@ -4,7 +4,7 @@
 
 {
     name: "jsox",
-    version: "1.2.122",
+    version: "1.2.123",
     description: "Java Script Object eXchange.",
     keywords: [
         "jsox","json",
@@ -18,9 +18,17 @@
     main: "lib/jsox.js",
     browser: "lib/jsox.es6.js.gz",
     exports: {
-        import: "./lib/jsox.mjs",
-        require: "./lib/jsox.js",
-        browser: "./lib/jsox.es6.js.gz"
+        ".": {
+            "require": "./lib/jsox.js",
+            "import": "./lib/jsox.mjs",
+            "browser": "./lib/jsox.es6.js.gz"
+        },
+        "./import.mjs": {
+            "import": "./lib/import.mjs"
+        },
+        "./import": {
+            "import": "./lib/import.mjs"
+        }
     },
     bin: "lib/cli.js",
     files: [

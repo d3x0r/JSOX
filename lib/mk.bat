@@ -3,12 +3,6 @@
 :call google-closure-compiler.cmd --language_out ECMASCRIPT3 --formatting=pretty_print --js=jsox.js --js_output_file=jsox.es3.pretty.js 
 :call google-closure-compiler.cmd --language_out NO_TRANSPILE --formatting=pretty_print --js=jsox.js --js_output_file=jsox.es6.pretty.js 
 
-gzip -n -f jsox.min.mjs
-gzip -n -f jsox.min.js
+gzip -9 jsox.min.mjs -c >jsox.min.mjs.gz
+gzip -9 jsox.min.js -c > jsox.min.js.gz
 
-git add jsox.min.mjs
-git add jsox.min.js
-
-git checkout jsox.min.mjs
-git checkout jsox.min.js
-:gzip -f jsox.es3.js

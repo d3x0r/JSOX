@@ -477,7 +477,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 that ojects that have a toJSOX know of the JSOX module instead.  The result of the callback should be a string, and is up to the
 toJSOX method to include quotes if it is a string value.  Any string may result that is valid JSOX.
 
-Regsitering the same name more than once throws an error.
+Registering the same name more than once throws an error.
 
 ``` js
 function stringTest() {

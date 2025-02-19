@@ -57,7 +57,8 @@ module.exports = [
         },
         plugins: [
             commonjs(),
-            terser( {toplevel:false,mangle:{reserved :["exports"], properties:{undeclared :false, reserved :["begin","JSOX","exports"]}} } ),
+            terser( {toplevel:false,mangle:{reserved :["exports","JSOX","version","stringifier","DateNS","toJSOX","fromJSOX","addType","escape","begin","parse","defineClass","reset"]
+                    , properties:{undeclared :false, reserved :["begin","JSOX","exports","version","stringifier","DateNS","toJSOX","fromJSOX","addType","escape","begin","parse","defineClass","reset"]}} } ),
         ],
     },
 	/*
