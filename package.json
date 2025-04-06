@@ -34,7 +34,9 @@
     "bin": "lib/cli.js",
     "files": [
         "lib/jsox.js",
+        "lib/jsox.d.ts",
         "lib/jsox.mjs",
+        "lib/jsox.d.mts",
         "lib/jsox.min.js",
         "lib/jsox.min.mjs",
         "lib/jsox.min.js.gz",
