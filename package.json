@@ -2,6 +2,7 @@
     "name": "jsox",
     "version": "1.2.123",
     "description": "Java Script Object eXchange.",
+    "type": "commonjs",
     "keywords": [
         "jsox",
         "json",
@@ -21,6 +22,7 @@
     "exports": {
         ".": {
             "require": "./lib/jsox.js",
+            "module-sync": "./lib/jsox.mjs",
             "import": "./lib/jsox.mjs",
             "browser": "./lib/jsox.es6.js.gz"
         },
@@ -34,7 +36,9 @@
     "bin": "lib/cli.js",
     "files": [
         "lib/jsox.js",
+        "lib/jsox.d.ts",
         "lib/jsox.mjs",
+        "lib/jsox.d.mts",
         "lib/jsox.min.js",
         "lib/jsox.min.mjs",
         "lib/jsox.min.js.gz",
