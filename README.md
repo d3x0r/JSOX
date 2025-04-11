@@ -805,8 +805,10 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.122 (inprogress)
-    - Fix parsing `{op:f}`; partial keyword state, at close of bracket.
+- 1.2.123 (inprogress)
+- 1.2.122
+    - Fix parsing `{op:f}`; partial keyword state, at close of bracket (started to match `false`).
+    - Fix NPM Package to include d.ts info.
 - 1.2.121
     - hotfix on 1.2.120 - dropped module JSOX declaration.
 - 1.2.120
