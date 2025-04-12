@@ -805,7 +805,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.123 (inprogress)
+- 1.2.124 (inprogress)
+- 1.2.123
+    - partial fix didn't fully fix partial values `fal` did not become a string.
 - 1.2.122
     - Fix parsing `{op:f}`; partial keyword state, at close of bracket (started to match `false`).
     - Fix NPM Package to include d.ts info.
