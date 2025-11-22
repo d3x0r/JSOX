@@ -52,7 +52,7 @@ export namespace JSOX {
      * @param {class} ptype
      * @param {(any)=>any} f
      */
-    export function registerToJSOX(name: any, ptype: class, f: (any: any) => any): never;
+    export function registerToJSOX(name: any, ptype: any, f: (any: any) => any): never;
     /**
      * define a class with special serialization rules.
      *
@@ -60,14 +60,14 @@ export namespace JSOX {
      * @param {class} ptype
      * @param {(any)=>any} f
      */
-    export function toJSOX(name: any, ptype: class, f: (any: any) => any): void;
+    export function toJSOX(name: any, ptype: any, f: (any: any) => any): void;
     /**
      * define a class to be used for deserialization
      * @param {string} prototypeName
      * @param {class} o
      * @param {(any)=>any} f
      */
-    export function fromJSOX(prototypeName: string, o: class, f: (any: any) => any): void;
+    export function fromJSOX(prototypeName: string, o: any, f: (any: any) => any): void;
     /**
      * deprecated; use fromJSOX instead
      */
@@ -81,7 +81,7 @@ export namespace JSOX {
      * @param {(stringifier:JSOXStringifier)->{string}} to - `this` is the value to convert; function to call to encode JSOX from an object
      * @param {(field:string,val:any)->{any}} from - handle storing revived value in class
      */
-    export function addType(prototypeName: any, prototype: class, to: any, from: any): void;
+    export function addType(prototypeName: any, prototype: any, to: any, from: any): void;
     export function registerToFrom(prototypeName: any, prototype: any): never;
     /**
      * Create a stringifier to convert objects to JSOX text.  Allows defining custom serialization for objects.
@@ -105,4 +105,8 @@ export namespace JSOX {
 declare class DateNS extends Date {
     constructor(a: any, b: any);
     ns: any;
+}
+declare class Stringifier {
+}
+declare class JSOXParser {
 }
