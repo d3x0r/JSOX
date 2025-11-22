@@ -85,9 +85,9 @@ export namespace JSOX {
     export function registerToFrom(prototypeName: any, prototype: any): never;
     /**
      * Create a stringifier to convert objects to JSOX text.  Allows defining custom serialization for objects.
-     * @returns {Stringifier}
+     * @returns {JSOXStringifier}
      */
-    export function stringifier(): Stringifier;
+    export function stringifier(): JSOXStringifier;
     /**
      * @param {unknown} object
      * @param {(this: unknown, key: string, value: unknown)} [replacer]
