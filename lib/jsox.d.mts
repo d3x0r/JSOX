@@ -115,12 +115,12 @@ declare class JSOXStringifier {
 		setDefaultObjectToJSOX( cb:()=>any );
 		isEncoding(o:unknown);
 		encodeObject(o:unknown);
-		stringify(object:unknown,replacer?: (this: unknown, key: string, value: unknown) => any, space:string|number);
+		stringify(object:unknown,replacer?: (this: unknown, key: string, value: unknown) => any, space?:string|number);
 		setQuote(q:string):void;
 		registerToJSOX(n:any,p:any,f:any):any;
 		toJSOX( name:string, ptype:any, f:()=>any ):any;
 		get ignoreNonEnumerable():boolean;
-		set ignoreNonEnumerable(val:boolean):void;
+		set ignoreNonEnumerable(val:boolean);
 }
 declare class JSOXParser {
 		fromJSOX( prototypeName:string, o:unknown, f:()=>void ):void;
