@@ -104,6 +104,10 @@ export namespace JSOX {
  */
 declare class DateNS extends Date {
     constructor(a: any, b: any);
+	/**
+    *  nanosecond precision beyond milliseconds
+    *  full partial second is (date.getMilliseconds()+ns/1_000_000)/1000
+    */
     ns: any;
 }
 declare class JSOXStringifier {
@@ -129,7 +133,7 @@ declare class JSOXParser {
 		/**
 		 * Reset the parser to a blank state.
 		 */
-		reset( void):void;
+		reset():void;
 		usePrototype(className,protoType ):void;
 		write(msg:string):number;
 

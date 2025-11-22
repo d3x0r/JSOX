@@ -133,7 +133,7 @@ declare class JSOXParser {
 		/**
 		 * Reset the parser to a blank state.
 		 */
-		reset( void):void;
+		reset():void;
 		usePrototype(className,protoType ):void;
 		write(msg:string):number;
 
