@@ -52,7 +52,7 @@ export namespace JSOX {
      * @param {class} ptype
      * @param {(any)=>any} f
      */
-    export function registerToJSOX(name: any, ptype: any, f: (any: any) => any): never;
+    export function registerToJSOX(name: any, ptype: new()=>any, f: (any: any) => any): never;
     /**
      * define a class with special serialization rules.
      *
@@ -60,14 +60,14 @@ export namespace JSOX {
      * @param {class} ptype
      * @param {(any)=>any} f
      */
-    export function toJSOX(name: any, ptype: any, f: (any: any) => any): void;
+    export function toJSOX(name: any, ptype: new()=>any, f: (any: any) => any): void;
     /**
      * define a class to be used for deserialization
      * @param {string} prototypeName
      * @param {class} o
-     * @param {(any)=>any} f
+     * @param {new()=>any} f
      */
-    export function fromJSOX(prototypeName: string, o: any, f: (any: any) => any): void;
+    export function fromJSOX(prototypeName: string, o: new()=>any, f: (any: any) => any): void;
     /**
      * deprecated; use fromJSOX instead
      */
@@ -117,14 +117,14 @@ declare class JSOXStringifier {
 		encodeObject(o:unknown);
 		stringify(object:unknown,replacer?: (this: unknown, key: string, value: unknown) => any, space?:string|number);
 		setQuote(q:string):void;
-		registerToJSOX(n:any,p:any,f:any):any;
-		toJSOX( name:string, ptype:any, f:()=>any ):any;
+		registerToJSOX(n:any,p:new()=>any,f?:(string,any)=>any):any;
+		toJSOX( name:string, ptype:new()=>any, f:()=>any ):any;
 		get ignoreNonEnumerable():boolean;
 		set ignoreNonEnumerable(val:boolean);
 }
 declare class JSOXParser {
-		fromJSOX( prototypeName:string, o:unknown, f:()=>void ):void;
-		registerFromJSOX( prototypeName, o/*, f*/ ):void;
+		fromJSOX( prototypeName:string, o:new()=>any, f:()=>void ):void;
+		registerFromJSOX( prototypeName, o:new()=>any, f?:(string,any)=>any ):void;
 
 		/**
 		 * Get current value after write
