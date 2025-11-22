@@ -805,7 +805,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.124 (inprogress)
+- 1.2.125 (inprogress)
+- 1.2.124
+    - fix typescript bindings, and inline documentation.
 - 1.2.123
     - partial fix didn't fully fix partial values `fal` did not become a string.
 - 1.2.122
