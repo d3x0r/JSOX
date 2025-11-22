@@ -117,7 +117,7 @@ declare class JSOXStringifier {
 		encodeObject(o:unknown);
 		stringify(object:unknown,replacer?: (this: unknown, key: string, value: unknown) => any, space:string|number);
 		setQuote(q:string):void;
-		registerToJSOX(n:any,p:any,f:any)::any;
+		registerToJSOX(n:any,p:any,f:any):any;
 		toJSOX( name:string, ptype:any, f:()=>any ):any;
 		get ignoreNonEnumerable():boolean;
 		set ignoreNonEnumerable(val:boolean):void;
