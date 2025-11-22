@@ -81,13 +81,13 @@ export namespace JSOX {
      * @param {(stringifier:JSOXStringifier)->{string}} to - `this` is the value to convert; function to call to encode JSOX from an object
      * @param {(field:string,val:any)->{any}} from - handle storing revived value in class
      */
-    export function addType(prototypeName: any, prototype: any, to: any, from: any): void;
+    export function addType(prototypeName: any, prototype: any, to: (stringifier:JSOXStringifier)=>{string}, from: any): void;
     export function registerToFrom(prototypeName: any, prototype: any): never;
     /**
      * Create a stringifier to convert objects to JSOX text.  Allows defining custom serialization for objects.
-     * @returns {Stringifier}
+     * @returns {JSOXStringifier}
      */
-    export function stringifier(): Stringifier;
+    export function stringifier(): JSOXStringifier;
     /**
      * @param {unknown} object
      * @param {(this: unknown, key: string, value: unknown)} [replacer]
@@ -106,7 +106,32 @@ declare class DateNS extends Date {
     constructor(a: any, b: any);
     ns: any;
 }
-declare class Stringifier {
+declare class JSOXStringifier {
+		defineClass(name: string,obj: object);
+		setDefaultObjectToJSOX( cb:()=>any );
+		isEncoding(o:unknown);
+		encodeObject(o:unknown);
+		stringify(object:unknown,replacer?: (this: unknown, key: string, value: unknown) => any, space:string|number);
+		setQuote(q:string):void;
+		registerToJSOX(n:any,p:any,f:any)::any;
+		toJSOX( name:string, ptype:any, f:()=>any ):any;
+		get ignoreNonEnumerable():boolean;
+		set ignoreNonEnumerable(val:boolean):void;
 }
 declare class JSOXParser {
+		fromJSOX( prototypeName:string, o:unknown, f:()=>void ):void;
+		registerFromJSOX( prototypeName, o/*, f*/ ):void;
+
+		/**
+		 * Get current value after write
+		 */
+		value():any;
+		/**
+		 * Reset the parser to a blank state.
+		 */
+		reset( void):void;
+		usePrototype(className,protoType ):void;
+		write(msg:string):number;
+
+
 }
