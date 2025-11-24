@@ -477,7 +477,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 that ojects that have a toJSOX know of the JSOX module instead.  The result of the callback should be a string, and is up to the
 toJSOX method to include quotes if it is a string value.  Any string may result that is valid JSOX.
 
-Regsitering the same name more than once throws an error.
+Registering the same name more than once throws an error.
 
 ``` js
 function stringTest() {
@@ -805,7 +805,14 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.122 (inprogress)
+- 1.2.125 (inprogress)
+- 1.2.124
+    - fix typescript bindings, and inline documentation.
+- 1.2.123
+    - partial fix didn't fully fix partial values `fal` did not become a string.
+- 1.2.122
+    - Fix parsing `{op:f}`; partial keyword state, at close of bracket (started to match `false`).
+    - Fix NPM Package to include d.ts info.
 - 1.2.121
     - hotfix on 1.2.120 - dropped module JSOX declaration.
 - 1.2.120

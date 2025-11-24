@@ -1,1 +1,1 @@
-call tsc jsox.mjs --target esnext --declaration --allowJs --emitDeclarationOnly
+call tsc jsox.mjs --target esnext --declaration --allowJs --emitDeclarationOnly --stripInternal

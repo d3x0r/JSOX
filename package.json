@@ -1,6 +1,6 @@
 {
     "name": "jsox",
-    "version": "1.2.121",
+    "version": "1.2.124",
     "description": "Java Script Object eXchange.",
     "keywords": [
         "jsox",
@@ -19,17 +19,29 @@
     "main": "lib/jsox.js",
     "browser": "lib/jsox.es6.js.gz",
     "exports": {
-        "import": "./lib/jsox.mjs",
-        "require": "./lib/jsox.js",
-        "browser": "./lib/jsox.es6.js.gz"
+        ".": {
+            "require": "./lib/jsox.js",
+            "module-sync": "./lib/jsox.mjs",
+            "import": "./lib/jsox.mjs",
+            "browser": "./lib/jsox.es6.js.gz"
+        },
+        "./import.mjs": {
+            "import": "./lib/import.mjs"
+        },
+        "./import": {
+            "import": "./lib/import.mjs"
+        }
     },
     "bin": "lib/cli.js",
     "files": [
         "lib/jsox.js",
+        "lib/jsox.d.ts",
         "lib/jsox.mjs",
+        "lib/jsox.d.mts",
         "lib/jsox.min.js",
         "lib/jsox.min.mjs",
         "lib/jsox.min.js.gz",
+        "lib/jsox.min.d.ts",
         "lib/jsox.min.mjs.gz",
         "lib/jsox.es6.js.gz",
         "lib/cli.js",
@@ -50,7 +62,7 @@
         "@rollup/plugin-commonjs": "latest",
         "@rollup/plugin-node-resolve": "latest",
         "@rollup/plugin-strip": "latest",
-        "rollup-plugin-terser": "latest",
+        "@rollup/plugin-terser": "latest",
         "rollup-plugin-gzip": "latest"
     },
     "nyc": {

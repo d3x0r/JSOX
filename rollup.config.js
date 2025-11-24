@@ -2,7 +2,7 @@ const nodeResolve = require('@rollup/plugin-node-resolve')
 const resolve = ("function" === typeof nodeResolve )?nodeResolve:nodeResolve.nodeResolve;
 const commonjs = require('@rollup/plugin-commonjs')
 //const closure = require('rollup-plugin-closure-compiler' );
-const terser = require('rollup-plugin-terser').terser
+const terser = require('@rollup/plugin-terser')
 //const gzip = require( 'rollup-plugin-gzip').default
 const pkg = require('./package.json')
 
@@ -31,7 +31,7 @@ module.exports = [
         plugins: [
             resolve(),//.nodeResolve(),
             commonjs(),
-            terser(),
+            terser( ),
         ],
     },
     // ES6 Modules Minified
@@ -52,12 +52,13 @@ module.exports = [
         input: pkg.main,
         output: {
             file: pkg.main.replace(/\.js$/, '.min.js'),
-				exports : 'named',
+				//exports : 'default',
             format: 'cjs',
         },
         plugins: [
             commonjs(),
-            terser(),
+            terser( {toplevel:false,mangle:{reserved :["exports","JSOX","version","stringifier","DateNS","toJSOX","fromJSOX","addType","escape","begin","parse","defineClass","reset"]
+                    , properties:{undeclared :false, reserved :["begin","JSOX","exports","version","stringifier","DateNS","toJSOX","fromJSOX","addType","escape","begin","parse","defineClass","reset"]}} } ),
         ],
     },
 	/*

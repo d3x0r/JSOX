@@ -52,7 +52,7 @@ export namespace JSOX {
      * @param {class} ptype
      * @param {(any)=>any} f
      */
-    export function registerToJSOX(name: any, ptype: new()=>any, f: (any: any) => any): never;
+    export function registerToJSOX(name: any, ptype: class, f: (any: any) => any): never;
     /**
      * define a class with special serialization rules.
      *
@@ -60,14 +60,14 @@ export namespace JSOX {
      * @param {class} ptype
      * @param {(any)=>any} f
      */
-    export function toJSOX(name: any, ptype: new()=>any, f: (any: any) => any): void;
+    export function toJSOX(name: any, ptype: class, f: (any: any) => any): void;
     /**
      * define a class to be used for deserialization
      * @param {string} prototypeName
      * @param {class} o
-     * @param {new()=>any} f
+     * @param {(any)=>any} f
      */
-    export function fromJSOX(prototypeName: string, o: new()=>any, f: (any: any) => any): void;
+    export function fromJSOX(prototypeName: string, o: class, f: (any: any) => any): void;
     /**
      * deprecated; use fromJSOX instead
      */
@@ -78,16 +78,16 @@ export namespace JSOX {
      *
      * @param {string} name - Name used to prefix objects of this type encoded in JSOX
      * @param {class} prototype - prototype to match when serializing, and to create instaces of when deserializing.
-     * @param {(stringifier:JSOXStringifier)=>{string}} to - `this` is the value to convert; function to call to encode JSOX from an object
-     * @param {(field:string,val:any)=>{any}} from - handle storing revived value in class
+     * @param {(stringifier:JSOXStringifier)->{string}} to - `this` is the value to convert; function to call to encode JSOX from an object
+     * @param {(field:string,val:any)->{any}} from - handle storing revived value in class
      */
-    export function addType(prototypeName: any, prototype: any, to: (stringifier:JSOXStringifier)=>{string}, from: (field:string,val:any)=>{any}): void;
+    export function addType(prototypeName: any, prototype: class, to: any, from: any): void;
     export function registerToFrom(prototypeName: any, prototype: any): never;
     /**
      * Create a stringifier to convert objects to JSOX text.  Allows defining custom serialization for objects.
-     * @returns {JSOXStringifier}
+     * @returns {Stringifier}
      */
-    export function stringifier(): JSOXStringifier;
+    export function stringifier(): Stringifier;
     /**
      * @param {unknown} object
      * @param {(this: unknown, key: string, value: unknown)} [replacer]
@@ -104,38 +104,5 @@ export namespace JSOX {
  */
 declare class DateNS extends Date {
     constructor(a: any, b: any);
-	/**
-    *  nanosecond precision beyond milliseconds
-    *  full partial second is (date.getMilliseconds()+ns/1_000_000)/1000
-    */
     ns: any;
-}
-declare class JSOXStringifier {
-		defineClass(name: string,obj: object);
-		setDefaultObjectToJSOX( cb:()=>any );
-		isEncoding(o:unknown);
-		encodeObject(o:unknown);
-		stringify(object:unknown,replacer?: (this: unknown, key: string, value: unknown) => any, space?:string|number);
-		setQuote(q:string):void;
-		registerToJSOX(n:any,p:new()=>any,f?:(string,any)=>any):any;
-		toJSOX( name:string, ptype:new()=>any, f:()=>any ):any;
-		get ignoreNonEnumerable():boolean;
-		set ignoreNonEnumerable(val:boolean);
-}
-declare class JSOXParser {
-		fromJSOX( prototypeName:string, o:new()=>any, f:()=>void ):void;
-		registerFromJSOX( prototypeName, o:new()=>any, f?:(string,any)=>any ):void;
-
-		/**
-		 * Get current value after write
-		 */
-		value():any;
-		/**
-		 * Reset the parser to a blank state.
-		 */
-		reset():void;
-		usePrototype(className,protoType ):void;
-		write(msg:string):number;
-
-
 }
