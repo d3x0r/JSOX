@@ -805,7 +805,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.125 (inprogress)
+- 1.2.126 (inprogress)
+- 1.2.125
+    - Fix double-ref emission on certain encodes.
 - 1.2.124
     - fix typescript bindings, and inline documentation.
 - 1.2.123
