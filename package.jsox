@@ -89,7 +89,7 @@
        nyc: "nyc npm run mocha-lite",
        test-lite: "npm run lint && npm run build && npm run nyc-lite",
        test: "npm run lint && npm run build && npm run nyc",
-       build: "node ./lib/cli.js -c package.jsox && rollup -c",
+       build: "node ./lib/cli.js -c package.jsox && node mjs-to-cjs.mjs && rollup -c",
     },
     homepage: "http://npmjs.org/package/jsox/",
     license: "MIT",
