@@ -1,0 +1,95 @@
+{
+	common:{
+		linkedSliders:true,
+		stages:25,
+		secondStagingStarts : 5
+	}
+	,stocks:[
+		{
+			stock: "Alcoa"
+			, ID: 1
+			, color: $fc482c
+			, symbol: "ALCA"
+			, minimum: 30
+			, staging: "4/1 4"
+			, dividend: 4
+			, baseline: 130
+		},{
+
+			stock: "American Motors"
+        		, ID: 2
+			, color: $fbd25d
+			, symbol: "AMER"
+			, minimum: 10
+			, staging: "2/1 2"
+			, dividend: 3
+			, baseline: 60
+		},{
+
+	                stock: "J.I. Case"
+			, ID: 3
+        		, color: "$fca43c"
+			, symbol: "JICS"
+			, minimum: 15
+			, staging: "2/1 1"
+			, dividend: 2
+			, baseline: 45
+       		},{
+
+			stock: "General Mills"
+                        , ID: 4
+			, color: "$4c28d2"
+			, symbol: "GEMI"
+			, minimum: 18
+			, staging: "1/2 1/2"
+			, dividend: 1
+			, baseline: 30
+
+		},{
+			stock: "International Shoes"
+			, ID: 5
+                        , color: "$f44983"
+			, symbol: "INTS"
+			, minimum: 18
+			, staging: "1/2 1/2"
+			, dividend: 1
+			, baseline: 30
+			, inversed: true
+
+		},{
+			stock: "Maytag"
+			, ID: 6
+                        , color: "$37864e"
+			, symbol: "MYTG"
+			, minimum: 15
+			, staging: "2/1 1"
+			, dividend: 2
+			, baseline: 45
+			, inversed:true
+
+		},{
+			stock: "Western Publishing"
+			, ID: 7
+                        , color: "$b4b126"
+			, symbol: "WSTP"
+			, minimum: 10
+			, staging: "2/1 2"
+			, dividend: 3
+			, baseline: 60
+			, inversed:true
+
+		},{
+			stock: "Woolworth"
+			, ID: 8
+	                , color: "$a68100"
+			, symbol: "WLWR"
+			, minimum: 30
+			, staging: "4/1 4/1"
+			, dividend: 4
+			, baseline: 130
+			, inversed :true // current stage is applied negative to the baseline
+		}
+       	]
+}
+
+

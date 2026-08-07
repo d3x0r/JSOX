@@ -1,0 +1,4549 @@
+MSG: { a b:1 }
+processing:  123 1 { { line: 1, col: 1 } 0 0 0
+opening object:  0 0 0
+Begin a new object; previously pushed into elements; but wait until trailing comma or close previously:0 null
+processing:  32 2   { line: 1, col: 2 } 0 3 29
+Whitespace... 29 3
+processing:  97 3 a { line: 1, col: 3 } 0 3 29
+Trace: Recover Ident char: 97 a word: 29
+    at recoverIdent (M:\javascript\jsox\lib\jsox.js:487:29)
+    at Object._write (M:\javascript\jsox\lib\jsox.js:1666:15)
+    at JSOX.parse (M:\javascript\jsox\lib\jsox.js:1752:13)
+    at Object.<anonymous> (M:\javascript\jsox\tests\mytest.js:13:13)
+    at Module._compile (internal/modules/cjs/loader.js:959:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:995:10)
+    at Module.load (internal/modules/cjs/loader.js:815:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:727:14)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1047:10)
+    at internal/main/run_main_module.js:17:11
+processing:  32 4   { line: 1, col: 4 } 0 3 31
+Whitespace... 31 3
+processing:  98 5 b { line: 1, col: 5 } 0 3 31
+TICK
+Expected error, success
+MSG: {"name":"@std/esm","version":"0.18.0","description":"Enable ES modules in Node today!","keywords":"commonjs, ecmascript, export, import, modules, node, require","repository":"standard-things/esm","license":"MIT","author":"John-David Dalton <john.david.dalton@gmail.com>","main":"index.js","private":true,"@std/esm":true,"engines":{"node":">=4"},"scripts":{"prebuild:prod":"optional-dev-dependency","precommit":"npm run lint","prelint":"npm run pretest","prepub":"npm run test:prod","pretest":"npm run build -- --test","pretest:prod":"npm run build:prod -- --test","build":"node script/build.js","build:prod":"npm run build -- --prod","clean":"node script/clean.js","lint":"eslint \\'**/*.{js,mjs}\\' --fix --quiet","pub":"node script/publish.js","test":"node script/test.js","test:prod":"node script/test.js --prod"},"devDependencies":{"@babel/core":"^7.0.0-beta.34","@babel/plugin-proposal-class-properties":"^7.0.0-beta.34","@babel/plugin-transform-block-scoping":"^7.0.0-beta.34","@babel/preset-env":"^7.0.0-beta.34","@babel/register":"^7.0.0-beta.34","acorn":"^5.2.1","ava":"^0.24.0","babel-eslint":"^8.0.3","babel-loader":"^8.0.0-beta.0","babel-plugin-transform-for-of-as-array":"^1.0.4","download":"^6.2.5","eslint":"^4.12.0","eslint-plugin-import":"^2.7.0","eslint-plugin-node":"^5.2.0","execa":"^0.8.0","fs-extra":"^4.0.3","globby":"^7.1.1","husky":"^0.14.3","jest":"^21.2.1","json-6":"^0.1.120","minizlib":"^1.0.4","mocha":"^4.0.1","mock-stdio":"^1.0.0","nop":"^1.0.0","nyc":"^11.3.0","optimize-js-plugin":"0.0.4","optional-dev-dependency":"^2.0.1","pify":"^3.0.0","pm2":"^2.8.0","semver":"^5.4.1","trash":"^4.2.1","typescript":"^2.6.1","uglify-es":"^3.2.1","uglifyjs-webpack-plugin":"^1.1.1","webpack":"^3.10.0","webpack-bundle-analyzer":"^2.8.3","webpack-common-shake":"^1.5.3","yargs":"^10.0.3"},"optionalDevDependencies":{"node-zopfli":"^2.0.2"},"files":["index.js","esm.js.gz"]}
+processing:  123 1 { { line: 1, col: 1 } 0 0 0
+opening object:  0 0 0
+Begin a new object; previously pushed into elements; but wait until trailing comma or close previously:0 null
+processing:  34 2 " { line: 1, col: 2 } 0 3 29
+string gather for object field value : name 1 false 0 1892
+processing:  58 8 : { line: 1, col: 8 } 0 3 31
+colon received...
+processing:  34 9 " { line: 1, col: 9 } 0 4 0
+string gather for object field value : @std/esm 1 false 0 1892
+processing:  44 19 , { line: 1, col: 19 } 0 4 31
+comma after field value, push field to object: name 4
+CONVERT VAL: {
+  name: 'name',
+  value_type: 4,
+  string: '@std/esm',
+  contains: null,
+  className: null
+}
++++ Added object field: name { name: '@std/esm' } @std/esm { name: '@std/esm' }
+processing:  34 20 " { line: 1, col: 20 } 0 3 0
+string gather for object field value : version 1 false 0 1892
+processing:  58 29 : { line: 1, col: 29 } 0 3 31
+colon received...
+processing:  34 30 " { line: 1, col: 30 } 0 4 0
+string gather for object field value : 0.18.0 1 false 0 1892
+processing:  44 38 , { line: 1, col: 38 } 0 4 31
+comma after field value, push field to object: version 4
+CONVERT VAL: {
+  name: 'version',
+  value_type: 4,
+  string: '0.18.0',
+  contains: null,
+  className: null
+}
++++ Added object field: version { name: '@std/esm', version: '0.18.0' } 0.18.0 { name: '@std/esm', version: '0.18.0' }
+processing:  34 39 " { line: 1, col: 39 } 0 3 0
+string gather for object field value : description 1 false 0 1892
+processing:  58 52 : { line: 1, col: 52 } 0 3 31
+colon received...
+processing:  34 53 " { line: 1, col: 53 } 0 4 0
+string gather for object field value : Enable ES modules in Node today! 1 false 0 1892
+processing:  44 87 , { line: 1, col: 87 } 0 4 31
+comma after field value, push field to object: description 4
+CONVERT VAL: {
+  name: 'description',
+  value_type: 4,
+  string: 'Enable ES modules in Node today!',
+  contains: null,
+  className: null
+}
++++ Added object field: description {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!'
+} Enable ES modules in Node today! {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!'
+}
+processing:  34 88 " { line: 1, col: 88 } 0 3 0
+string gather for object field value : keywords 1 false 0 1892
+processing:  58 98 : { line: 1, col: 98 } 0 3 31
+colon received...
+processing:  34 99 " { line: 1, col: 99 } 0 4 0
+string gather for object field value : commonjs, ecmascript, export, import, modules, node, require 1 false 0 1892
+processing:  44 161 , { line: 1, col: 161 } 0 4 31
+comma after field value, push field to object: keywords 4
+CONVERT VAL: {
+  name: 'keywords',
+  value_type: 4,
+  string: 'commonjs, ecmascript, export, import, modules, node, require',
+  contains: null,
+  className: null
+}
++++ Added object field: keywords {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require'
+} commonjs, ecmascript, export, import, modules, node, require {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require'
+}
+processing:  34 162 " { line: 1, col: 162 } 0 3 0
+string gather for object field value : repository 1 false 0 1892
+processing:  58 174 : { line: 1, col: 174 } 0 3 31
+colon received...
+processing:  34 175 " { line: 1, col: 175 } 0 4 0
+string gather for object field value : standard-things/esm 1 false 0 1892
+processing:  44 196 , { line: 1, col: 196 } 0 4 31
+comma after field value, push field to object: repository 4
+CONVERT VAL: {
+  name: 'repository',
+  value_type: 4,
+  string: 'standard-things/esm',
+  contains: null,
+  className: null
+}
++++ Added object field: repository {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm'
+} standard-things/esm {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm'
+}
+processing:  34 197 " { line: 1, col: 197 } 0 3 0
+string gather for object field value : license 1 false 0 1892
+processing:  58 206 : { line: 1, col: 206 } 0 3 31
+colon received...
+processing:  34 207 " { line: 1, col: 207 } 0 4 0
+string gather for object field value : MIT 1 false 0 1892
+processing:  44 212 , { line: 1, col: 212 } 0 4 31
+comma after field value, push field to object: license 4
+CONVERT VAL: {
+  name: 'license',
+  value_type: 4,
+  string: 'MIT',
+  contains: null,
+  className: null
+}
++++ Added object field: license {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT'
+} MIT {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT'
+}
+processing:  34 213 " { line: 1, col: 213 } 0 3 0
+string gather for object field value : author 1 false 0 1892
+processing:  58 221 : { line: 1, col: 221 } 0 3 31
+colon received...
+processing:  34 222 " { line: 1, col: 222 } 0 4 0
+string gather for object field value : John-David Dalton <john.david.dalton@gmail.com> 1 false 0 1892
+processing:  44 271 , { line: 1, col: 271 } 0 4 31
+comma after field value, push field to object: author 4
+CONVERT VAL: {
+  name: 'author',
+  value_type: 4,
+  string: 'John-David Dalton <john.david.dalton@gmail.com>',
+  contains: null,
+  className: null
+}
++++ Added object field: author {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>'
+} John-David Dalton <john.david.dalton@gmail.com> {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>'
+}
+processing:  34 272 " { line: 1, col: 272 } 0 3 0
+string gather for object field value : main 1 false 0 1892
+processing:  58 278 : { line: 1, col: 278 } 0 3 31
+colon received...
+processing:  34 279 " { line: 1, col: 279 } 0 4 0
+string gather for object field value : index.js 1 false 0 1892
+processing:  44 289 , { line: 1, col: 289 } 0 4 31
+comma after field value, push field to object: main 4
+CONVERT VAL: {
+  name: 'main',
+  value_type: 4,
+  string: 'index.js',
+  contains: null,
+  className: null
+}
++++ Added object field: main {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js'
+} index.js {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js'
+}
+processing:  34 290 " { line: 1, col: 290 } 0 3 0
+string gather for object field value : private 1 false 0 1892
+processing:  58 299 : { line: 1, col: 299 } 0 3 31
+colon received...
+processing:  116 300 t { line: 1, col: 300 } 0 4 0
+processing:  114 301 r { line: 1, col: 301 } 0 4 1
+processing:  117 302 u { line: 1, col: 302 } 0 4 2
+processing:  101 303 e { line: 1, col: 303 } 0 4 3
+processing:  44 304 , { line: 1, col: 304 } 0 4 31
+comma after field value, push field to object: private 2
+CONVERT VAL: {
+  name: 'private',
+  value_type: 2,
+  string: '',
+  contains: null,
+  className: null
+}
++++ Added object field: private {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true
+} true {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true
+}
+processing:  34 305 " { line: 1, col: 305 } 0 3 0
+string gather for object field value : @std/esm 1 false 0 1892
+processing:  58 315 : { line: 1, col: 315 } 0 3 31
+colon received...
+processing:  116 316 t { line: 1, col: 316 } 0 4 0
+processing:  114 317 r { line: 1, col: 317 } 0 4 1
+processing:  117 318 u { line: 1, col: 318 } 0 4 2
+processing:  101 319 e { line: 1, col: 319 } 0 4 3
+processing:  44 320 , { line: 1, col: 320 } 0 4 31
+comma after field value, push field to object: @std/esm 2
+CONVERT VAL: {
+  name: '@std/esm',
+  value_type: 2,
+  string: '',
+  contains: null,
+  className: null
+}
++++ Added object field: @std/esm {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true
+} true {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true
+}
+processing:  34 321 " { line: 1, col: 321 } 0 3 0
+string gather for object field value : engines 1 false 0 1892
+processing:  58 330 : { line: 1, col: 330 } 0 3 31
+colon received...
+processing:  123 331 { { line: 1, col: 331 } 0 4 0
+opening object:  0 0 4
+Begin a new object; previously pushed into elements; but wait until trailing comma or close previously:0 null
+processing:  34 332 " { line: 1, col: 332 } 0 3 0
+string gather for object field value : node 1 false 0 1892
+processing:  58 338 : { line: 1, col: 338 } 0 3 31
+colon received...
+processing:  34 339 " { line: 1, col: 339 } 0 4 0
+string gather for object field value : >=4 1 false 0 1892
+processing:  125 344 } { line: 1, col: 344 } 0 4 31
+close bracket context: 31 4 4 >=4
+close object; push item 'node' 4
+CONVERT VAL: {
+  name: 'node',
+  value_type: 4,
+  string: '>=4',
+  contains: null,
+  className: null
+}
++++ Added object field: node { node: '>=4' } >=4 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' }
+}
+processing:  44 345 , { line: 1, col: 345 } 0 4 0
+comma after field value, push field to object: engines 6
+CONVERT VAL: {
+  name: 'engines',
+  value_type: 6,
+  string: '',
+  contains: { node: '>=4' },
+  className: null
+}
+processing:  34 346 " { line: 1, col: 346 } 0 3 0
+string gather for object field value : scripts 1 false 0 1892
+processing:  58 355 : { line: 1, col: 355 } 0 3 31
+colon received...
+processing:  123 356 { { line: 1, col: 356 } 0 4 0
+opening object:  0 0 4
+Begin a new object; previously pushed into elements; but wait until trailing comma or close previously:0 null
+processing:  34 357 " { line: 1, col: 357 } 0 3 0
+string gather for object field value : prebuild:prod 1 false 0 1892
+processing:  58 372 : { line: 1, col: 372 } 0 3 31
+colon received...
+processing:  34 373 " { line: 1, col: 373 } 0 4 0
+string gather for object field value : optional-dev-dependency 1 false 0 1892
+processing:  44 398 , { line: 1, col: 398 } 0 4 31
+comma after field value, push field to object: prebuild:prod 4
+CONVERT VAL: {
+  name: 'prebuild:prod',
+  value_type: 4,
+  string: 'optional-dev-dependency',
+  contains: null,
+  className: null
+}
++++ Added object field: prebuild:prod { 'prebuild:prod': 'optional-dev-dependency' } optional-dev-dependency {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: { 'prebuild:prod': 'optional-dev-dependency' }
+}
+processing:  34 399 " { line: 1, col: 399 } 0 3 0
+string gather for object field value : precommit 1 false 0 1892
+processing:  58 410 : { line: 1, col: 410 } 0 3 31
+colon received...
+processing:  34 411 " { line: 1, col: 411 } 0 4 0
+string gather for object field value : npm run lint 1 false 0 1892
+processing:  44 425 , { line: 1, col: 425 } 0 4 31
+comma after field value, push field to object: precommit 4
+CONVERT VAL: {
+  name: 'precommit',
+  value_type: 4,
+  string: 'npm run lint',
+  contains: null,
+  className: null
+}
++++ Added object field: precommit {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint'
+} npm run lint {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint'
+  }
+}
+processing:  34 426 " { line: 1, col: 426 } 0 3 0
+string gather for object field value : prelint 1 false 0 1892
+processing:  58 435 : { line: 1, col: 435 } 0 3 31
+colon received...
+processing:  34 436 " { line: 1, col: 436 } 0 4 0
+string gather for object field value : npm run pretest 1 false 0 1892
+processing:  44 453 , { line: 1, col: 453 } 0 4 31
+comma after field value, push field to object: prelint 4
+CONVERT VAL: {
+  name: 'prelint',
+  value_type: 4,
+  string: 'npm run pretest',
+  contains: null,
+  className: null
+}
++++ Added object field: prelint {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest'
+} npm run pretest {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest'
+  }
+}
+processing:  34 454 " { line: 1, col: 454 } 0 3 0
+string gather for object field value : prepub 1 false 0 1892
+processing:  58 462 : { line: 1, col: 462 } 0 3 31
+colon received...
+processing:  34 463 " { line: 1, col: 463 } 0 4 0
+string gather for object field value : npm run test:prod 1 false 0 1892
+processing:  44 482 , { line: 1, col: 482 } 0 4 31
+comma after field value, push field to object: prepub 4
+CONVERT VAL: {
+  name: 'prepub',
+  value_type: 4,
+  string: 'npm run test:prod',
+  contains: null,
+  className: null
+}
++++ Added object field: prepub {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod'
+} npm run test:prod {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod'
+  }
+}
+processing:  34 483 " { line: 1, col: 483 } 0 3 0
+string gather for object field value : pretest 1 false 0 1892
+processing:  58 492 : { line: 1, col: 492 } 0 3 31
+colon received...
+processing:  34 493 " { line: 1, col: 493 } 0 4 0
+string gather for object field value : npm run build -- --test 1 false 0 1892
+processing:  44 518 , { line: 1, col: 518 } 0 4 31
+comma after field value, push field to object: pretest 4
+CONVERT VAL: {
+  name: 'pretest',
+  value_type: 4,
+  string: 'npm run build -- --test',
+  contains: null,
+  className: null
+}
++++ Added object field: pretest {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test'
+} npm run build -- --test {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test'
+  }
+}
+processing:  34 519 " { line: 1, col: 519 } 0 3 0
+string gather for object field value : pretest:prod 1 false 0 1892
+processing:  58 533 : { line: 1, col: 533 } 0 3 31
+colon received...
+processing:  34 534 " { line: 1, col: 534 } 0 4 0
+string gather for object field value : npm run build:prod -- --test 1 false 0 1892
+processing:  44 564 , { line: 1, col: 564 } 0 4 31
+comma after field value, push field to object: pretest:prod 4
+CONVERT VAL: {
+  name: 'pretest:prod',
+  value_type: 4,
+  string: 'npm run build:prod -- --test',
+  contains: null,
+  className: null
+}
++++ Added object field: pretest:prod {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test'
+} npm run build:prod -- --test {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test'
+  }
+}
+processing:  34 565 " { line: 1, col: 565 } 0 3 0
+string gather for object field value : build 1 false 0 1892
+processing:  58 572 : { line: 1, col: 572 } 0 3 31
+colon received...
+processing:  34 573 " { line: 1, col: 573 } 0 4 0
+string gather for object field value : node script/build.js 1 false 0 1892
+processing:  44 595 , { line: 1, col: 595 } 0 4 31
+comma after field value, push field to object: build 4
+CONVERT VAL: {
+  name: 'build',
+  value_type: 4,
+  string: 'node script/build.js',
+  contains: null,
+  className: null
+}
++++ Added object field: build {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js'
+} node script/build.js {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js'
+  }
+}
+processing:  34 596 " { line: 1, col: 596 } 0 3 0
+string gather for object field value : build:prod 1 false 0 1892
+processing:  58 608 : { line: 1, col: 608 } 0 3 31
+colon received...
+processing:  34 609 " { line: 1, col: 609 } 0 4 0
+string gather for object field value : npm run build -- --prod 1 false 0 1892
+processing:  44 634 , { line: 1, col: 634 } 0 4 31
+comma after field value, push field to object: build:prod 4
+CONVERT VAL: {
+  name: 'build:prod',
+  value_type: 4,
+  string: 'npm run build -- --prod',
+  contains: null,
+  className: null
+}
++++ Added object field: build:prod {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js',
+  'build:prod': 'npm run build -- --prod'
+} npm run build -- --prod {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod'
+  }
+}
+processing:  34 635 " { line: 1, col: 635 } 0 3 0
+string gather for object field value : clean 1 false 0 1892
+processing:  58 642 : { line: 1, col: 642 } 0 3 31
+colon received...
+processing:  34 643 " { line: 1, col: 643 } 0 4 0
+string gather for object field value : node script/clean.js 1 false 0 1892
+processing:  44 665 , { line: 1, col: 665 } 0 4 31
+comma after field value, push field to object: clean 4
+CONVERT VAL: {
+  name: 'clean',
+  value_type: 4,
+  string: 'node script/clean.js',
+  contains: null,
+  className: null
+}
++++ Added object field: clean {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js',
+  'build:prod': 'npm run build -- --prod',
+  clean: 'node script/clean.js'
+} node script/clean.js {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js'
+  }
+}
+processing:  34 666 " { line: 1, col: 666 } 0 3 0
+string gather for object field value : lint 1 false 0 1892
+processing:  58 672 : { line: 1, col: 672 } 0 3 31
+colon received...
+processing:  34 673 " { line: 1, col: 673 } 0 4 0
+string gather for object field value : eslint \'**/*.{js,mjs}\' --fix --quiet 1 false 0 1892
+processing:  44 715 , { line: 1, col: 715 } 0 4 31
+comma after field value, push field to object: lint 4
+CONVERT VAL: {
+  name: 'lint',
+  value_type: 4,
+  string: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+  contains: null,
+  className: null
+}
++++ Added object field: lint {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js',
+  'build:prod': 'npm run build -- --prod',
+  clean: 'node script/clean.js',
+  lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet"
+} eslint \'**/*.{js,mjs}\' --fix --quiet {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet"
+  }
+}
+processing:  34 716 " { line: 1, col: 716 } 0 3 0
+string gather for object field value : pub 1 false 0 1892
+processing:  58 721 : { line: 1, col: 721 } 0 3 31
+colon received...
+processing:  34 722 " { line: 1, col: 722 } 0 4 0
+string gather for object field value : node script/publish.js 1 false 0 1892
+processing:  44 746 , { line: 1, col: 746 } 0 4 31
+comma after field value, push field to object: pub 4
+CONVERT VAL: {
+  name: 'pub',
+  value_type: 4,
+  string: 'node script/publish.js',
+  contains: null,
+  className: null
+}
++++ Added object field: pub {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js',
+  'build:prod': 'npm run build -- --prod',
+  clean: 'node script/clean.js',
+  lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+  pub: 'node script/publish.js'
+} node script/publish.js {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js'
+  }
+}
+processing:  34 747 " { line: 1, col: 747 } 0 3 0
+string gather for object field value : test 1 false 0 1892
+processing:  58 753 : { line: 1, col: 753 } 0 3 31
+colon received...
+processing:  34 754 " { line: 1, col: 754 } 0 4 0
+string gather for object field value : node script/test.js 1 false 0 1892
+processing:  44 775 , { line: 1, col: 775 } 0 4 31
+comma after field value, push field to object: test 4
+CONVERT VAL: {
+  name: 'test',
+  value_type: 4,
+  string: 'node script/test.js',
+  contains: null,
+  className: null
+}
++++ Added object field: test {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js',
+  'build:prod': 'npm run build -- --prod',
+  clean: 'node script/clean.js',
+  lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+  pub: 'node script/publish.js',
+  test: 'node script/test.js'
+} node script/test.js {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js'
+  }
+}
+processing:  34 776 " { line: 1, col: 776 } 0 3 0
+string gather for object field value : test:prod 1 false 0 1892
+processing:  58 787 : { line: 1, col: 787 } 0 3 31
+colon received...
+processing:  34 788 " { line: 1, col: 788 } 0 4 0
+string gather for object field value : node script/test.js --prod 1 false 0 1892
+processing:  125 816 } { line: 1, col: 816 } 0 4 31
+close bracket context: 31 4 4 node script/test.js --prod
+close object; push item 'test:prod' 4
+CONVERT VAL: {
+  name: 'test:prod',
+  value_type: 4,
+  string: 'node script/test.js --prod',
+  contains: null,
+  className: null
+}
++++ Added object field: test:prod {
+  'prebuild:prod': 'optional-dev-dependency',
+  precommit: 'npm run lint',
+  prelint: 'npm run pretest',
+  prepub: 'npm run test:prod',
+  pretest: 'npm run build -- --test',
+  'pretest:prod': 'npm run build:prod -- --test',
+  build: 'node script/build.js',
+  'build:prod': 'npm run build -- --prod',
+  clean: 'node script/clean.js',
+  lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+  pub: 'node script/publish.js',
+  test: 'node script/test.js',
+  'test:prod': 'node script/test.js --prod'
+} node script/test.js --prod {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  }
+}
+processing:  44 817 , { line: 1, col: 817 } 0 4 0
+comma after field value, push field to object: scripts 6
+CONVERT VAL: {
+  name: 'scripts',
+  value_type: 6,
+  string: '',
+  contains: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  className: null
+}
+processing:  34 818 " { line: 1, col: 818 } 0 3 0
+string gather for object field value : devDependencies 1 false 0 1892
+processing:  58 835 : { line: 1, col: 835 } 0 3 31
+colon received...
+processing:  123 836 { { line: 1, col: 836 } 0 4 0
+opening object:  0 0 4
+Begin a new object; previously pushed into elements; but wait until trailing comma or close previously:0 null
+processing:  34 837 " { line: 1, col: 837 } 0 3 0
+string gather for object field value : @babel/core 1 false 0 1892
+processing:  58 850 : { line: 1, col: 850 } 0 3 31
+colon received...
+processing:  34 851 " { line: 1, col: 851 } 0 4 0
+string gather for object field value : ^7.0.0-beta.34 1 false 0 1892
+processing:  44 867 , { line: 1, col: 867 } 0 4 31
+comma after field value, push field to object: @babel/core 4
+CONVERT VAL: {
+  name: '@babel/core',
+  value_type: 4,
+  string: '^7.0.0-beta.34',
+  contains: null,
+  className: null
+}
++++ Added object field: @babel/core { '@babel/core': '^7.0.0-beta.34' } ^7.0.0-beta.34 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: { '@babel/core': '^7.0.0-beta.34' }
+}
+processing:  34 868 " { line: 1, col: 868 } 0 3 0
+string gather for object field value : @babel/plugin-proposal-class-properties 1 false 0 1892
+processing:  58 909 : { line: 1, col: 909 } 0 3 31
+colon received...
+processing:  34 910 " { line: 1, col: 910 } 0 4 0
+string gather for object field value : ^7.0.0-beta.34 1 false 0 1892
+processing:  44 926 , { line: 1, col: 926 } 0 4 31
+comma after field value, push field to object: @babel/plugin-proposal-class-properties 4
+CONVERT VAL: {
+  name: '@babel/plugin-proposal-class-properties',
+  value_type: 4,
+  string: '^7.0.0-beta.34',
+  contains: null,
+  className: null
+}
++++ Added object field: @babel/plugin-proposal-class-properties {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34'
+} ^7.0.0-beta.34 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34'
+  }
+}
+processing:  34 927 " { line: 1, col: 927 } 0 3 0
+string gather for object field value : @babel/plugin-transform-block-scoping 1 false 0 1892
+processing:  58 966 : { line: 1, col: 966 } 0 3 31
+colon received...
+processing:  34 967 " { line: 1, col: 967 } 0 4 0
+string gather for object field value : ^7.0.0-beta.34 1 false 0 1892
+processing:  44 983 , { line: 1, col: 983 } 0 4 31
+comma after field value, push field to object: @babel/plugin-transform-block-scoping 4
+CONVERT VAL: {
+  name: '@babel/plugin-transform-block-scoping',
+  value_type: 4,
+  string: '^7.0.0-beta.34',
+  contains: null,
+  className: null
+}
++++ Added object field: @babel/plugin-transform-block-scoping {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34'
+} ^7.0.0-beta.34 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34'
+  }
+}
+processing:  34 984 " { line: 1, col: 984 } 0 3 0
+string gather for object field value : @babel/preset-env 1 false 0 1892
+processing:  58 1003 : { line: 1, col: 1003 } 0 3 31
+colon received...
+processing:  34 1004 " { line: 1, col: 1004 } 0 4 0
+string gather for object field value : ^7.0.0-beta.34 1 false 0 1892
+processing:  44 1020 , { line: 1, col: 1020 } 0 4 31
+comma after field value, push field to object: @babel/preset-env 4
+CONVERT VAL: {
+  name: '@babel/preset-env',
+  value_type: 4,
+  string: '^7.0.0-beta.34',
+  contains: null,
+  className: null
+}
++++ Added object field: @babel/preset-env {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34'
+} ^7.0.0-beta.34 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34'
+  }
+}
+processing:  34 1021 " { line: 1, col: 1021 } 0 3 0
+string gather for object field value : @babel/register 1 false 0 1892
+processing:  58 1038 : { line: 1, col: 1038 } 0 3 31
+colon received...
+processing:  34 1039 " { line: 1, col: 1039 } 0 4 0
+string gather for object field value : ^7.0.0-beta.34 1 false 0 1892
+processing:  44 1055 , { line: 1, col: 1055 } 0 4 31
+comma after field value, push field to object: @babel/register 4
+CONVERT VAL: {
+  name: '@babel/register',
+  value_type: 4,
+  string: '^7.0.0-beta.34',
+  contains: null,
+  className: null
+}
++++ Added object field: @babel/register {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34'
+} ^7.0.0-beta.34 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34'
+  }
+}
+processing:  34 1056 " { line: 1, col: 1056 } 0 3 0
+string gather for object field value : acorn 1 false 0 1892
+processing:  58 1063 : { line: 1, col: 1063 } 0 3 31
+colon received...
+processing:  34 1064 " { line: 1, col: 1064 } 0 4 0
+string gather for object field value : ^5.2.1 1 false 0 1892
+processing:  44 1072 , { line: 1, col: 1072 } 0 4 31
+comma after field value, push field to object: acorn 4
+CONVERT VAL: {
+  name: 'acorn',
+  value_type: 4,
+  string: '^5.2.1',
+  contains: null,
+  className: null
+}
++++ Added object field: acorn {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1'
+} ^5.2.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1'
+  }
+}
+processing:  34 1073 " { line: 1, col: 1073 } 0 3 0
+string gather for object field value : ava 1 false 0 1892
+processing:  58 1078 : { line: 1, col: 1078 } 0 3 31
+colon received...
+processing:  34 1079 " { line: 1, col: 1079 } 0 4 0
+string gather for object field value : ^0.24.0 1 false 0 1892
+processing:  44 1088 , { line: 1, col: 1088 } 0 4 31
+comma after field value, push field to object: ava 4
+CONVERT VAL: {
+  name: 'ava',
+  value_type: 4,
+  string: '^0.24.0',
+  contains: null,
+  className: null
+}
++++ Added object field: ava {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0'
+} ^0.24.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0'
+  }
+}
+processing:  34 1089 " { line: 1, col: 1089 } 0 3 0
+string gather for object field value : babel-eslint 1 false 0 1892
+processing:  58 1103 : { line: 1, col: 1103 } 0 3 31
+colon received...
+processing:  34 1104 " { line: 1, col: 1104 } 0 4 0
+string gather for object field value : ^8.0.3 1 false 0 1892
+processing:  44 1112 , { line: 1, col: 1112 } 0 4 31
+comma after field value, push field to object: babel-eslint 4
+CONVERT VAL: {
+  name: 'babel-eslint',
+  value_type: 4,
+  string: '^8.0.3',
+  contains: null,
+  className: null
+}
++++ Added object field: babel-eslint {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3'
+} ^8.0.3 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3'
+  }
+}
+processing:  34 1113 " { line: 1, col: 1113 } 0 3 0
+string gather for object field value : babel-loader 1 false 0 1892
+processing:  58 1127 : { line: 1, col: 1127 } 0 3 31
+colon received...
+processing:  34 1128 " { line: 1, col: 1128 } 0 4 0
+string gather for object field value : ^8.0.0-beta.0 1 false 0 1892
+processing:  44 1143 , { line: 1, col: 1143 } 0 4 31
+comma after field value, push field to object: babel-loader 4
+CONVERT VAL: {
+  name: 'babel-loader',
+  value_type: 4,
+  string: '^8.0.0-beta.0',
+  contains: null,
+  className: null
+}
++++ Added object field: babel-loader {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0'
+} ^8.0.0-beta.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0'
+  }
+}
+processing:  34 1144 " { line: 1, col: 1144 } 0 3 0
+string gather for object field value : babel-plugin-transform-for-of-as-array 1 false 0 1892
+processing:  58 1184 : { line: 1, col: 1184 } 0 3 31
+colon received...
+processing:  34 1185 " { line: 1, col: 1185 } 0 4 0
+string gather for object field value : ^1.0.4 1 false 0 1892
+processing:  44 1193 , { line: 1, col: 1193 } 0 4 31
+comma after field value, push field to object: babel-plugin-transform-for-of-as-array 4
+CONVERT VAL: {
+  name: 'babel-plugin-transform-for-of-as-array',
+  value_type: 4,
+  string: '^1.0.4',
+  contains: null,
+  className: null
+}
++++ Added object field: babel-plugin-transform-for-of-as-array {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4'
+} ^1.0.4 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4'
+  }
+}
+processing:  34 1194 " { line: 1, col: 1194 } 0 3 0
+string gather for object field value : download 1 false 0 1892
+processing:  58 1204 : { line: 1, col: 1204 } 0 3 31
+colon received...
+processing:  34 1205 " { line: 1, col: 1205 } 0 4 0
+string gather for object field value : ^6.2.5 1 false 0 1892
+processing:  44 1213 , { line: 1, col: 1213 } 0 4 31
+comma after field value, push field to object: download 4
+CONVERT VAL: {
+  name: 'download',
+  value_type: 4,
+  string: '^6.2.5',
+  contains: null,
+  className: null
+}
++++ Added object field: download {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5'
+} ^6.2.5 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5'
+  }
+}
+processing:  34 1214 " { line: 1, col: 1214 } 0 3 0
+string gather for object field value : eslint 1 false 0 1892
+processing:  58 1222 : { line: 1, col: 1222 } 0 3 31
+colon received...
+processing:  34 1223 " { line: 1, col: 1223 } 0 4 0
+string gather for object field value : ^4.12.0 1 false 0 1892
+processing:  44 1232 , { line: 1, col: 1232 } 0 4 31
+comma after field value, push field to object: eslint 4
+CONVERT VAL: {
+  name: 'eslint',
+  value_type: 4,
+  string: '^4.12.0',
+  contains: null,
+  className: null
+}
++++ Added object field: eslint {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0'
+} ^4.12.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0'
+  }
+}
+processing:  34 1233 " { line: 1, col: 1233 } 0 3 0
+string gather for object field value : eslint-plugin-import 1 false 0 1892
+processing:  58 1255 : { line: 1, col: 1255 } 0 3 31
+colon received...
+processing:  34 1256 " { line: 1, col: 1256 } 0 4 0
+string gather for object field value : ^2.7.0 1 false 0 1892
+processing:  44 1264 , { line: 1, col: 1264 } 0 4 31
+comma after field value, push field to object: eslint-plugin-import 4
+CONVERT VAL: {
+  name: 'eslint-plugin-import',
+  value_type: 4,
+  string: '^2.7.0',
+  contains: null,
+  className: null
+}
++++ Added object field: eslint-plugin-import {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0'
+} ^2.7.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0'
+  }
+}
+processing:  34 1265 " { line: 1, col: 1265 } 0 3 0
+string gather for object field value : eslint-plugin-node 1 false 0 1892
+processing:  58 1285 : { line: 1, col: 1285 } 0 3 31
+colon received...
+processing:  34 1286 " { line: 1, col: 1286 } 0 4 0
+string gather for object field value : ^5.2.0 1 false 0 1892
+processing:  44 1294 , { line: 1, col: 1294 } 0 4 31
+comma after field value, push field to object: eslint-plugin-node 4
+CONVERT VAL: {
+  name: 'eslint-plugin-node',
+  value_type: 4,
+  string: '^5.2.0',
+  contains: null,
+  className: null
+}
++++ Added object field: eslint-plugin-node {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0'
+} ^5.2.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0'
+  }
+}
+processing:  34 1295 " { line: 1, col: 1295 } 0 3 0
+string gather for object field value : execa 1 false 0 1892
+processing:  58 1302 : { line: 1, col: 1302 } 0 3 31
+colon received...
+processing:  34 1303 " { line: 1, col: 1303 } 0 4 0
+string gather for object field value : ^0.8.0 1 false 0 1892
+processing:  44 1311 , { line: 1, col: 1311 } 0 4 31
+comma after field value, push field to object: execa 4
+CONVERT VAL: {
+  name: 'execa',
+  value_type: 4,
+  string: '^0.8.0',
+  contains: null,
+  className: null
+}
++++ Added object field: execa {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0'
+} ^0.8.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0'
+  }
+}
+processing:  34 1312 " { line: 1, col: 1312 } 0 3 0
+string gather for object field value : fs-extra 1 false 0 1892
+processing:  58 1322 : { line: 1, col: 1322 } 0 3 31
+colon received...
+processing:  34 1323 " { line: 1, col: 1323 } 0 4 0
+string gather for object field value : ^4.0.3 1 false 0 1892
+processing:  44 1331 , { line: 1, col: 1331 } 0 4 31
+comma after field value, push field to object: fs-extra 4
+CONVERT VAL: {
+  name: 'fs-extra',
+  value_type: 4,
+  string: '^4.0.3',
+  contains: null,
+  className: null
+}
++++ Added object field: fs-extra {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3'
+} ^4.0.3 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3'
+  }
+}
+processing:  34 1332 " { line: 1, col: 1332 } 0 3 0
+string gather for object field value : globby 1 false 0 1892
+processing:  58 1340 : { line: 1, col: 1340 } 0 3 31
+colon received...
+processing:  34 1341 " { line: 1, col: 1341 } 0 4 0
+string gather for object field value : ^7.1.1 1 false 0 1892
+processing:  44 1349 , { line: 1, col: 1349 } 0 4 31
+comma after field value, push field to object: globby 4
+CONVERT VAL: {
+  name: 'globby',
+  value_type: 4,
+  string: '^7.1.1',
+  contains: null,
+  className: null
+}
++++ Added object field: globby {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1'
+} ^7.1.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1'
+  }
+}
+processing:  34 1350 " { line: 1, col: 1350 } 0 3 0
+string gather for object field value : husky 1 false 0 1892
+processing:  58 1357 : { line: 1, col: 1357 } 0 3 31
+colon received...
+processing:  34 1358 " { line: 1, col: 1358 } 0 4 0
+string gather for object field value : ^0.14.3 1 false 0 1892
+processing:  44 1367 , { line: 1, col: 1367 } 0 4 31
+comma after field value, push field to object: husky 4
+CONVERT VAL: {
+  name: 'husky',
+  value_type: 4,
+  string: '^0.14.3',
+  contains: null,
+  className: null
+}
++++ Added object field: husky {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3'
+} ^0.14.3 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3'
+  }
+}
+processing:  34 1368 " { line: 1, col: 1368 } 0 3 0
+string gather for object field value : jest 1 false 0 1892
+processing:  58 1374 : { line: 1, col: 1374 } 0 3 31
+colon received...
+processing:  34 1375 " { line: 1, col: 1375 } 0 4 0
+string gather for object field value : ^21.2.1 1 false 0 1892
+processing:  44 1384 , { line: 1, col: 1384 } 0 4 31
+comma after field value, push field to object: jest 4
+CONVERT VAL: {
+  name: 'jest',
+  value_type: 4,
+  string: '^21.2.1',
+  contains: null,
+  className: null
+}
++++ Added object field: jest {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1'
+} ^21.2.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1'
+  }
+}
+processing:  34 1385 " { line: 1, col: 1385 } 0 3 0
+string gather for object field value : json-6 1 false 0 1892
+processing:  58 1393 : { line: 1, col: 1393 } 0 3 31
+colon received...
+processing:  34 1394 " { line: 1, col: 1394 } 0 4 0
+string gather for object field value : ^0.1.120 1 false 0 1892
+processing:  44 1404 , { line: 1, col: 1404 } 0 4 31
+comma after field value, push field to object: json-6 4
+CONVERT VAL: {
+  name: 'json-6',
+  value_type: 4,
+  string: '^0.1.120',
+  contains: null,
+  className: null
+}
++++ Added object field: json-6 {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120'
+} ^0.1.120 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120'
+  }
+}
+processing:  34 1405 " { line: 1, col: 1405 } 0 3 0
+string gather for object field value : minizlib 1 false 0 1892
+processing:  58 1415 : { line: 1, col: 1415 } 0 3 31
+colon received...
+processing:  34 1416 " { line: 1, col: 1416 } 0 4 0
+string gather for object field value : ^1.0.4 1 false 0 1892
+processing:  44 1424 , { line: 1, col: 1424 } 0 4 31
+comma after field value, push field to object: minizlib 4
+CONVERT VAL: {
+  name: 'minizlib',
+  value_type: 4,
+  string: '^1.0.4',
+  contains: null,
+  className: null
+}
++++ Added object field: minizlib {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4'
+} ^1.0.4 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4'
+  }
+}
+processing:  34 1425 " { line: 1, col: 1425 } 0 3 0
+string gather for object field value : mocha 1 false 0 1892
+processing:  58 1432 : { line: 1, col: 1432 } 0 3 31
+colon received...
+processing:  34 1433 " { line: 1, col: 1433 } 0 4 0
+string gather for object field value : ^4.0.1 1 false 0 1892
+processing:  44 1441 , { line: 1, col: 1441 } 0 4 31
+comma after field value, push field to object: mocha 4
+CONVERT VAL: {
+  name: 'mocha',
+  value_type: 4,
+  string: '^4.0.1',
+  contains: null,
+  className: null
+}
++++ Added object field: mocha {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1'
+} ^4.0.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1'
+  }
+}
+processing:  34 1442 " { line: 1, col: 1442 } 0 3 0
+string gather for object field value : mock-stdio 1 false 0 1892
+processing:  58 1454 : { line: 1, col: 1454 } 0 3 31
+colon received...
+processing:  34 1455 " { line: 1, col: 1455 } 0 4 0
+string gather for object field value : ^1.0.0 1 false 0 1892
+processing:  44 1463 , { line: 1, col: 1463 } 0 4 31
+comma after field value, push field to object: mock-stdio 4
+CONVERT VAL: {
+  name: 'mock-stdio',
+  value_type: 4,
+  string: '^1.0.0',
+  contains: null,
+  className: null
+}
++++ Added object field: mock-stdio {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0'
+} ^1.0.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0'
+  }
+}
+processing:  34 1464 " { line: 1, col: 1464 } 0 3 0
+string gather for object field value : nop 1 false 0 1892
+processing:  58 1469 : { line: 1, col: 1469 } 0 3 31
+colon received...
+processing:  34 1470 " { line: 1, col: 1470 } 0 4 0
+string gather for object field value : ^1.0.0 1 false 0 1892
+processing:  44 1478 , { line: 1, col: 1478 } 0 4 31
+comma after field value, push field to object: nop 4
+CONVERT VAL: {
+  name: 'nop',
+  value_type: 4,
+  string: '^1.0.0',
+  contains: null,
+  className: null
+}
++++ Added object field: nop {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0'
+} ^1.0.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0'
+  }
+}
+processing:  34 1479 " { line: 1, col: 1479 } 0 3 0
+string gather for object field value : nyc 1 false 0 1892
+processing:  58 1484 : { line: 1, col: 1484 } 0 3 31
+colon received...
+processing:  34 1485 " { line: 1, col: 1485 } 0 4 0
+string gather for object field value : ^11.3.0 1 false 0 1892
+processing:  44 1494 , { line: 1, col: 1494 } 0 4 31
+comma after field value, push field to object: nyc 4
+CONVERT VAL: {
+  name: 'nyc',
+  value_type: 4,
+  string: '^11.3.0',
+  contains: null,
+  className: null
+}
++++ Added object field: nyc {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0'
+} ^11.3.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0'
+  }
+}
+processing:  34 1495 " { line: 1, col: 1495 } 0 3 0
+string gather for object field value : optimize-js-plugin 1 false 0 1892
+processing:  58 1515 : { line: 1, col: 1515 } 0 3 31
+colon received...
+processing:  34 1516 " { line: 1, col: 1516 } 0 4 0
+string gather for object field value : 0.0.4 1 false 0 1892
+processing:  44 1523 , { line: 1, col: 1523 } 0 4 31
+comma after field value, push field to object: optimize-js-plugin 4
+CONVERT VAL: {
+  name: 'optimize-js-plugin',
+  value_type: 4,
+  string: '0.0.4',
+  contains: null,
+  className: null
+}
++++ Added object field: optimize-js-plugin {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4'
+} 0.0.4 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4'
+  }
+}
+processing:  34 1524 " { line: 1, col: 1524 } 0 3 0
+string gather for object field value : optional-dev-dependency 1 false 0 1892
+processing:  58 1549 : { line: 1, col: 1549 } 0 3 31
+colon received...
+processing:  34 1550 " { line: 1, col: 1550 } 0 4 0
+string gather for object field value : ^2.0.1 1 false 0 1892
+processing:  44 1558 , { line: 1, col: 1558 } 0 4 31
+comma after field value, push field to object: optional-dev-dependency 4
+CONVERT VAL: {
+  name: 'optional-dev-dependency',
+  value_type: 4,
+  string: '^2.0.1',
+  contains: null,
+  className: null
+}
++++ Added object field: optional-dev-dependency {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1'
+} ^2.0.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1'
+  }
+}
+processing:  34 1559 " { line: 1, col: 1559 } 0 3 0
+string gather for object field value : pify 1 false 0 1892
+processing:  58 1565 : { line: 1, col: 1565 } 0 3 31
+colon received...
+processing:  34 1566 " { line: 1, col: 1566 } 0 4 0
+string gather for object field value : ^3.0.0 1 false 0 1892
+processing:  44 1574 , { line: 1, col: 1574 } 0 4 31
+comma after field value, push field to object: pify 4
+CONVERT VAL: {
+  name: 'pify',
+  value_type: 4,
+  string: '^3.0.0',
+  contains: null,
+  className: null
+}
++++ Added object field: pify {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0'
+} ^3.0.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0'
+  }
+}
+processing:  34 1575 " { line: 1, col: 1575 } 0 3 0
+string gather for object field value : pm2 1 false 0 1892
+processing:  58 1580 : { line: 1, col: 1580 } 0 3 31
+colon received...
+processing:  34 1581 " { line: 1, col: 1581 } 0 4 0
+string gather for object field value : ^2.8.0 1 false 0 1892
+processing:  44 1589 , { line: 1, col: 1589 } 0 4 31
+comma after field value, push field to object: pm2 4
+CONVERT VAL: {
+  name: 'pm2',
+  value_type: 4,
+  string: '^2.8.0',
+  contains: null,
+  className: null
+}
++++ Added object field: pm2 {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0'
+} ^2.8.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0'
+  }
+}
+processing:  34 1590 " { line: 1, col: 1590 } 0 3 0
+string gather for object field value : semver 1 false 0 1892
+processing:  58 1598 : { line: 1, col: 1598 } 0 3 31
+colon received...
+processing:  34 1599 " { line: 1, col: 1599 } 0 4 0
+string gather for object field value : ^5.4.1 1 false 0 1892
+processing:  44 1607 , { line: 1, col: 1607 } 0 4 31
+comma after field value, push field to object: semver 4
+CONVERT VAL: {
+  name: 'semver',
+  value_type: 4,
+  string: '^5.4.1',
+  contains: null,
+  className: null
+}
++++ Added object field: semver {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1'
+} ^5.4.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1'
+  }
+}
+processing:  34 1608 " { line: 1, col: 1608 } 0 3 0
+string gather for object field value : trash 1 false 0 1892
+processing:  58 1615 : { line: 1, col: 1615 } 0 3 31
+colon received...
+processing:  34 1616 " { line: 1, col: 1616 } 0 4 0
+string gather for object field value : ^4.2.1 1 false 0 1892
+processing:  44 1624 , { line: 1, col: 1624 } 0 4 31
+comma after field value, push field to object: trash 4
+CONVERT VAL: {
+  name: 'trash',
+  value_type: 4,
+  string: '^4.2.1',
+  contains: null,
+  className: null
+}
++++ Added object field: trash {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1'
+} ^4.2.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1'
+  }
+}
+processing:  34 1625 " { line: 1, col: 1625 } 0 3 0
+string gather for object field value : typescript 1 false 0 1892
+processing:  58 1637 : { line: 1, col: 1637 } 0 3 31
+colon received...
+processing:  34 1638 " { line: 1, col: 1638 } 0 4 0
+string gather for object field value : ^2.6.1 1 false 0 1892
+processing:  44 1646 , { line: 1, col: 1646 } 0 4 31
+comma after field value, push field to object: typescript 4
+CONVERT VAL: {
+  name: 'typescript',
+  value_type: 4,
+  string: '^2.6.1',
+  contains: null,
+  className: null
+}
++++ Added object field: typescript {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1'
+} ^2.6.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1'
+  }
+}
+processing:  34 1647 " { line: 1, col: 1647 } 0 3 0
+string gather for object field value : uglify-es 1 false 0 1892
+processing:  58 1658 : { line: 1, col: 1658 } 0 3 31
+colon received...
+processing:  34 1659 " { line: 1, col: 1659 } 0 4 0
+string gather for object field value : ^3.2.1 1 false 0 1892
+processing:  44 1667 , { line: 1, col: 1667 } 0 4 31
+comma after field value, push field to object: uglify-es 4
+CONVERT VAL: {
+  name: 'uglify-es',
+  value_type: 4,
+  string: '^3.2.1',
+  contains: null,
+  className: null
+}
++++ Added object field: uglify-es {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1',
+  'uglify-es': '^3.2.1'
+} ^3.2.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1'
+  }
+}
+processing:  34 1668 " { line: 1, col: 1668 } 0 3 0
+string gather for object field value : uglifyjs-webpack-plugin 1 false 0 1892
+processing:  58 1693 : { line: 1, col: 1693 } 0 3 31
+colon received...
+processing:  34 1694 " { line: 1, col: 1694 } 0 4 0
+string gather for object field value : ^1.1.1 1 false 0 1892
+processing:  44 1702 , { line: 1, col: 1702 } 0 4 31
+comma after field value, push field to object: uglifyjs-webpack-plugin 4
+CONVERT VAL: {
+  name: 'uglifyjs-webpack-plugin',
+  value_type: 4,
+  string: '^1.1.1',
+  contains: null,
+  className: null
+}
++++ Added object field: uglifyjs-webpack-plugin {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1',
+  'uglify-es': '^3.2.1',
+  'uglifyjs-webpack-plugin': '^1.1.1'
+} ^1.1.1 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1'
+  }
+}
+processing:  34 1703 " { line: 1, col: 1703 } 0 3 0
+string gather for object field value : webpack 1 false 0 1892
+processing:  58 1712 : { line: 1, col: 1712 } 0 3 31
+colon received...
+processing:  34 1713 " { line: 1, col: 1713 } 0 4 0
+string gather for object field value : ^3.10.0 1 false 0 1892
+processing:  44 1722 , { line: 1, col: 1722 } 0 4 31
+comma after field value, push field to object: webpack 4
+CONVERT VAL: {
+  name: 'webpack',
+  value_type: 4,
+  string: '^3.10.0',
+  contains: null,
+  className: null
+}
++++ Added object field: webpack {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1',
+  'uglify-es': '^3.2.1',
+  'uglifyjs-webpack-plugin': '^1.1.1',
+  webpack: '^3.10.0'
+} ^3.10.0 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0'
+  }
+}
+processing:  34 1723 " { line: 1, col: 1723 } 0 3 0
+string gather for object field value : webpack-bundle-analyzer 1 false 0 1892
+processing:  58 1748 : { line: 1, col: 1748 } 0 3 31
+colon received...
+processing:  34 1749 " { line: 1, col: 1749 } 0 4 0
+string gather for object field value : ^2.8.3 1 false 0 1892
+processing:  44 1757 , { line: 1, col: 1757 } 0 4 31
+comma after field value, push field to object: webpack-bundle-analyzer 4
+CONVERT VAL: {
+  name: 'webpack-bundle-analyzer',
+  value_type: 4,
+  string: '^2.8.3',
+  contains: null,
+  className: null
+}
++++ Added object field: webpack-bundle-analyzer {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1',
+  'uglify-es': '^3.2.1',
+  'uglifyjs-webpack-plugin': '^1.1.1',
+  webpack: '^3.10.0',
+  'webpack-bundle-analyzer': '^2.8.3'
+} ^2.8.3 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0',
+    'webpack-bundle-analyzer': '^2.8.3'
+  }
+}
+processing:  34 1758 " { line: 1, col: 1758 } 0 3 0
+string gather for object field value : webpack-common-shake 1 false 0 1892
+processing:  58 1780 : { line: 1, col: 1780 } 0 3 31
+colon received...
+processing:  34 1781 " { line: 1, col: 1781 } 0 4 0
+string gather for object field value : ^1.5.3 1 false 0 1892
+processing:  44 1789 , { line: 1, col: 1789 } 0 4 31
+comma after field value, push field to object: webpack-common-shake 4
+CONVERT VAL: {
+  name: 'webpack-common-shake',
+  value_type: 4,
+  string: '^1.5.3',
+  contains: null,
+  className: null
+}
++++ Added object field: webpack-common-shake {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1',
+  'uglify-es': '^3.2.1',
+  'uglifyjs-webpack-plugin': '^1.1.1',
+  webpack: '^3.10.0',
+  'webpack-bundle-analyzer': '^2.8.3',
+  'webpack-common-shake': '^1.5.3'
+} ^1.5.3 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0',
+    'webpack-bundle-analyzer': '^2.8.3',
+    'webpack-common-shake': '^1.5.3'
+  }
+}
+processing:  34 1790 " { line: 1, col: 1790 } 0 3 0
+string gather for object field value : yargs 1 false 0 1892
+processing:  58 1797 : { line: 1, col: 1797 } 0 3 31
+colon received...
+processing:  34 1798 " { line: 1, col: 1798 } 0 4 0
+string gather for object field value : ^10.0.3 1 false 0 1892
+processing:  125 1807 } { line: 1, col: 1807 } 0 4 31
+close bracket context: 31 4 4 ^10.0.3
+close object; push item 'yargs' 4
+CONVERT VAL: {
+  name: 'yargs',
+  value_type: 4,
+  string: '^10.0.3',
+  contains: null,
+  className: null
+}
++++ Added object field: yargs {
+  '@babel/core': '^7.0.0-beta.34',
+  '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+  '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+  '@babel/preset-env': '^7.0.0-beta.34',
+  '@babel/register': '^7.0.0-beta.34',
+  acorn: '^5.2.1',
+  ava: '^0.24.0',
+  'babel-eslint': '^8.0.3',
+  'babel-loader': '^8.0.0-beta.0',
+  'babel-plugin-transform-for-of-as-array': '^1.0.4',
+  download: '^6.2.5',
+  eslint: '^4.12.0',
+  'eslint-plugin-import': '^2.7.0',
+  'eslint-plugin-node': '^5.2.0',
+  execa: '^0.8.0',
+  'fs-extra': '^4.0.3',
+  globby: '^7.1.1',
+  husky: '^0.14.3',
+  jest: '^21.2.1',
+  'json-6': '^0.1.120',
+  minizlib: '^1.0.4',
+  mocha: '^4.0.1',
+  'mock-stdio': '^1.0.0',
+  nop: '^1.0.0',
+  nyc: '^11.3.0',
+  'optimize-js-plugin': '0.0.4',
+  'optional-dev-dependency': '^2.0.1',
+  pify: '^3.0.0',
+  pm2: '^2.8.0',
+  semver: '^5.4.1',
+  trash: '^4.2.1',
+  typescript: '^2.6.1',
+  'uglify-es': '^3.2.1',
+  'uglifyjs-webpack-plugin': '^1.1.1',
+  webpack: '^3.10.0',
+  'webpack-bundle-analyzer': '^2.8.3',
+  'webpack-common-shake': '^1.5.3',
+  yargs: '^10.0.3'
+} ^10.0.3 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0',
+    'webpack-bundle-analyzer': '^2.8.3',
+    'webpack-common-shake': '^1.5.3',
+    yargs: '^10.0.3'
+  }
+}
+processing:  44 1808 , { line: 1, col: 1808 } 0 4 0
+comma after field value, push field to object: devDependencies 6
+CONVERT VAL: {
+  name: 'devDependencies',
+  value_type: 6,
+  string: '',
+  contains: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0',
+    'webpack-bundle-analyzer': '^2.8.3',
+    'webpack-common-shake': '^1.5.3',
+    yargs: '^10.0.3'
+  },
+  className: null
+}
+processing:  34 1809 " { line: 1, col: 1809 } 0 3 0
+string gather for object field value : optionalDevDependencies 1 false 0 1892
+processing:  58 1834 : { line: 1, col: 1834 } 0 3 31
+colon received...
+processing:  123 1835 { { line: 1, col: 1835 } 0 4 0
+opening object:  0 0 4
+Begin a new object; previously pushed into elements; but wait until trailing comma or close previously:0 null
+processing:  34 1836 " { line: 1, col: 1836 } 0 3 0
+string gather for object field value : node-zopfli 1 false 0 1892
+processing:  58 1849 : { line: 1, col: 1849 } 0 3 31
+colon received...
+processing:  34 1850 " { line: 1, col: 1850 } 0 4 0
+string gather for object field value : ^2.0.2 1 false 0 1892
+processing:  125 1858 } { line: 1, col: 1858 } 0 4 31
+close bracket context: 31 4 4 ^2.0.2
+close object; push item 'node-zopfli' 4
+CONVERT VAL: {
+  name: 'node-zopfli',
+  value_type: 4,
+  string: '^2.0.2',
+  contains: null,
+  className: null
+}
++++ Added object field: node-zopfli { 'node-zopfli': '^2.0.2' } ^2.0.2 {
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0',
+    'webpack-bundle-analyzer': '^2.8.3',
+    'webpack-common-shake': '^1.5.3',
+    yargs: '^10.0.3'
+  },
+  optionalDevDependencies: { 'node-zopfli': '^2.0.2' }
+}
+processing:  44 1859 , { line: 1, col: 1859 } 0 4 0
+comma after field value, push field to object: optionalDevDependencies 6
+CONVERT VAL: {
+  name: 'optionalDevDependencies',
+  value_type: 6,
+  string: '',
+  contains: { 'node-zopfli': '^2.0.2' },
+  className: null
+}
+processing:  34 1860 " { line: 1, col: 1860 } 0 3 0
+string gather for object field value : files 1 false 0 1892
+processing:  58 1867 : { line: 1, col: 1867 } 0 3 31
+colon received...
+processing:  91 1868 [ { line: 1, col: 1868 } 0 4 0
+Begin a new array; previously pushed into elements; but wait until trailing comma or close previously:0
+processing:  34 1869 " { line: 1, col: 1869 } 0 1 0
+string gather for object field value : index.js 1 false 0 1892
+processing:  44 1879 , { line: 1, col: 1879 } 0 1 31
+back in array; push item 4
+PUSH TO ARRAY: {
+  name: null,
+  value_type: 4,
+  string: 'index.js',
+  contains: null,
+  className: null
+}
+CONVERT VAL: {
+  name: null,
+  value_type: 4,
+  string: 'index.js',
+  contains: null,
+  className: null
+}
+processing:  34 1880 " { line: 1, col: 1880 } 0 1 0
+string gather for object field value : esm.js.gz 1 false 0 1892
+processing:  93 1891 ] { line: 1, col: 1891 } 0 1 31
+close array, push last element: 4
+PUSH TO ARRAY: {
+  name: null,
+  value_type: 4,
+  string: 'esm.js.gz',
+  contains: null,
+  className: null
+}
+CONVERT VAL: {
+  name: null,
+  value_type: 4,
+  string: 'esm.js.gz',
+  contains: null,
+  className: null
+}
+processing:  125 1892 } { line: 1, col: 1892 } 0 4 0
+close bracket context: 0 4 13 
+close object; push item 'files' 13
+CONVERT VAL: {
+  name: 'files',
+  value_type: 13,
+  string: '',
+  contains: [ 'index.js', 'esm.js.gz' ],
+  className: null
+}
+CONVERT VAL: {
+  name: null,
+  value_type: 6,
+  string: '',
+  contains: {
+    name: '@std/esm',
+    version: '0.18.0',
+    description: 'Enable ES modules in Node today!',
+    keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+    repository: 'standard-things/esm',
+    license: 'MIT',
+    author: 'John-David Dalton <john.david.dalton@gmail.com>',
+    main: 'index.js',
+    private: true,
+    '@std/esm': true,
+    engines: { node: '>=4' },
+    scripts: {
+      'prebuild:prod': 'optional-dev-dependency',
+      precommit: 'npm run lint',
+      prelint: 'npm run pretest',
+      prepub: 'npm run test:prod',
+      pretest: 'npm run build -- --test',
+      'pretest:prod': 'npm run build:prod -- --test',
+      build: 'node script/build.js',
+      'build:prod': 'npm run build -- --prod',
+      clean: 'node script/clean.js',
+      lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+      pub: 'node script/publish.js',
+      test: 'node script/test.js',
+      'test:prod': 'node script/test.js --prod'
+    },
+    devDependencies: {
+      '@babel/core': '^7.0.0-beta.34',
+      '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+      '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+      '@babel/preset-env': '^7.0.0-beta.34',
+      '@babel/register': '^7.0.0-beta.34',
+      acorn: '^5.2.1',
+      ava: '^0.24.0',
+      'babel-eslint': '^8.0.3',
+      'babel-loader': '^8.0.0-beta.0',
+      'babel-plugin-transform-for-of-as-array': '^1.0.4',
+      download: '^6.2.5',
+      eslint: '^4.12.0',
+      'eslint-plugin-import': '^2.7.0',
+      'eslint-plugin-node': '^5.2.0',
+      execa: '^0.8.0',
+      'fs-extra': '^4.0.3',
+      globby: '^7.1.1',
+      husky: '^0.14.3',
+      jest: '^21.2.1',
+      'json-6': '^0.1.120',
+      minizlib: '^1.0.4',
+      mocha: '^4.0.1',
+      'mock-stdio': '^1.0.0',
+      nop: '^1.0.0',
+      nyc: '^11.3.0',
+      'optimize-js-plugin': '0.0.4',
+      'optional-dev-dependency': '^2.0.1',
+      pify: '^3.0.0',
+      pm2: '^2.8.0',
+      semver: '^5.4.1',
+      trash: '^4.2.1',
+      typescript: '^2.6.1',
+      'uglify-es': '^3.2.1',
+      'uglifyjs-webpack-plugin': '^1.1.1',
+      webpack: '^3.10.0',
+      'webpack-bundle-analyzer': '^2.8.3',
+      'webpack-common-shake': '^1.5.3',
+      yargs: '^10.0.3'
+    },
+    optionalDevDependencies: { 'node-zopfli': '^2.0.2' },
+    files: [ 'index.js', 'esm.js.gz' ]
+  },
+  className: null
+}
+{
+  name: '@std/esm',
+  version: '0.18.0',
+  description: 'Enable ES modules in Node today!',
+  keywords: 'commonjs, ecmascript, export, import, modules, node, require',
+  repository: 'standard-things/esm',
+  license: 'MIT',
+  author: 'John-David Dalton <john.david.dalton@gmail.com>',
+  main: 'index.js',
+  private: true,
+  '@std/esm': true,
+  engines: { node: '>=4' },
+  scripts: {
+    'prebuild:prod': 'optional-dev-dependency',
+    precommit: 'npm run lint',
+    prelint: 'npm run pretest',
+    prepub: 'npm run test:prod',
+    pretest: 'npm run build -- --test',
+    'pretest:prod': 'npm run build:prod -- --test',
+    build: 'node script/build.js',
+    'build:prod': 'npm run build -- --prod',
+    clean: 'node script/clean.js',
+    lint: "eslint \\'**/*.{js,mjs}\\' --fix --quiet",
+    pub: 'node script/publish.js',
+    test: 'node script/test.js',
+    'test:prod': 'node script/test.js --prod'
+  },
+  devDependencies: {
+    '@babel/core': '^7.0.0-beta.34',
+    '@babel/plugin-proposal-class-properties': '^7.0.0-beta.34',
+    '@babel/plugin-transform-block-scoping': '^7.0.0-beta.34',
+    '@babel/preset-env': '^7.0.0-beta.34',
+    '@babel/register': '^7.0.0-beta.34',
+    acorn: '^5.2.1',
+    ava: '^0.24.0',
+    'babel-eslint': '^8.0.3',
+    'babel-loader': '^8.0.0-beta.0',
+    'babel-plugin-transform-for-of-as-array': '^1.0.4',
+    download: '^6.2.5',
+    eslint: '^4.12.0',
+    'eslint-plugin-import': '^2.7.0',
+    'eslint-plugin-node': '^5.2.0',
+    execa: '^0.8.0',
+    'fs-extra': '^4.0.3',
+    globby: '^7.1.1',
+    husky: '^0.14.3',
+    jest: '^21.2.1',
+    'json-6': '^0.1.120',
+    minizlib: '^1.0.4',
+    mocha: '^4.0.1',
+    'mock-stdio': '^1.0.0',
+    nop: '^1.0.0',
+    nyc: '^11.3.0',
+    'optimize-js-plugin': '0.0.4',
+    'optional-dev-dependency': '^2.0.1',
+    pify: '^3.0.0',
+    pm2: '^2.8.0',
+    semver: '^5.4.1',
+    trash: '^4.2.1',
+    typescript: '^2.6.1',
+    'uglify-es': '^3.2.1',
+    'uglifyjs-webpack-plugin': '^1.1.1',
+    webpack: '^3.10.0',
+    'webpack-bundle-analyzer': '^2.8.3',
+    'webpack-common-shake': '^1.5.3',
+    yargs: '^10.0.3'
+  },
+  optionalDevDependencies: { 'node-zopfli': '^2.0.2' },
+  files: [ 'index.js', 'esm.js.gz' ]
+}

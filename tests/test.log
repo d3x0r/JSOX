@@ -1,0 +1,32 @@
+123 is 123 number
+123_456_789 is 123456789 number
+0123 is 123 number
+0o123 is 83 number
+0x123 is 291 number
+0b1010101 is 85 number
+o is 123 string
+o is null object
+o is true boolean
+o is false boolean
+o is undefined undefined
+o is NaN number
+o is NaN number
+o is Infinity number
+o is -Infinity number
+o is { a: 123 }
+o is { a: 'abcdef' }
+o is { a: 'abcdef' }
+o is { a: 'abc\ndef' }
+o is { a: 'abcdef' }
+o is { a: 'abcdef' }
+o is { a: 123 }
+o is [ 123 ]
+d 123
+c { d: 123 }
+e 456
+b { c: { d: 123 }, e: 456 }
+f 789
+a { b: { c: { d: 123 }, e: 456 }, f: 789 }
+g 987
+ { a: { b: { c: [Object], e: 456 }, f: 789 }, g: 987 }
+o is {"a":{"b":{"c":{"d":123},"e":456},"f":789},"g":987}

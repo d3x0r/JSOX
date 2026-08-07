@@ -1,0 +1,20 @@
+{op:world,world:~Wr{lines:[~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:-5,y:0,z:0}},to:5}
+,~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:5,z:0}},to:5}
+,~L{from:-5,r:r{n:v3{x:1,y:0,z:0},o:v3{x:0,y:-5,z:0}},to:5}
+,~L{from:-5,r:r{n:v3{x:0,y:1,z:0},o:v3{x:5,y:0,z:0}},to:5}]
+,names:[~N{flags:{vertical:false},name:Default}]
+,sectors:[~S[0,null
+			,~Wl[0,ref["world","lines",0],null
+			,~Wl[2,ref["world","lines",2],null
+			,ref["world","sectors",0,2],false
+			,~Wl[3,ref["world","lines",3],null
+			,ref["world","sectors",0,2,3],true
+			,~Wl[1,ref["world","lines",1],null
+			,ref["world","sectors",0,2],true
+			,ref["world","sectors",0,2,3,5],true],true],false]
+		,false,ref["world","sectors",0,2,3,5,5],false],r{n:v3{x:0,y:0,z:1},o:v3{x:0,y:0,z:0}},~T{flags:{color:true},name:null}]
+		]
+,walls:[ref["world","sectors",0,2]
+		,ref["world","sectors",0,2,3,5,5]
+		,ref["world","sectors",0,2,3]
+		,ref["world","sectors",0,2,3,5]]}}
