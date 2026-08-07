@@ -25,7 +25,7 @@ JSOX.fromJSOX( "stringTest", function() {
 	return new stringTest( this );
 } );
 
-JSOX.registerToJSOX( "stringTest", stringTest, stringTest.prototype.toString );
+JSOX.toJSOX( "stringTest", stringTest, stringTest.prototype.toString );
 
 JSOX.fromJSOX( "arrayTest", function() {
 	//console.log( "Resuurect from Array:[%s]", this );
