@@ -806,6 +806,11 @@ The product of this should run on very old platforms also, especially `node_modu
 
 ## Changelog
 - 1.2.126 (inprogress)
+    - Fix general parsing case of typed arrays w/o handlers.
+    - Fix revival of tagged objects as a common prototype instead of Object.
+    - Fix build process to generate products more smootly.
+    - Extended test cases.
+    - 
 - 1.2.125
     - Fix double-ref emission on certain encodes.
 - 1.2.124
