@@ -1,0 +1,329 @@
+'use strict';
+const JSOX = require( ".." );
+
+// Contracts around class tags:
+//
+//  A) An unregistered tag must not break a round trip with no reviver registered --
+//     that is exactly what tests/data/rawtest.mjs does (parse/stringify/parse/
+//     stringify/compare). The tag name itself is intentionally dropped on output:
+//     inbound types are not auto-registered as stringifiers, so a leaf consumer
+//     without supporting code can't become a schema source for anyone else.
+//     What must hold is that the data survives and the output is stable.
+//
+//  B) A registered tag must call its reviver. This works for the `Tag{...}` form
+//     and not yet for the `Tag[...]` form, which sack.JSOX revives in every
+//     position (top level, object field, array element).
+//
+//  C) A reference may point at an object still being parsed, including the one
+//     enclosing it. That object's identity is not settled until its final revive,
+//     which may return something other than the accumulator values were collected
+//     into; the reference must end up holding the final object.
+//     `ref[]` (empty path) is the root object.
+
+describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
+
+	// ---- A: unregistered tags round-trip without revivers -------------------
+
+	function roundTrip( text ) {
+		JSOX.reset();
+		const once  = JSOX.stringify( JSOX.parse( text ) );
+		const twice = JSOX.stringify( JSOX.parse( once ) );
+		return { once, twice };
+	}
+
+	it( 'round-trips an unregistered tagged object with no reviver', function () {
+		const { once, twice } = roundTrip( '{x:Tag{a:1,b:2}}' );
+		expect( twice ).to.equal( once );
+		expect( JSOX.parse( once ) ).to.deep.equal( { x : { a : 1, b : 2 } } );
+	} );
+
+	it( 'round-trips an unregistered tagged array with no reviver', function () {
+		const { once, twice } = roundTrip( '{x:Tag[1,2,3]}' );
+		expect( twice ).to.equal( once );
+		expect( JSOX.parse( once ) ).to.deep.equal( { x : [ 1, 2, 3 ] } );
+	} );
+
+	it( 'round-trips a punctuation-named unregistered tagged array', function () {
+		// the shape flatland emits (~S[...]); must degrade, not throw
+		const { once, twice } = roundTrip( '{x:~S[1,2,3]}' );
+		expect( twice ).to.equal( once );
+		expect( JSOX.parse( once ) ).to.deep.equal( { x : [ 1, 2, 3 ] } );
+	} );
+
+	// ---- B: registered tags call their reviver ------------------------------
+
+	class T {
+		constructor( src ) { this.data = src ? Array.from( src ) : []; }
+	}
+
+	function parseWithT( text ) {
+		JSOX.reset();
+		let result, called = false;
+		const parser = JSOX.begin( o => { result = o; } );
+		parser.fromJSOX( "T", T, function ( field, val ) {
+			if( field ) return val;
+			called = true;
+			return new T( this );
+		} );
+		parser.write( text );
+		return { result, called };
+	}
+
+	it( 'revives a registered tagged object', function () {
+		const { result, called } = parseWithT( 'T{a:1}' );
+		expect( called ).to.equal( true );
+		expect( result ).to.be.an.instanceof( T );
+	} );
+
+	it( 'revives a registered tagged array as an object field', function () {
+		const { result, called } = parseWithT( '{x:T[1,2,3]}' );
+		expect( called ).to.equal( true );
+		expect( result.x ).to.be.an.instanceof( T );
+	} );
+
+	it( 'revives a registered tagged array as an array element', function () {
+		const { result, called } = parseWithT( '[T[1,2,3]]' );
+		expect( called ).to.equal( true );
+		expect( result[0] ).to.be.an.instanceof( T );
+	} );
+
+	it( 'revives a registered tagged array at top level', function () {
+		const { result, called } = parseWithT( 'T[1,2,3]' );
+		expect( called ).to.equal( true );
+		expect( result ).to.be.an.instanceof( T );
+	} );
+
+	// ---- C: references into objects that are still being parsed -------------
+
+	// A's final revive deliberately returns a different object than the one values
+	// were accumulated into -- that substitution is the whole point of these tests.
+	class A { a = 0; b = null; c = 0; }
+	class B { b = 0; c = null; }
+
+	// always returns a NEW object rather than the accumulator, so the tests are
+	// actually checking that references end up holding the substituted instance
+	function reviveAs( Klass, fields ) {
+		return function ( field, val ) {
+			if( field ) return val;                       // accumulate
+			const out = new Klass();
+			if( Array.isArray( this ) )                   // tagged array: positional
+				fields.forEach( ( f, i ) => { out[f] = this[i]; } );
+			else                                          // tagged object: by name
+				Object.assign( out, this );
+			return out;
+		};
+	}
+
+	function parseAB( text ) {
+		JSOX.reset();
+		let result;
+		const parser = JSOX.begin( o => { result = o; } );
+		parser.fromJSOX( "A", A, reviveAs( A, [ "a", "b", "c" ] ) );
+		parser.fromJSOX( "B", B, reviveAs( B, [ "b", "c" ] ) );
+		parser.write( text );
+		return result;
+	}
+
+	it( 'resolves a ref to the enclosing object (tagged object form)', function () {
+		const result = parseAB( 'A{a:1,b:B{b:2,c:ref[]},c:3}' );
+
+		expect( result ).to.be.an.instanceof( A );
+		expect( result.a ).to.equal( 1 );
+		expect( result.c ).to.equal( 3 );
+		expect( result.b ).to.be.an.instanceof( B );
+		expect( result.b.b ).to.equal( 2 );
+
+		// must be the revived A, not the accumulator it replaced
+		expect( result.b.c ).to.equal( result );
+	} );
+
+	it( 'resolves a ref to the enclosing object (tagged array form)', function () {
+		const result = parseAB( '{root:A[1,B[2,ref["root"]],3]}' );
+
+		expect( result.root ).to.be.an.instanceof( A );
+		expect( result.root.b ).to.be.an.instanceof( B );
+		expect( result.root.b.c ).to.equal( result.root );
+	} );
+
+	it( 'still resolves a ref to an already-completed sibling', function () {
+		// backward reference: target is closed before the ref is read, so this path
+		// must keep working untouched.
+		const result = parseAB( 'A{a:1,b:B{b:2,c:0},c:ref["b"]}' );
+
+		expect( result.c ).to.equal( result.b );
+		expect( result.c ).to.be.an.instanceof( B );
+	} );
+
+	it( 'keeps the element that follows a reference in an array', function () {
+		// resolving a reference used to leave the "already placed" flag set, so the
+		// next element was silently dropped -- shortening the array and throwing off
+		// every index a later reference path depended on.
+		JSOX.reset();
+		const o = JSOX.parse( '{a:1,b:[0,ref["a"],null,2,ref["a"],false]}' );
+		expect( o.b.length ).to.equal( 6 );
+		expect( o.b ).to.deep.equal( [ 0, 1, null, 2, 1, false ] );
+	} );
+
+	it( 'resolves references through nested containers', function () {
+		JSOX.reset();
+		const o = JSOX.parse( '{ a: { a: {}, b: ref["a","a"], c:{ a:[1,2,ref["a","b"],ref["a","c","a",0]] } } }' );
+
+		expect( o.a.b ).to.equal( o.a.a );          // b -> the {} at a.a
+		expect( o.a.c.a[2] ).to.equal( o.a.b );     // through b, already resolved
+		expect( o.a.c.a[2] ).to.equal( o.a.a );
+		expect( o.a.c.a[3] ).to.equal( 1 );         // back into its own enclosing array
+	} );
+
+	// ---- D: a custom toJSOX re-enters the stringifier -----------------------
+
+	it( 'keeps reference paths rooted at the document from a custom toJSOX', function () {
+		// A custom toJSOX returns stringifier.stringify(mirror), which re-enters.
+		// That nested call used to reset the shared path and fieldMap, so references
+		// inside the mirror came out rooted at the mirror -- and worse, the outer
+		// walk resumed with every previously recorded path forgotten.
+		JSOX.reset();
+		class Leaf { constructor( v ) { this.v = v; } }
+		class Holder { constructor( a, b ) { this.a = a; this.b = b; } }
+
+		const shared = new Leaf( 1 );
+		const doc = { first : shared, holder : new Holder( shared, 2 ), last : shared };
+
+		const s = JSOX.stringifier();
+		s.toJSOX( "H", Holder, function ( stringifier ) {
+			return stringifier.stringify( { a : this.a, b : this.b } );
+		} );
+		const text = s.stringify( doc );
+
+		// inside the mirror: must point at where `shared` was emitted in the document
+		expect( text ).to.contain( 'ref["first"]' );
+		// after the mirror: the outer walk must still know `first` was emitted
+		expect( ( text.match( /ref\["first"\]/g ) || [] ).length ).to.equal( 2 );
+	} );
+
+	it( 'round-trips shared identity through a custom toJSOX', function () {
+		JSOX.reset();
+		class Holder { constructor( a ) { this.a = a; } }
+
+		const shared = { v : 1 };
+		const doc = { first : shared, holder : new Holder( shared ) };
+
+		const s = JSOX.stringifier();
+		s.toJSOX( "H", Holder, function ( stringifier ) {
+			return stringifier.stringify( { a : this.a } );
+		} );
+
+		const back = JSOX.parse( s.stringify( doc ) );
+		expect( back.holder.a ).to.equal( back.first );
+	} );
+
+	it( 'resolves a deferred ref a reviver stored on an object of its own', function () {
+		// A reviver commonly keeps values on an instance it allocated rather than on
+		// the accumulator it was handed (flatland's WallMsg holds a pooled Wall this
+		// way). That instance is reachable only from the accumulator, not from the
+		// document root -- the root may expose its contents through getters -- so the
+		// second pass scans from the accumulator the reviver was called on.
+		//
+		// Note the limit: a value put in a genuinely private (#) field cannot be
+		// substituted by any outside walk. That case needs the reviver to be told,
+		// not searched for.
+		JSOX.reset();
+		class Node { peer = null; }
+		class NodeMsg { node = new Node(); }
+
+		let out;
+		const p = JSOX.begin( o => { out = o; } );
+		p.fromJSOX( "Nd", NodeMsg, function ( field, val ) {
+			if( !field ) return this.node;
+			if( field === "peer" ) { this.node.peer = val; return undefined; }
+			return val;
+		} );
+		p.write( '{a:Nd{peer:ref[]},b:1}' );
+
+		expect( out.a ).to.be.an.instanceof( Node );
+		expect( out.a.peer ).to.equal( out );      // the document root, fully revived
+	} );
+
+	it( 'stores a falsy value returned by a field reviver', function () {
+		// `undefined` means the reviver handled the field itself; 0, false, null and ""
+		// are values it asked to have stored. They used to be dropped, so an id of 0
+		// (or any false flag) never reached the object being revived.
+		JSOX.reset();
+		let out;
+		const p = JSOX.begin( o => { out = o; } );
+		p.fromJSOX( "Rec", Object, function ( field, val ) {
+			if( field ) return val;   // ask for every field to be stored as-is
+			return this;
+		} );
+		p.write( 'Rec{id:0,flag:false,name:"",zero:0.0,nil:null,keep:7}' );
+
+		expect( out.id ).to.equal( 0 );
+		expect( out.flag ).to.equal( false );
+		expect( out.name ).to.equal( "" );
+		expect( out.nil ).to.equal( null );
+		expect( out.keep ).to.equal( 7 );
+	} );
+
+	// ---- E: field ordering ---------------------------------------------------
+
+	it( 'sorts object fields by default and keeps insertion order with sort off', function () {
+		JSOX.reset();
+		expect( JSOX.stringify( { zebra:1, alpha:2, middle:3 } ) )
+			.to.equal( '{alpha:2,middle:3,zebra:1}' );
+		expect( JSOX.stringify( { zebra:1, alpha:2, middle:3 }, { sort:false } ) )
+			.to.equal( '{zebra:1,alpha:2,middle:3}' );
+	} );
+
+	it( 'keeps class-matched objects normalized even with sort off', function () {
+		// the compact form emits values positionally against the class's normalized
+		// field list, so unsorted keys there would silently transpose the values
+		JSOX.reset();
+		const emit = ( sort ) => {
+			const s = JSOX.stringifier();
+			s.defineClass( "rec", { alpha:0, zebra:0 } );
+			s.sort = sort;
+			return s.stringify( [ { zebra:1, alpha:2 } ] );
+		};
+		expect( emit( false ) ).to.equal( emit( true ) );
+		expect( JSOX.parse( emit( false ) ) ).to.deep.equal( [ { alpha:2, zebra:1 } ] );
+	} );
+
+	it( 'takes an options object in the replacer slot', function () {
+		JSOX.reset();
+		// { pretty } instead of the (value, null, '\t') dance
+		expect( JSOX.stringify( { b:1, a:2 }, { pretty:'\t' } ) )
+			.to.equal( JSOX.stringify( { b:1, a:2 }, null, '\t' ) );
+		// a real replacer still works in the same slot
+		expect( JSOX.stringify( { b:1, a:2 }, [ "a" ] ) ).to.contain( "a" );
+	} );
+
+	it( 'exposes sort and quote as properties on a stringifier', function () {
+		const s = JSOX.stringifier();
+		expect( s.sort ).to.equal( true );
+		expect( s.quote ).to.equal( '"' );
+		s.quote = "'";
+		expect( s.stringify( { a:"x y" } ) ).to.equal( "{a:'x y'}" );
+	} );
+
+	it( 'scopes a per-call sort to that call, even nested inside a toJSOX', function () {
+		// the idiom for emitting a mirror id-first: nested calls share the stringifier
+		// instance, so setting .sort on it would leak to the rest of the document --
+		// passing it per call must not.
+		JSOX.reset();
+		class Thing { constructor( id, b, a ) { this.id = id; this.bbb = b; this.aaa = a; } }
+		const s = JSOX.stringifier();
+		s.toJSOX( "T", Thing, function ( stringifier ) {
+			return stringifier.stringify( { id:this.id, bbb:this.bbb, aaa:this.aaa }
+			                            , { sort:false } );
+		} );
+
+		const out = s.stringify( { zoo:1, apple:2, thing:new Thing( 7, "B", "A" ) } );
+		expect( out ).to.equal( "{apple:2,thing:T{id:7,bbb:B,aaa:A},zoo:1}" );
+		expect( s.sort ).to.equal( true );
+	} );
+
+	it( 'throws rather than hanging on a reference that cannot resolve', function () {
+		// forward reference into a slot that does not exist; must terminate.
+		expect( () => parseAB( 'A{a:1,b:B{b:2,c:ref["z","z","z"]},c:3}' ) ).to.throw();
+	} );
+
+} );
