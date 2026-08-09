@@ -439,4 +439,71 @@ describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
 		}
 	} );
 
+	it( 'rejects a payload that is not a whole number of elements', function () {
+		// `f32[AAAAAAAA]` decodes to 6 bytes and 6 is not a multiple of 4. sack built a
+		// 1-element view over the first 4 and dropped the other 2 without a word, which
+		// turns damaged input into plausible-looking data; jsox threw, but with the
+		// constructor's own message, which never mentions the payload. Anything that
+		// emitted an f32 emitted a multiple of 4, so a remainder means damage.
+		JSOX.reset();
+		expect( () => JSOX.parse( 'f32[AAAAAAAA]' ) ).to.throw();
+		expect( () => JSOX.parse( 'f64[AAAAAAAA]' ) ).to.throw();
+		expect( () => JSOX.parse( 'u32[AAAAAAAA]' ) ).to.throw();
+		expect( () => JSOX.parse( '{x:f32[AAAAAAAA]}' ) ).to.throw();
+		expect( () => JSOX.parse( '[f32[AAAAAAAA]]' ) ).to.throw();
+
+		// one-byte elements have no such constraint, and neither does a raw buffer
+		expect( JSOX.parse( 'u8[AAAAAAAA]' ).length ).to.equal( 6 );
+		expect( JSOX.parse( 'ab[AAAAAAAA]' ).byteLength ).to.equal( 6 );
+		expect( JSOX.parse( 'u16[AAAAAAAA]' ).length ).to.equal( 3 );
+
+		// and the well-formed payload still decodes
+		expect( Array.from( JSOX.parse( 'f32[AADAPwAAAAA=]' ) ) ).to.deep.equal( [ 1.5, 0 ] );
+	} );
+
+	// ---- G: radix literals ---------------------------------------------------
+
+	it( 'parses hex literals containing hex letters', function () {
+		// sack's number lexer took only decimal digits after `0x`, so `0x10` parsed and
+		// `0xff` faulted on the 'f'. Worse, `0xe` fell into the exponent branch, since
+		// 'e' is an exponent marker in decimal but an ordinary digit in hex. The
+		// converter had always decoded a-f; only the lexer was missing them.
+		JSOX.reset();
+		expect( JSOX.parse( '[0x1f]' )[0] ).to.equal( 31 );
+		expect( JSOX.parse( '[0X1F]' )[0] ).to.equal( 31 );
+		expect( JSOX.parse( '[0xff]' )[0] ).to.equal( 255 );
+		expect( JSOX.parse( '[0xe]' )[0] ).to.equal( 14 );
+		expect( JSOX.parse( '[0xE]' )[0] ).to.equal( 14 );
+		expect( JSOX.parse( '[0x10]' )[0] ).to.equal( 16 );
+		expect( JSOX.parse( '[-0x10]' )[0] ).to.equal( -16 );
+		expect( JSOX.parse( '[0x1_f]' )[0] ).to.equal( 31 );
+	} );
+
+	it( 'rejects a digit that is not legal in the radix written', function () {
+		// Both silently produced a value: jsox let a-f through after any radix prefix
+		// (`0o1f` reached Number() and came back NaN), and sack's converter stopped at
+		// the first bad digit (`0b12` became 1). A typo has to be an error, not a value.
+		JSOX.reset();
+		expect( () => JSOX.parse( '[0o1f]' ) ).to.throw();
+		expect( () => JSOX.parse( '[0o18]' ) ).to.throw();
+		expect( () => JSOX.parse( '[0b12]' ) ).to.throw();
+		expect( () => JSOX.parse( '[0b19]' ) ).to.throw();
+		expect( () => JSOX.parse( '[0xg]' ) ).to.throw();
+
+		// and the legal ones keep working, in either prefix case
+		expect( JSOX.parse( '[0b101]' )[0] ).to.equal( 5 );
+		expect( JSOX.parse( '[0B101]' )[0] ).to.equal( 5 );
+		expect( JSOX.parse( '[0o17]' )[0] ).to.equal( 15 );
+		expect( JSOX.parse( '[0O17]' )[0] ).to.equal( 15 );
+	} );
+
+	it( 'treats a leading zero as decimal, not octal', function () {
+		// matches Number('0123') and post-ES5 parseInt; legacy octal-by-leading-zero is
+		// deliberately not implemented, `0o123` is the supported spelling
+		JSOX.reset();
+		expect( JSOX.parse( '[0123]' )[0] ).to.equal( 123 );
+		expect( JSOX.parse( '[08]' )[0] ).to.equal( 8 );
+		expect( JSOX.parse( '[0o123]' )[0] ).to.equal( 83 );
+	} );
+
 } );
