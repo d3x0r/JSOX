@@ -2,6 +2,32 @@
 
 Latest changelog entries in [Readme link](README.md#Changelog)
 
+- 1.2.122
+    - Fix parsing `{op:f}`; partial keyword state, at close of bracket (started to match `false`).
+    - Fix NPM Package to include d.ts info.
+- 1.2.121
+    - hotfix on 1.2.120 - dropped module JSOX declaration.
+- 1.2.120
+    - Add JSDoc comments to provide some type information.
+    - fix quoting the string `'[]'`; ended up unquoted.
+    - Fragmented changelog.
+    - Change external testing tool.
+    - Quote strings that have a '#' in them.
+    - allow '#' to start a comment until end-of-line.
+    - fix cummulative error in column count on a comma after a number.
+- 1.2.119
+    - Provide typescript definitions.
+    - Provide JSOX as a import name; see issue #13.
+- 1.2.118
+    - Fix stringify with prettify option.
+- 1.2.117
+    - Fix decoding number as first argument in a reference.
+    - update non-module version with 116 changes too.
+- 1.2.116
+    - Fix parsing negative ISO-8601 Dates.
+    - generate specific timestamp for `new Date( "0000-01-01T00:00:00.000Z" ).getTime()` to return that string anyway.
+- 1.2.115
+    - Strings starting with 'N' not followed by 'a' for 'NaN' did not recover the right string.
 - 1.2.114
     - import.mjs is not included in npm publish (fixed)
     - Fix errors found when reviving referneces; (assumed a field in object meant THE object; checked wrong array length; cleanup duplicate variables)

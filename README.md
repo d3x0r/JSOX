@@ -232,7 +232,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - Numbers can begin with an explicit plus sign.
 
-- Numbers can begin with multiple minus signs. For example, `----123` parses to `123`.
+- ~~Numbers can begin with multiple minus signs. For example, `----123` parses to `123`.~~
 
 ### Dates
 
@@ -810,39 +810,14 @@ The product of this should run on very old platforms also, especially `node_modu
     - Fix revival of tagged objects as a common prototype instead of Object.
     - Fix build process to generate products more smootly.
     - Extended test cases.
-    - 
+    - Fixed '+ #' and '- #' being treated as legitimate.
+    - Fixed revival of nested-substituted objects (at least in a few simple cases). #18
 - 1.2.125
     - Fix double-ref emission on certain encodes.
 - 1.2.124
     - fix typescript bindings, and inline documentation.
 - 1.2.123
     - partial fix didn't fully fix partial values `fal` did not become a string.
-- 1.2.122
-    - Fix parsing `{op:f}`; partial keyword state, at close of bracket (started to match `false`).
-    - Fix NPM Package to include d.ts info.
-- 1.2.121
-    - hotfix on 1.2.120 - dropped module JSOX declaration.
-- 1.2.120
-    - Add JSDoc comments to provide some type information.
-    - fix quoting the string `'[]'`; ended up unquoted.
-    - Fragmented changelog.
-    - Change external testing tool.
-    - Quote strings that have a '#' in them.
-    - allow '#' to start a comment until end-of-line.
-    - fix cummulative error in column count on a comma after a number.
-- 1.2.119
-    - Provide typescript definitions.
-    - Provide JSOX as a import name; see issue #13.
-- 1.2.118
-    - Fix stringify with prettify option.
-- 1.2.117
-    - Fix decoding number as first argument in a reference.
-    - update non-module version with 116 changes too.
-- 1.2.116
-    - Fix parsing negative ISO-8601 Dates.
-    - generate specific timestamp for `new Date( "0000-01-01T00:00:00.000Z" ).getTime()` to return that string anyway.
-- 1.2.115
-    - Strings starting with 'N' not followed by 'a' for 'NaN' did not recover the right string.
 
 Older changelog in [CHANGELOG.md](./CHANGELOG.md)
 
