@@ -296,6 +296,27 @@ describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
 		expect( JSOX.stringify( { b:1, a:2 }, [ "a" ] ) ).to.contain( "a" );
 	} );
 
+	it( 'takes a per-call quote, and restores the stringifier default after', function () {
+		JSOX.reset();
+		expect( JSOX.stringify( { a:"x y" }, { quote:"'" } ) ).to.equal( "{a:'x y'}" );
+		expect( JSOX.stringify( { a:"x y" }, { quote:"`" } ) ).to.equal( "{a:`x y`}" );
+		// default is unchanged for a call that does not ask
+		expect( JSOX.stringify( { a:"x y" } ) ).to.equal( '{a:"x y"}' );
+		// and a per-call quote does not stick to the stringifier it ran on
+		const s = JSOX.stringifier();
+		s.stringify( { a:"x y" }, { quote:"'" } );
+		expect( s.quote ).to.equal( '"' );
+		expect( s.stringify( { a:"x y" } ) ).to.equal( '{a:"x y"}' );
+	} );
+
+	it( 'quotes only the delimiter, leaving escape() to cover all three', function () {
+		// a foreign quote parses unescaped, so escaping it is conservative, not
+		// required -- but escape() cannot know which quote wraps its result.
+		JSOX.reset();
+		const out = JSOX.stringify( { a:"x'y" }, { quote:"`" } );
+		expect( JSOX.parse( out ).a ).to.equal( "x'y" );
+	} );
+
 	it( 'exposes sort and quote as properties on a stringifier', function () {
 		const s = JSOX.stringifier();
 		expect( s.sort ).to.equal( true );

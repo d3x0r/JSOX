@@ -11,6 +11,11 @@ export namespace JSOX {
     /**
      * Provide minimal escapes for a string to be encapsulated as a JSOX string in quotes.
      *
+     * The caller supplies the quotes, and may append the result in segments, so this
+     * cannot know which of the three quote characters will end up delimiting it; all
+     * three are escaped regardless.  A parser accepts a foreign quote unescaped -- and
+     * a raw newline in any quote style -- so this is conservative, not required.
+     *
      * @param {string} string
      * @returns {string}
      */
@@ -94,11 +99,21 @@ export namespace JSOX {
     export function stringifier(): JSOXStringifier;
     /**
      * @param {unknown} object
-     * @param {(this: unknown, key: string, value: unknown)} [replacer]
+     * @param {((this: unknown, key: string, value: unknown)=>any)|string[]|{replacer?:(this: unknown, key: string, value: unknown)=>any,pretty?:string|number,space?:string|number,sort?:boolean,quote?:string}} [replacer]
+     *        a replacer function, a field-name array, or an options object; the options
+     *        object may carry `pretty`/`space` (indent), `sort` (false emits fields in
+     *        insertion order) and `quote` (the quote to prefer, default `"`), each
+     *        applying only to this call.
      * @param {string | number} [space]
      * @returns {string}
      */
-    export function stringify(object: unknown, replacer?: (this: unknown, key: string, value: unknown) => any, space?: string | number): string;
+    export function stringify(object: unknown, replacer?: ((this: unknown, key: string, value: unknown) => any) | string[] | {
+        replacer?: (this: unknown, key: string, value: unknown) => any;
+        pretty?: string | number;
+        space?: string | number;
+        sort?: boolean;
+        quote?: string;
+    }, space?: string | number): string;
 }
 /**
  * Extend Date type with a nanosecond field.
