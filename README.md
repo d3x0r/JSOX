@@ -232,7 +232,7 @@ All items listed below are JSON5 additions if not specifed as JSON6.
 
 - Numbers can begin with an explicit plus sign.
 
-- ~~Numbers can begin with multiple minus signs. For example, `----123` parses to `123`.~~
+- (**JSOX**) ~~Numbers can begin with multiple minus signs. For example, `----123` parses to `123`.~~  multiple negations are disallowed; support complicated other error conditions; and as a user-configuration format doesn't add a lot of value. `-NaN` can be accepted, but is just `NaN`.
 
 ### Dates
 
