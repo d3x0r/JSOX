@@ -33,7 +33,9 @@ describe('Added in 1.2.113 (DateNS)', function () {
 	it( 'handles parse', function() {
         	const val = JSOX.parse( "2022-01-01T00:00:00.000000123Z" );
 		const strval = ''+val.toISOString()+val.ns;
-		expect( strval ).to.equal( "2022-01-01T00:00:00.000Z123" );
+		// DateNS.toISOString() keeps Date's UTC contract but not its millisecond
+		// resolution -- ISO-8601 has no precision limit and Z is only the offset.
+		expect( strval ).to.equal( "2022-01-01T00:00:00.000000123Z123" );
         } );
 
 })

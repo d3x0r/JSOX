@@ -5,7 +5,7 @@ const stringify = JSOX.stringify;
 
 /**
  * Set the timezone offset from the local timezone offset.
- * Argument "minutes" => -UTC±XX:XX, default = local offset.
+ * Argument "minutes" => -UTCï¿½XX:XX, default = local offset.
  * Property "timezoneOffset" => last-set offset.
  * Return => milliseconds.
  */
@@ -41,7 +41,7 @@ describe('Basic parsing', function () {
 		});
 		it('converts to and from the same date', function () {
 			const o = parse( stringify( parse("2020-01-01T12:00:00.123456789Z") ) ).toISOString();
-			expect(o).to.equal( "2020-01-01T12:00:00.123Z" );
+			expect(o).to.equal( "2020-01-01T12:00:00.123456789Z" );
 		});
         } );
 

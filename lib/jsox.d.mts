@@ -124,4 +124,5 @@ export namespace JSOX {
 declare class DateNS extends Date {
     constructor(a: any, b: any);
     ns: any;
+    toLocalISOString(): string;
 }
