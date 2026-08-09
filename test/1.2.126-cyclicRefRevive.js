@@ -347,4 +347,96 @@ describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
 		expect( () => parseAB( 'A{a:1,b:B{b:2,c:ref["z","z","z"]},c:3}' ) ).to.throw();
 	} );
 
+	it( 'throws on a reference that points at the slot holding it', function () {
+		// A reference names something that already exists -- and only objects ever
+		// become references, since a primitive is not unique enough to be worth one.
+		// So a reference can name an enclosing container (still open, but it exists),
+		// and cannot name the slot it is itself about to be stored in: `{a:ref["a"]}`
+		// is the same mistake as `const o = { a: o.a }`.
+		//
+		// The array form always failed this way, because elements are not pushed until
+		// the array closes. The object form linked the field when the reference opened,
+		// so the path quietly resolved to the reference's own path array and that array
+		// came back as the value -- `{a:ref["a"]}` parsed to `{a:['a']}`.
+		JSOX.reset();
+		expect( () => JSOX.parse( '{a:ref["a"]}' ) ).to.throw();
+		expect( () => JSOX.parse( '{a:1,b:ref["b"]}' ) ).to.throw();
+		expect( () => JSOX.parse( '{a:{b:ref["a","b"]}}' ) ).to.throw();
+		expect( () => JSOX.parse( '[ref[0]]' ) ).to.throw();
+		expect( () => JSOX.parse( '[1,ref[1]]' ) ).to.throw();
+	} );
+
+	it( 'still allows a reference to an enclosing container', function () {
+		// the neighbouring case that must keep working: the enclosing object does
+		// exist when the reference is read, it just is not finished yet.
+		JSOX.reset();
+		const o = JSOX.parse( '{a:ref[]}' );
+		expect( o.a ).to.equal( o );
+		const p = JSOX.parse( '{a:[1,ref["a"],3]}' );
+		expect( p.a[1] ).to.equal( p.a );
+		expect( p.a.length ).to.equal( 3 );
+	} );
+
+	// ---- F: typed-array payloads --------------------------------------------
+
+	it( 'decodes an empty typed array as zero bytes', function () {
+		// `ab[]` used to segfault: the base64 decoder read buf[-1] looking for '='
+		// padding, and buf is NULL when there was no payload at all.
+		JSOX.reset();
+		expect( JSOX.parse( 'ab[]' ).byteLength ).to.equal( 0 );
+		expect( JSOX.parse( 'u8[]' ).length ).to.equal( 0 );
+		expect( JSOX.parse( '{x:ab[]}' ).x.byteLength ).to.equal( 0 );
+	} );
+
+	it( 'rejects an unquoted base64 payload that lexes as a number', function () {
+		// A payload is a string token, and a loose string cannot start with a digit --
+		// that lexes as a number -- so the stringifier quotes any payload that does.
+		// Arriving as a number means the input is not something JSOX emits: `ab[0123]`
+		// is already 123 by then, the leading zero (a real base64 digit) destroyed.
+		// jsox sized the output from NaN and returned zero bytes; sack decoded the
+		// decimal text and invented three.
+		JSOX.reset();
+		expect( () => JSOX.parse( 'ab[1234]' ) ).to.throw();
+		expect( () => JSOX.parse( 'ab[0123]' ) ).to.throw();
+		expect( () => JSOX.parse( '{x:ab[1234]}' ) ).to.throw();
+		expect( () => JSOX.parse( '[ab[1234]]' ) ).to.throw();
+	} );
+
+	it( 'decodes the quoted form the stringifier emits for those', function () {
+		JSOX.reset();
+		expect( Array.from( new Uint8Array( JSOX.parse( 'ab["1234"]' ) ) ) )
+			.to.deep.equal( [ 215, 109, 248 ] );
+		expect( Array.from( new Uint8Array( JSOX.parse( 'ab["0123"]' ) ) ) )
+			.to.deep.equal( [ 211, 93, 183 ] );
+	} );
+
+	it( 'keeps a top-level typed array free of its own payload text', function () {
+		// Only objects and arrays get built into. A typed array carries its payload in
+		// `contains` too, so a top-level one was walked as if it were a container and
+		// the raw token was assigned as property '0' -- which on a real typed array
+		// coerced to a number and silently overwrote element 0.
+		JSOX.reset();
+		expect( Array.from( JSOX.parse( 'u8[$_$_]' ) ) ).to.deep.equal( [ 251, 255, 191 ] );
+		expect( Array.from( JSOX.parse( 's8[$_$_]' ) ) ).to.deep.equal( [ -5, -1, -65 ] );
+		// the stringifier's own output for Float32Array([1.5,0]); a leading 1.5 is
+		// exactly what the stray property destroyed -- it coerced to NaN
+		expect( Array.from( JSOX.parse( 'f32[AADAPwAAAAA=]' ) ) ).to.deep.equal( [ 1.5, 0 ] );
+		expect( Object.getOwnPropertyNames( JSOX.parse( 'ab[$_$_]' ) ) ).to.deep.equal( [] );
+		// and the nested form, which always worked, must still agree
+		expect( Array.from( JSOX.parse( '{x:u8[$_$_]}' ).x ) )
+			.to.deep.equal( Array.from( JSOX.parse( 'u8[$_$_]' ) ) );
+	} );
+
+	it( 'round-trips every byte pattern through stringify', function () {
+		JSOX.reset();
+		for( let i = 0; i < 300; i++ ) {
+			const n = 1 + ( i % 11 );
+			const u = new Uint8Array( n );
+			for( let k = 0; k < n; k++ ) u[k] = ( i * 37 + k * 101 + 7 ) & 0xff;
+			const back = JSOX.parse( JSOX.stringify( u ) );
+			expect( Array.from( new Uint8Array( back.buffer || back ) ) )
+				.to.deep.equal( Array.from( u ) );
+		}
+	} );
+
 } );

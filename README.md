@@ -812,6 +812,9 @@ The product of this should run on very old platforms also, especially `node_modu
     - Extended test cases.
     - Fixed '+ #' and '- #' being treated as legitimate.
     - Fixed revival of nested-substituted objects (at least in a few simple cases). #18
+    - fix decoding badly formed typed array buffer arguments.
+    - fix handling references that refer to themselves (which are invalid); edge case just before 'references something that doesn't exist yet'.
+    - handle references to primmitive values consistently - though they shouldn't be generated since strings and numbers are not unique objects.
 - 1.2.125
     - Fix double-ref emission on certain encodes.
 - 1.2.124
