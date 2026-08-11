@@ -98,6 +98,38 @@ describe('Added in 1.2.126 - partial keyword recovery', function () {
 		expect( JSOX.parse( 'fal ' ) ).to.equal( 'fal' );
 	} );
 
+	it( 'refuses to turn a signed token into text', function () {
+		// A sign takes the token out of lazy-string territory: `-` is only accepted ahead
+		// of a number, Infinity or NaN, so a signed token that cannot finish as one is the
+		// same fault as `-123x` -- never a string. A leading `-` does not start an
+		// identifier either, so there is no reading under which these are values.
+		//
+		// sack built strings out of all of them, and inconsistently: `[-Infinit]` kept the
+		// sign while `[-Na]` and `[-N]` silently dropped it. jsox threw, but reported it as
+		// "Negative outside of quotes, being converted to a string"; both now give the
+		// number fault, so `[-Infinityx]` reads exactly like `[-123x]`.
+		JSOX.reset();
+		for( const s of [ '[-Infinit]', '[-Infinit,1]', '[-Infinit ]', '{a:-Infinit}',
+		                  '[-Na]', '[-Na,1]', '[-N]', '[-I]',
+		                  '[-Infinityx]', '[-Infinity1]', '[-NaNx]', '-Infinityx' ] )
+			expect( function () { JSOX.parse( s ); }, s ).to.throw( Error, /fault while parsing number/ );
+	} );
+
+	it( 'still reads a signed keyword that is complete', function () {
+		// the values the rule above must not swallow -- the sign is folded into the value
+		// and the token simply ends
+		JSOX.reset();
+		expect( JSOX.parse( '[-Infinity]' )[0] ).to.equal( -Infinity );
+		expect( JSOX.parse( '[-Infinity,1]' ) ).to.deep.equal( [ -Infinity, 1 ] );
+		expect( JSOX.parse( '[-Infinity ]' )[0] ).to.equal( -Infinity );
+		expect( JSOX.parse( '{a:-Infinity}' ).a ).to.equal( -Infinity );
+		expect( JSOX.parse( '[-NaN]' )[0] ).to.be.NaN;
+		// and an *unsigned* partial keyword is still an ordinary identifier
+		expect( JSOX.parse( '[Infinit]' ) ).to.deep.equal( [ 'Infinit' ] );
+		expect( JSOX.parse( '[Na]' ) ).to.deep.equal( [ 'Na' ] );
+		expect( JSOX.parse( '[Infinityx]' ) ).to.deep.equal( [ 'Infinityx' ] );
+	} );
+
 	it( 'leaves whole keywords alone', function () {
 		expect( JSOX.parse( 'true' ) ).to.equal( true );
 		expect( JSOX.parse( 'false' ) ).to.equal( false );

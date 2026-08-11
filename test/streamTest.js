@@ -37,10 +37,12 @@ describe('Streaming', function () {
 			results.push(val);
 		});
 
-		expect(function () {
-			parser.write({});
-		//}).to.throw(Error, /fault parsing 'o' unexpected/);
-		}).to.throw(Error, /Double string error, no constructor for: new object\(Object\)/);
+		// String({}) is "[object Object]", which is a class-tagged string: tag `object`,
+		// payload `Object`. An unregistered tag degrades to its payload now instead of
+		// throwing, so this documents that a non-string argument is still stringified and
+		// parsed -- it just no longer fails while doing it.
+		parser.write({});
+		expect(results).to.deep.equal([['Object']]);
 	});
 	it('handles incomplete string key in chunks', function () {
 		const results = [];

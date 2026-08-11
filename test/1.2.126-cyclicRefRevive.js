@@ -555,9 +555,52 @@ describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
 		expect( () => JSOX.parse( '[[] 8]' ) ).to.throw();
 	} );
 
+	it( 'rejects adjacent keyword values', function () {
+		// A keyword is not an identifier: it cannot name a class, and nothing can tag it.
+		// So `true false` inside a container is two values with nothing between them.
+		// It used to come out as the *string* "false" -- the second value replaced the
+		// first, and the keyword it replaced was re-read as text on the way past.
+		JSOX.reset();
+		expect( () => JSOX.parse( '[true false]' ) ).to.throw();
+		expect( () => JSOX.parse( '[false true]' ) ).to.throw();
+		expect( () => JSOX.parse( '[null null]' ) ).to.throw();
+		expect( () => JSOX.parse( '[NaN NaN]' ) ).to.throw();
+		expect( () => JSOX.parse( '[undefined null]' ) ).to.throw();
+		expect( () => JSOX.parse( '[Infinity 1]' ) ).to.throw();
+		expect( () => JSOX.parse( '[1 true]' ) ).to.throw();
+		expect( () => JSOX.parse( '[true 1]' ) ).to.throw();
+		expect( () => JSOX.parse( '[1,true false]' ) ).to.throw();
+		expect( () => JSOX.parse( '{a:true false}' ) ).to.throw();
+		expect( () => JSOX.parse( '{a:1,b:true false}' ) ).to.throw();
+	} );
+
+	it( 'rejects a keyword touching a container or a string', function () {
+		// same rule from the other side: `Tag{...}` / `Tag[...]` / `Tag"..."` need an
+		// identifier or quoted string as the tag, and a closed container can no more
+		// carry one than a keyword can be one
+		JSOX.reset();
+		expect( () => JSOX.parse( '[true {}]' ) ).to.throw();
+		expect( () => JSOX.parse( '[true{}]' ) ).to.throw();
+		expect( () => JSOX.parse( '[true []]' ) ).to.throw();
+		expect( () => JSOX.parse( '[true "x"]' ) ).to.throw();
+		expect( () => JSOX.parse( '[true"x"]' ) ).to.throw();
+		expect( () => JSOX.parse( '[{} true]' ) ).to.throw();
+		expect( () => JSOX.parse( '[[] true]' ) ).to.throw();
+	} );
+
+	it( 'still lets an unquoted keyword recover into an identifier', function () {
+		// with no whitespace the token is still being collected, so `truefalse` is one
+		// identifier -- the recovery path the keyword guard must not disturb
+		JSOX.reset();
+		expect( JSOX.parse( '[truefalse]' ) ).to.deep.equal( [ 'truefalse' ] );
+		expect( JSOX.parse( '[true,false]' ) ).to.deep.equal( [ true, false ] );
+		expect( JSOX.parse( '[ true , false ]' ) ).to.deep.equal( [ true, false ] );
+		expect( JSOX.parse( '{a:true,b:false}' ) ).to.deep.equal( { a : true, b : false } );
+	} );
+
 	it( 'still accepts separated values and class tags', function () {
-		// the neighbours that must keep working -- the guard keys on a *number* being
-		// involved precisely so class tags are untouched
+		// the neighbours that must keep working -- the guard keys on the held value being
+		// unable to tag or be tagged, precisely so class tags are untouched
 		JSOX.reset();
 		expect( JSOX.parse( '[8,8]' ) ).to.deep.equal( [ 8, 8 ] );
 		expect( JSOX.parse( '[1,2,3]' ) ).to.deep.equal( [ 1, 2, 3 ] );
@@ -579,6 +622,186 @@ describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
 		const p = JSOX.begin( o => { seen.push( o ); } );
 		p.write( '8 8 ' );                       // trailing space terminates the second
 		expect( seen ).to.deep.equal( [ 8, 8 ] );
+	} );
+
+	// ---- an unquoted keyword continued into an identifier --------------------
+
+	it( 'recovers a keyword-prefixed identifier in every context', function () {
+		// A completed keyword carries no text -- it is only a value_type -- so a character
+		// that continues it has to spell it back out first. jsox appended straight onto
+		// the (empty) string in three of the four contexts, keeping the keyword's value
+		// and losing the character: `[nullx]` parsed as [null] and `nullx` at the root as
+		// null. In an object field value it recovered and then appended the character a
+		// second time, so `{a:nullx}` came out as "nullxx". sack was correct throughout.
+		JSOX.reset();
+		expect( JSOX.parse( '[nullx]' ) ).to.deep.equal( [ 'nullx' ] );
+		expect( JSOX.parse( '[truex]' ) ).to.deep.equal( [ 'truex' ] );
+		expect( JSOX.parse( '[falsex]' ) ).to.deep.equal( [ 'falsex' ] );
+		expect( JSOX.parse( '[undefinedx]' ) ).to.deep.equal( [ 'undefinedx' ] );
+		expect( JSOX.parse( '[NaNx]' ) ).to.deep.equal( [ 'NaNx' ] );
+		expect( JSOX.parse( '[Infinityx]' ) ).to.deep.equal( [ 'Infinityx' ] );
+		expect( JSOX.parse( '[null1]' ) ).to.deep.equal( [ 'null1' ] );   // a digit continues it too
+		expect( JSOX.parse( '[nullx,1]' ) ).to.deep.equal( [ 'nullx', 1 ] );
+		expect( JSOX.parse( '[[nullx]]' ) ).to.deep.equal( [ [ 'nullx' ] ] );
+		expect( JSOX.parse( 'nullx' ) ).to.equal( 'nullx' );              // root
+		expect( JSOX.parse( '{a:nullx}' ) ).to.deep.equal( { a : 'nullx' } );        // field value
+		expect( JSOX.parse( '{a:nullx,b:2}' ) ).to.deep.equal( { a : 'nullx', b : 2 } );
+		expect( JSOX.parse( '{a:{b:nullx}}' ) ).to.deep.equal( { a : { b : 'nullx' } } );
+		expect( JSOX.parse( '{nullx:1}' ) ).to.deep.equal( { nullx : 1 } );          // field name
+	} );
+
+	it( 'still reads the keywords themselves', function () {
+		// the values the recovery must not swallow
+		JSOX.reset();
+		expect( JSOX.parse( '[null,true,false]' ) ).to.deep.equal( [ null, true, false ] );
+		expect( JSOX.parse( '{a:null,b:undefined}' ) ).to.deep.equal( { a : null, b : undefined } );
+		expect( JSOX.parse( '[Infinity]' )[0] ).to.equal( Infinity );
+		expect( JSOX.parse( '[-Infinity]' )[0] ).to.equal( -Infinity );
+		expect( JSOX.parse( '[NaN]' )[0] ).to.be.NaN;
+		// partial keywords are identifiers, and were already handled
+		expect( JSOX.parse( '[tru]' ) ).to.deep.equal( [ 'tru' ] );
+		expect( JSOX.parse( '[fal,1]' ) ).to.deep.equal( [ 'fal', 1 ] );
+	} );
+
+	// ---- class definitions and the records that follow them ------------------
+	//
+	// `author{name,age}` declares a shape; `author{"bob",44}` is then an instance whose
+	// values are matched to it positionally. The definition is not itself a value, and
+	// each record after it is its own message in the stream.
+
+	function records( text ) {
+		JSOX.reset();
+		const seen = [];
+		const p = JSOX.begin( o => seen.push( o ) );
+		p.write( text );
+		return seen;
+	}
+
+	it( 'reads a positional record against its definition', function () {
+		expect( records( 'author{name,age} author{"bob",44} ' ) )
+			.to.deep.equal( [ { name : "bob", age : 44 } ] );
+		expect( records( 'author{name,age} book{title,year} author{"bob",44} book{"t",2001} ' ) )
+			.to.deep.equal( [ { name : "bob", age : 44 }, { title : "t", year : 2001 } ] );
+	} );
+
+	it( 'keeps every character of an unquoted value in a record', function () {
+		// jsox had no branch for CONTEXT_CLASS_VALUE in the character collector, so a
+		// character arriving while a string was already being gathered was discarded --
+		// only letters with their own `case` in that switch survived, because those route
+		// through recoverIdent, which appends. `author{xyz}` came out as "xy",
+		// `author{abcdef}` as "adef", `author{name}` as "nae".
+		expect( records( 'idA{a} idA{xyz} ' ) ).to.deep.equal( [ { a : "xyz" } ] );
+		expect( records( 'idB{a} idB{abcdef} ' ) ).to.deep.equal( [ { a : "abcdef" } ] );
+		expect( records( 'idC{name} idC{name} ' ) ).to.deep.equal( [ { name : "name" } ] );
+		expect( records( 'idD{a,b} idD{xyz,pqr} ' ) ).to.deep.equal( [ { a : "xyz", b : "pqr" } ] );
+		// and a keyword inside a record still recovers, or stays a keyword
+		expect( records( 'idE{a} idE{nullx} ' ) ).to.deep.equal( [ { a : "nullx" } ] );
+		expect( records( 'idF{a} idF{true} ' ) ).to.deep.equal( [ { a : true } ] );
+	} );
+
+	it( 'rejects a record with more values than the definition has fields', function () {
+		// positional values are matched by index, and running off the end of the field
+		// list segfaulted sack outright (GetLink returns NULL, and `field->name` followed
+		// it) while jsox produced a field literally named "undefined"
+		JSOX.reset();
+		JSOX.reset();
+		expect( () => JSOX.parse( 'ovA{name} ovA{1,2} ' ) ).to.throw();
+		JSOX.reset();
+		expect( () => JSOX.parse( 'ovB{a,b} ovB{1,2,3} ' ) ).to.throw();
+		JSOX.reset();
+		expect( () => JSOX.parse( 'ovC{a} ovC{1,2,3} ' ) ).to.throw();
+		// the matching counts still work
+		expect( records( 'ovD{name} ovD{1} ' ) ).to.deep.equal( [ { name : 1 } ] );
+		expect( records( 'ovE{a,b} ovE{1,2} ' ) ).to.deep.equal( [ { a : 1, b : 2 } ] );
+	} );
+
+	it( 'delivers every record in a buffer, and a definition as none', function () {
+		// sack gated "a value completed" on there being no current_class, which is set
+		// while *instantiating* a class as much as while defining one -- so a tagged
+		// record at the root never completed as its own message and the next one replaced
+		// it: three records in one buffer delivered only the third, and
+		// `author{a} author{1} 8` delivered only the 8.
+		expect( records( 'mA{a} mA{1} mA{2} mA{3} ' ) )
+			.to.deep.equal( [ { a : 1 }, { a : 2 }, { a : 3 } ] );
+		expect( records( 'mB{a} mB{1} 8 ' ) ).to.deep.equal( [ { a : 1 }, 8 ] );
+		expect( records( '8 mC{a} mC{1} mC{2} ' ) ).to.deep.equal( [ 8, { a : 1 }, { a : 2 } ] );
+
+		// a definition declares a shape and completes nothing; jsox delivered a spurious
+		// `null` message for one, since the value type restored on its close was the
+		// enclosing context's leftover
+		expect( records( 'mD{a} ' ) ).to.deep.equal( [] );
+		expect( records( 'mD{a} ', ) ).to.have.lengthOf( 0 );
+		// ...which must not swallow a real null
+		expect( records( 'null ' ) ).to.deep.equal( [ null ] );
+		expect( records( 'null null ' ) ).to.deep.equal( [ null, null ] );
+
+		// parse() returns the first message, as it does for any stream
+		JSOX.reset();
+		expect( JSOX.parse( 'pA{name,age} pA{"bob",44} pA{"jo",30}' ) )
+			.to.deep.equal( { name : "bob", age : 44 } );
+	} );
+
+	// ---- string adjacency: a class tag and its payload -----------------------
+	//
+	// `Tag"payload"` is a valid construct even when nobody registered `Tag`; it just
+	// cannot be given any special treatment, so it degrades to its payload. At most two
+	// strings may be adjacent -- the tag and the payload -- in any mix of quoted and
+	// unquoted. A third has nothing it could be.
+
+	it( 'degrades an unregistered tagged string to its payload', function () {
+		JSOX.reset();
+		expect( JSOX.parse( 'Tag"x"' ) ).to.equal( 'x' );
+		expect( JSOX.parse( '[Tag"x"]' ) ).to.deep.equal( [ 'x' ] );
+		expect( JSOX.parse( '{a:Tag"x"}' ) ).to.deep.equal( { a : 'x' } );
+		expect( JSOX.parse( '["a" "b"]' ) ).to.deep.equal( [ 'b' ] );   // quoted tag
+		expect( JSOX.parse( '[a "b"]' ) ).to.deep.equal( [ 'b' ] );     // unquoted tag
+		expect( JSOX.parse( '["a" b]' ) ).to.deep.equal( [ 'b' ] );     // unquoted payload
+		expect( JSOX.parse( '[a b]' ) ).to.deep.equal( [ 'b' ] );       // both unquoted
+		expect( JSOX.parse( '{a:b c}' ) ).to.deep.equal( { a : 'c' } ); // and in a field value
+		// String({}) is "[object Object]", which is exactly this form
+		expect( JSOX.parse( '[object Object]' ) ).to.deep.equal( [ 'Object' ] );
+	} );
+
+	it( 'rejects a third adjacent string', function () {
+		JSOX.reset();
+		for( const s of [ '["a" "b" "c"]', '{a:"a" "b" "c"}', '[a b c]', '{a:a b c}',
+		                  '[a "b" "c"]', '["a" b c]' ] )
+			expect( function () { JSOX.parse( s ); }, s ).to.throw( Error );
+	} );
+
+	it( 'revives an unknown tagged object anywhere, including alone', function () {
+		// the whole-document form used to throw "Cannot read properties of undefined
+		// (reading 'constructor')": the recovery that notices a tag is really a tagged
+		// object built its placeholder prototype from `()=>{}`, and an arrow function has
+		// no .prototype. Nested and field-value positions take other paths, which hid it.
+		JSOX.reset();
+		expect( JSOX.parse( 'Tag{a:1}' ) ).to.deep.equal( { a : 1 } );
+		expect( JSOX.parse( '[Tag{a:1}]' ) ).to.deep.equal( [ { a : 1 } ] );
+		expect( JSOX.parse( '{x:Tag{a:1}}' ) ).to.deep.equal( { x : { a : 1 } } );
+		// ...and it is not a plain object: the tag gets a prototype of its own, so methods
+		// can be attached to it later
+		expect( Object.getPrototypeOf( JSOX.parse( 'Tag{a:1}' ) ) ).to.not.equal( Object.prototype );
+	} );
+
+	// ---- a class body is all-named or all-positional --------------------------
+
+	it( 'rejects a class body that mixes named and positional values', function () {
+		// Mixing has no reading: the loose values would have to go somewhere -- first?
+		// last? into whatever slots the named fields left unclaimed? -- so it fails
+		// instead. All three orders used to parse into something arbitrary.
+		JSOX.reset();
+		expect( () => JSOX.parse( 'mx{n,a} mx{name:1,2}' ) ).to.throw( Error );   // named, then loose
+		expect( () => JSOX.parse( 'my{n,a} my{1,age:2}' ) ).to.throw( Error );    // loose, then named
+		expect( () => JSOX.parse( 'mz{name,age:2}' ) ).to.throw( Error );         // in the definition itself
+	} );
+
+	it( 'still takes an all-named or all-positional body', function () {
+		JSOX.reset();
+		// all named -- the definition's field list simply is not used
+		expect( JSOX.parse( 'na{n,a} na{name:1,age:2}' ) ).to.deep.equal( { name : 1, age : 2 } );
+		// all positional -- matched to the definition in order
+		expect( JSOX.parse( 'pa{n,a} pa{1,2}' ) ).to.deep.equal( { n : 1, a : 2 } );
+		expect( JSOX.parse( 'pb{name,age} pb{"bob",44}' ) ).to.deep.equal( { name : 'bob', age : 44 } );
 	} );
 
 } );
