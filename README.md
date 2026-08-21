@@ -806,6 +806,7 @@ The product of this should run on very old platforms also, especially `node_modu
 
 ## Changelog
 - 1.2.126 (inprogress)
+- 1.2.126
     - Fix general parsing case of typed arrays w/o handlers.
     - Fix revival of tagged objects as a common prototype instead of Object.
     - Fix build process to generate products more smootly.
@@ -815,6 +816,7 @@ The product of this should run on very old platforms also, especially `node_modu
     - fix decoding badly formed typed array buffer arguments.
     - fix handling references that refer to themselves (which are invalid); edge case just before 'references something that doesn't exist yet'.
     - handle references to primmitive values consistently - though they shouldn't be generated since strings and numbers are not unique objects.
+    - add many fuzzy tests for conditions that shouldn't happen for even approximately right JSOX.
 - 1.2.125
     - Fix double-ref emission on certain encodes.
 - 1.2.124
