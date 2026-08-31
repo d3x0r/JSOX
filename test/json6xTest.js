@@ -125,10 +125,13 @@ describe('Basic parsing', function () {
 		});
 	});
 	describe('Comments', function () {
-		it('Should throw with invalid comment', function () {
-			expect(function () {
-				parse( "/a" );
-			}).to.throw(Error);
+		it('Lone slash is an identifier character, not an invalid comment', function () {
+			// only '//' and '/*' open a comment; a solitary '/' is text, so that
+			// `www.example.com/file.name` need not be quoted
+			expect( parse( "/a" ) ).to.equal( "/a" );
+			expect( parse( "[a/b]" )[0] ).to.equal( "a/b" );
+			expect( parse( "[www.example.com/file.name]" )[0] )
+				.to.equal( "www.example.com/file.name" );
 		});
 		it('Should throw with incomplete comment (single slash)', function () {
 			expect(function () {

@@ -809,6 +809,7 @@ The product of this should run on very old platforms also, especially `node_modu
 - 1.2.127
     - Allow LS/PS characters to terminate a line comment.
     - Make NBSP behave more consistently instead of being ignored.
+    - allow '/' followed by not '\*','/'  to be in unquoted strings.
 - 1.2.126
     - Fix general parsing case of typed arrays w/o handlers.
     - Fix revival of tagged objects as a common prototype instead of Object.
