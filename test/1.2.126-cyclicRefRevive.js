@@ -762,6 +762,34 @@ describe( 'Added in 1.2.126 - class tags and cyclic references', function () {
 		expect( JSOX.parse( '[object Object]' ) ).to.deep.equal( [ 'Object' ] );
 	} );
 
+	it( 'constructs a registered tagged string and revives the instance', function () {
+		// `Tag"payload"` with a registered type: the constructor gets the payload, the
+		// reviver gets the instance as `this` with no field and the payload as `val`
+		JSOX.reset();
+		class Id { constructor( s ) { this.id = s; } }
+		const calls = [];
+		JSOX.fromJSOX( "~id", Id, function( field, val ) { calls.push( [ this, field, val ] ); return this; } );
+		const o = JSOX.parse( '{a:~id"xyz"}' );
+		expect( o.a ).to.be.instanceOf( Id );
+		expect( o.a.id ).to.equal( 'xyz' );
+		expect( calls.length ).to.equal( 1 );
+		expect( calls[0][0] ).to.equal( o.a );
+		expect( calls[0][1] ).to.equal( undefined );
+		expect( calls[0][2] ).to.equal( 'xyz' );
+		// top level and array element take the same path
+		expect( JSOX.parse( '~id"q"' ).id ).to.equal( 'q' );
+		expect( JSOX.parse( '[~id"q"]' )[0].id ).to.equal( 'q' );
+	} );
+
+	it( 'lets a tagged-string reviver replace the instance', function () {
+		JSOX.reset();
+		class Ignores { constructor() {} }
+		// constructor drops the argument; the reviver still sees the payload as `val`
+		JSOX.fromJSOX( "~up", Ignores, function( field, val ) { return val.toUpperCase(); } );
+		expect( JSOX.parse( '[~up"abc"]' ) ).to.deep.equal( [ 'ABC' ] );
+		expect( JSOX.parse( '{a:~up"abc"}' ) ).to.deep.equal( { a : 'ABC' } );
+	} );
+
 	it( 'rejects a third adjacent string', function () {
 		JSOX.reset();
 		for( const s of [ '["a" "b" "c"]', '{a:"a" "b" "c"}', '[a b c]', '{a:a b c}',
