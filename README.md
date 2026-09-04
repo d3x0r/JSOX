@@ -805,7 +805,9 @@ The product of this should run on very old platforms also, especially `node_modu
 
 
 ## Changelog
-- 1.2.129 (inprogress)
+- 1.2.130 (inprogress)
+- 1.2.129
+    - Improve Regex encoding/decoding (breaks older stringify inputs ATM); save source and flags of expression.
 - 1.2.128
     - Revert behavior of string-string revivals to create a proper class first.  (RegExp"/some-string/" is a good example)
 - 1.2.127
