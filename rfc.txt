@@ -386,12 +386,24 @@ Table of Contents
    prefixed with an optional minus sign, which may be followed by a
    fraction part and/or an exponent part.  
 
-   In JSON, Leading zeros are not allowed.  Leading zeros are allowed,
-   although will often change the value's interpretation.  Radix numbers
+   In JSON, leading zeros are not allowed.  In JSOX, leading zeros are
+   allowed and do not change the value's interpretation: a leading zero
+   is simply a decimal digit, so 0123 is the number 123.  It is NOT
+   interpreted as octal (83), and it is NOT an error.  Radix numbers
    like 0x123 have a leading zero, followed by a format character ( one of
-   'x','o',or 'b' in any case, which inidicate hexidecimal, octal, and binary
-   respectively).  A leading zero on an integer changes the meaning to
-   be octal, and while parsing, any character not in 0-7 emits an error.
+   'x','o',or 'b' in any case, which indicate hexadecimal, octal, and binary
+   respectively); octal MUST be written with the 0o prefix.
+
+   Rationale: JSOX is a data format, not source code.  The convention
+   that a leading zero means octal belongs to source-code lexers (C,
+   Java, Perl, Ruby, Go, shell, sloppy-mode ECMAScript).  Text-to-number
+   conversion routines, which is what a data-format parser is, uniformly
+   read a leading zero as a decimal digit: Number("0123"),
+   parseInt("0123", 10), strtol(s, 0, 10), strtod(), and Python's
+   int("0123") all yield 123, and none has ever yielded 83.  This keeps
+   the governing rule for numbers a single one: a numeric token means
+   what the ES6 Number() constructor says it means.  Number() accepts
+   0x, 0o, and 0b radix prefixes and has never accepted legacy octal.
 
    A number begins with [0-9], '+', and '.'.  Once a number starts, only
    a limited number of characters are allowed and they are all less
@@ -419,15 +431,13 @@ Table of Contents
 
       decimal-point = %x2E       ; .
 
-      digit1-9 = %x31-39         ; 1-9
-
       e = %x65 / %x45            ; e E
 
       exp = e [ minus / plus ] 1*DIGIT
 
       frac = decimal-point 1*DIGIT
 
-      int = zero / ( digit1-9 *DIGIT )
+      int = 1*DIGIT              ; leading zeros permitted; always decimal
 
       minus = %x2D               ; -
 

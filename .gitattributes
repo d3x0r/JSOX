@@ -1,0 +1,7 @@
+# Everything in lib/ is generated from src/ by `npm run build`.
+lib/jsox.mjs        linguist-generated=true
+lib/jsox.js         linguist-generated=true
+lib/jsox.min.*      linguist-generated=true
+lib/jsox.es6.*      linguist-generated=true
+lib/jsox.d.ts       linguist-generated=true
+lib/jsox.d.mts      linguist-generated=true

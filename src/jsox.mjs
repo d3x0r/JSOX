@@ -1,5 +1,3 @@
-// GENERATED FILE -- do not edit.
-// Built from src/jsox.mjs by src-to-lib.mjs (npm run build); edits here are overwritten.
 //"use strict";
 // jsox.js
 // JSOX JavaScript Object eXchange. Inherits human features of comments
@@ -14,16 +12,17 @@
 //import util from 'util'; 
 
 const _JSON=JSON; // in case someone does something like JSON=JSOX; we still need a primitive _JSON for internal stringification
-if( "undefined" === typeof exports )
-	var exports = {};
+//if( "undefined" === typeof exports )
+//	var exports = {};
 
 /**
  * JSOX container for all JSOX methods.
  * @namespace
  */
-const JSOX = (function ( JSOX ) {
+const JSOX = {};
+//const JSOX = (function ( JSOX ) {
 JSOX.JSOX = JSOX;
-JSOX.version = "1.2.129";
+JSOX.version = "1.2.125";
 
 const _DEBUG_LL = false;
 const _DEBUG_PARSING = false;
@@ -3852,7 +3851,7 @@ JSOX.stringify = function( object, replacer, space ) {
 const nonIdent = 
 [ [ 0,256,[ 0xffd9ff,0xff6aff,0x1fc00,0x380000,0x0,0xfffff8,0xffffff,0x7fffff] ]
 ].map( row=>{ return{ firstChar : row[0], lastChar: row[1], bits : row[2] }; } );
-return JSOX;
-})(exports || {})
-//export {JSOX}
-//export default JSOX;
+//return JSOX;
+//})(exports || {})
+export {JSOX}
+export default JSOX;

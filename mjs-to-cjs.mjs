@@ -1,4 +1,5 @@
 // Generate lib/jsox.js (CJS) from lib/jsox.mjs (ESM).
+// (lib/jsox.mjs is itself generated from src/jsox.mjs by src-to-lib.mjs; run that first.)
 // The two sources are identical except for how the module is opened and closed;
 // this toggles those three blocks and nothing else.
 //
