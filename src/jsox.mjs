@@ -610,6 +610,9 @@ JSOX.begin = function( cb, reviver ) {
 		 * @param {string} msg 
 		 */
 		write(msg) {
+			// write() is the push interface; values only leave it through the callback.
+			// parse() drives the same parser through _write()/value() and needs no callback.
+			if( !cb ) throw new Error( "Callback function must be passed to begin, or you can't get values from the stream." );
 			let retcode;
 			if (typeof msg !== "string" && typeof msg !== "undefined") msg = String(msg);
 			if( !status ) throw new Error( "Parser is still in an error state, please reset before resuming" );
@@ -2111,6 +2114,10 @@ JSOX.begin = function( cb, reviver ) {
 							}
 						} else if( ( parse_context == CONTEXT_OBJECT_FIELD ) || ( parse_context == CONTEXT_CLASS_VALUE ) ) {
 							if( val.value_type != VALUE_UNSET ) {
+								// A bare field name with no ':' and no class to supply one: '{a}', '{"a"}',
+								// '{a:1,b}'.  This used to be stored under the key "null".
+								if( !current_class && !val.name )
+									throwError( "Object field name with no value", cInt );
 								// Only when the field did not name itself. A named body sets val.name at
 								// its colon, and this used to overwrite it, so the *last* field of
 								// `au{n,a} au{name:1,age:2}` came back as slot 0 ("n") rather than
@@ -2271,6 +2278,9 @@ JSOX.begin = function( cb, reviver ) {
 								// this is an empty comma...
 								if( val.string || val.value_type )
 									throwError( "State error; comma in field name and/or lost the class", cInt );
+								// the previous field is complete; a bare name that follows must bring its own ':'
+								// ( '{a:1,b}' used to store "b" under the stale name "a" )
+								val.name = null;
 							}
 						} else if( parse_context == CONTEXT_CLASS_VALUE ) {
 							if( current_class ) {
@@ -2313,6 +2323,9 @@ JSOX.begin = function( cb, reviver ) {
 								objectPush();
 								RESET_VAL();
 							}
+							// the field is complete; a bare name that follows must bring its own ':'
+							// ( '{a:1,b}' used to store "b" under the stale name "a" )
+							val.name = null;
 							word = WORD_POS_RESET;
 						} else {
 							status = false;
