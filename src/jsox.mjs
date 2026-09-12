@@ -134,6 +134,7 @@ const isKeywordValue = ( value_type )=>( value_type === VALUE_TRUE
 // arriving where a value is already held begins a second value.
 const isWhitespace = ( cInt )=>( cInt === 32/*' '*/ || cInt === 9/*'\t'*/
                               || cInt === 10/*'\n'*/ || cInt === 13/*'\r'*/
+                              || cInt === 11/*VT*/ || cInt === 12/*FF*/
                               || cInt === 0xFEFF/*ZWNBS*/
                               || cInt === 0x2028/*LS*/ || cInt === 0x2029/*PS*/ );
 
@@ -1218,7 +1219,7 @@ JSOX.begin = function( cb, reviver ) {
 					// comma separates the string, it gets consumed.
 				} else {
 					// ignore white space.
-					if( cInt == 32/*' '*/ || cInt == 13 || cInt == 10 || cInt == 9 || cInt == 0xFEFF || cInt == 0x2028 || cInt == 0x2029 ) {
+					if( cInt == 32/*' '*/ || cInt == 13 || cInt == 10 || cInt == 9 || cInt == 11/*VT*/ || cInt == 12/*FF*/ || cInt == 0xFEFF || cInt == 0x2028 || cInt == 0x2029 ) {
 						//_DEBUG_WHITESPACE && console.log( "IGNORE WHITESPACE" );
 						return;
 					}
@@ -1544,6 +1545,7 @@ JSOX.begin = function( cb, reviver ) {
 							}
 							if( cInt == 32/*' '*/
 							 || cInt == 13 || cInt == 10 || cInt == 9 || cInt == 47/*'/'*/ || cInt ==  35/*'#'*/
+							 || cInt == 11/*VT*/ || cInt == 12/*FF*/ || cInt == 0xFEFF/*ZWNBS*/ || cInt == 0x2028/*LS*/ || cInt == 0x2029/*PS*/
 							 || cInt == 44/*','*/ || cInt == 125/*'}'*/ || cInt == 93/*']'*/
 							 || cInt == 123/*'{'*/ || cInt == 91/*'['*/ || cInt == 34/*'"'*/ || cInt == 39/*'''*/ || cInt == 96/*'`'*/
 							 || cInt == 58/*':'*/ ) {
@@ -2392,6 +2394,8 @@ JSOX.begin = function( cb, reviver ) {
 							case 0x2028://' ':
 							case 0x2029://' ':
 							case 9://'\t':
+							case 11://VT
+							case 12://FF
 							case 0xFEFF: // ZWNBS is WS though
 								 //_DEBUG_WHITESPACE  && console.log( "THIS SPACE", word, parse_context, val );
 								if( parse_context === CONTEXT_UNKNOWN && word === WORD_POS_END ) { // allow collect new keyword
@@ -2668,6 +2672,8 @@ JSOX.begin = function( cb, reviver ) {
 						case 32://' ':
 						case 9://'\t':
 						case 13://'\r':
+						case 11://VT
+						case 12://FF
 						case 0x2028: // LS (Line separator)
 						case 0x2029: // PS (paragraph separate)
 						case 0xFEFF://'\uFEFF':
@@ -3446,7 +3452,7 @@ JSOX.stringifier = function() {
 
 				// The value is an array. Stringify every element. Use null as a placeholder
 				// for non-JSOX values.
-			
+				gap += indent;
 				for (let i = 0; i < this.length; i += 1) {
 					path[thisNodeNameIndex] = i;
 					partial[i] = str(i, this) || "null";
@@ -3469,6 +3475,7 @@ JSOX.stringifier = function() {
 							, "]"
 						].join("")
 						: "[" + partial.join(",") + "]" );
+				gap = mind;
 				return v;
 			} 
 			function mapToObject(){

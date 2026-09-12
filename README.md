@@ -845,7 +845,9 @@ The same stance applies to [JSON6](https://github.com/d3x0r/JSON6), and is state
     - An object field name with no value now throws (`{a}` and `{a:1,b}` used to store the name under the key "null" or the previous field's name).
     - `begin()` no longer needs a callback; `write()` throws if there is none, since values can only leave it through the callback.
     - Build order is now src-to-lib, mjs-to-cjs, then `cli -c package.jsox`, so the CLI never runs against a stale `lib/`.
+    - Vertical tab (U+000B) and form feed (U+000C) are whitespace between tokens, as in ECMAScript; line and paragraph separators now also terminate a number.
     - Revert stringifier behavior to emit bare regex again, when there are no flags; while keeping full `/<src>/<flags>` form for advanced options.
+    - `stringify` with an indent now indents array elements one level deeper than the enclosing `[`; they used to sit at the parent's depth (objects were already correct).
 - 1.2.129
     - Improve Regex encoding/decoding (still recovers old stringified versions as code only); save source and flags of expression.
 - 1.2.128
