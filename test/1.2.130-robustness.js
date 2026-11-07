@@ -22,12 +22,23 @@ describe('Added in 1.2.130 - truncated input, parser pool and buffer views', fun
 			expect( () => JSOX.parse( '[[1,2]' ) ).to.throw( Error, /1 open container/ );
 			expect( () => JSOX.parse( '[[1,2' ) ).to.throw( Error, /2 open containers/ );
 		} );
-		it( 'still takes a complete document, and still has no value in an empty one', function () {
+		it( 'throws for a blank document, as JSON.parse does', function () {
+			// JSON.parse('') is "Unexpected end of JSON input", and sack.vfs's parser
+			// throws here too; undefined was indistinguishable from a parsed 'undefined'.
+			expect( () => JSOX.parse( '' ) ).to.throw( Error, /No value in document/ );
+			expect( () => JSOX.parse( '   ' ) ).to.throw( Error, /No value in document/ );
+			expect( () => JSOX.parse( String.fromCharCode( 9, 10 ) ) ).to.throw( Error, /No value in document/ );
+		} );
+		it( 'still has no value in a comment-only document', function () {
+			// unlike a blank one, this said something -- and '//' at the end of a
+			// document is deliberately a warning rather than an error
+			expect( JSOX.parse( '//' ) ).to.equal( undefined );
+			expect( JSOX.parse( '// hi' ) ).to.equal( undefined );
+			expect( JSOX.parse( '/* x */' ) ).to.equal( undefined );
+		} );
+		it( 'still takes a complete document', function () {
 			expect( JSOX.parse( '[1,2]' ) ).to.deep.equal( [ 1, 2 ] );
 			expect( JSOX.parse( '{a:{b:1}}' ) ).to.deep.equal( { a:{ b:1 } } );
-			expect( JSOX.parse( '' ) ).to.equal( undefined );
-			expect( JSOX.parse( '   ' ) ).to.equal( undefined );
-			expect( JSOX.parse( '//' ) ).to.equal( undefined );
 		} );
 	} );
 
