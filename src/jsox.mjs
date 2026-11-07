@@ -279,6 +279,8 @@ let toProtoTypes = new WeakMap();
 let toObjectTypes = new Map();
 let fromProtoTypes = new Map();
 let commonClasses = [];
+// commonClasses indexed by field tag, so matchObject() does not scan the list
+let commonClassesByTag = new Map();
 
 /**
  * reset JSOX parser entirely; clears all type mappings
@@ -290,6 +292,7 @@ JSOX.reset = function() {
 	toObjectTypes = new Map();
 	fromProtoTypes = new Map();
 	commonClasses = [];
+	commonClassesByTag = new Map();
 	// The pooled parse level is a stack pointer for re-entrant parse() calls, and only
 	// the "returned a value" exit pops it -- a parse that threw, or one that completed
 	// with no value, leaves it raised, so every later parse() runs on a different pooled
@@ -453,6 +456,9 @@ JSOX.begin = function( cb, reviver ) {
 			}
 		},
 		classes = [],  // class templates that have been defined.
+		// classes indexed by name; without this, every Name{...} definition scanned
+		// the whole list, making a document of N definitions cost O(N^2).
+		classesByName = new Map(),
 		protoTypes = {},
 		current_proto = null,  // the current class being defined or being referenced.
 		current_class = null,  // the current class being defined or being referenced.
@@ -541,6 +547,11 @@ JSOX.begin = function( cb, reviver ) {
 				if( comment === 4 ) throwEndError( "Incomplete '/* *' close at end of document" );
 			}
 			if( gatheringString ) throwEndError( "Incomplete string" );
+			if( context_stack.length ) {
+				// something was opened ('[' or '{') and never closed.
+				const what = ( parse_context === CONTEXT_IN_ARRAY )?"array":"object";
+				throwEndError( `Unexpected end of document; ${context_stack.length} open ${context_stack.length>1?"containers":"container"} (innermost ${what})` );
+			}
 		},
 		value() {
 			this.finalError();
@@ -565,6 +576,7 @@ JSOX.begin = function( cb, reviver ) {
 			elements = undefined;
 			parse_context = CONTEXT_UNKNOWN;
 			classes = [];
+			classesByName = new Map();
 			protoTypes = {};
 			current_proto = null;
 			current_class = null;
@@ -798,7 +810,16 @@ JSOX.begin = function( cb, reviver ) {
 						if( !fp )
 							fp = fromProtoTypes.get( val.className );
 						val.className = null;
-						if( fp && fp.cb ) return val.contains = fp.cb.call( val.contains ); 
+						// The final call settles the object's identity: it returns `this` or a
+						// replacement.  A reviver that falls off its end returns undefined, and
+						// taking that literally threw away everything just parsed; the
+						// typed-string path above already keeps the instance in that case, and
+						// keeping it is the only reading that cannot lose data.
+						if( fp && fp.cb ) {
+							const r = fp.cb.call( val.contains );
+							if( r !== undefined ) val.contains = r;
+							return val.contains;
+						}
 					}
 					return val.contains;
 				case VALUE_ARRAY:
@@ -1007,8 +1028,13 @@ JSOX.begin = function( cb, reviver ) {
 						fp = localFromProtoTypes.get( val.className );
 						if( !fp )
 							fp = fromProtoTypes.get( val.className );
-						val.className = null; 
-						if( fp && fp.cb ) return fp.cb.call( val.contains ); 
+						val.className = null;
+						// same contract as the object case above: undefined from the final
+						// call means the reviver kept `this`, not that the array is gone.
+						if( fp && fp.cb ) {
+							const r = fp.cb.call( val.contains );
+							if( r !== undefined ) return r;
+						}
 					}
 					return val.contains;
 				default:
@@ -1094,7 +1120,11 @@ JSOX.begin = function( cb, reviver ) {
 			// `author{name} author{1,2}` parsed as {name:1,undefined:2}.  (sack dereferenced
 			// the missing entry instead and crashed outright.)
 			function nextClassField() {
-				if( elements && Object.keys( elements ).length > current_class_field )
+				// Only a named value taken before any positional one can leave a key here:
+				// the loose-then-named order is caught at the ':' instead (current_class_field
+				// > 0 there).  So this looks once per class body rather than once per field --
+				// counting every key on every field made a body of F fields cost O(F^2).
+				if( elements && current_class_field === 0 && Object.keys( elements ).length )
 					throwError( "class body mixes named and positional values; fault while parsing;", cInt );
 				const name = current_class.fields[current_class_field++];
 				if( undefined === name )
@@ -1599,7 +1629,7 @@ JSOX.begin = function( cb, reviver ) {
 							}
 						if( !protoDef || !protoDef.protoDef && val.string ) // class creation is redundant...
 						{
-							cls = classes.find( cls=>cls.name===val.string );
+							cls = classesByName.get( val.string );
 							//console.log( "Probably creating the Macro-Tag here?", cls )
 							if( !cls ) {
 								/* eslint-disable no-inner-declarations */
@@ -1613,6 +1643,7 @@ JSOX.begin = function( cb, reviver ) {
 								// constructor is privateProto itself (cf. localFromProtoTypes below)
 								, protoCon: (protoDef && protoDef.protoDef && protoDef.protoDef.protoCon) || privateProto.prototype.constructor
 								 , fields : [] } );
+								classesByName.set( cls.name, cls );
 								 nextMode = CONTEXT_CLASS_FIELD;
 							} else if( redefineClass ) {
 								//_DEBUG_PARSING && console.log( "redefine class..." );
@@ -1643,7 +1674,7 @@ JSOX.begin = function( cb, reviver ) {
 							tmpobj = new protoDef.protoDef.protoCon();
 						} else {
 							// look for a class type (shorthand) to recover.
-							cls = classes.find( cls=>cls.name === val.string );
+							cls = classesByName.get( val.string );
 							if( !cls )
 							{
 								/* eslint-disable no-inner-declarations */
@@ -1863,7 +1894,7 @@ JSOX.begin = function( cb, reviver ) {
 				} 
 				if( val.string )
 				{
-					rv.cls = classes.find( cls=>cls.name === val.string );
+					rv.cls = classesByName.get( val.string );
 					if( !rv.protoDef && !rv.cls ) {
 					    // this will creaet a class def with a new proto to cover when we don't KNOW.
 					    //throwError( "Referenced class " + val.string + " has not been defined", cInt );
@@ -1902,7 +1933,11 @@ JSOX.begin = function( cb, reviver ) {
 						status = false;
 					else if( string_status > 0 ) {
 						gatheringString = false;
-						if( status ) val.value_type = VALUE_STRING;
+						if( status ) {
+							val.value_type = VALUE_STRING;
+							// same state an unsplit string leaves; a field name stays WORD_POS_FIELD
+							if( parse_context != CONTEXT_OBJECT_FIELD && parse_context != CONTEXT_CLASS_FIELD ) word = WORD_POS_END;
+						}
 					}
 				}
 				if( gatheringNumber ) {
@@ -1955,7 +1990,7 @@ JSOX.begin = function( cb, reviver ) {
 						}
 						else {
 							if( cInt == 47/*'/'*/ ) comment = 0;
-							else comment = 3;
+							else if( cInt != 42/*'*'*/ ) comment = 3; // another '*' can still begin the close
 						}
 						if( !loneSolidus ) continue;
 						// Append the solidus itself, then fall through and dispatch the
@@ -2874,6 +2909,15 @@ let _parse_level = 0;
  */
 JSOX.parse = function( msg, reviver ) {
 	let parse_level = _parse_level++;
+	try {
+		return parseWithLevel( parse_level, msg, reviver );
+	} finally {
+		// release the pooled parser however this parse ended (value, throw, or no value)
+		_parse_level = parse_level;
+	}
+}
+
+function parseWithLevel( parse_level, msg, reviver ) {
 	let parser;
 	if( _parser.length <= parse_level )
 		_parser.push( Object.freeze( JSOX.begin() ) );
@@ -2908,9 +2952,11 @@ JSOX.parse = function( msg, reviver ) {
 			}
 			return reviver.call(holder, key, value);
 		}({'': value}, '')) : value;
-		_parse_level--;
 		return value;
 	}
+	// finalError() throws for a truncated document (open string, comment or container);
+	// anything else that gets here is a document with no value in it at all - ''
+	// or only whitespace and comments - which has always come back as undefined.
 	parser.finalError();
 	return undefined;
 }
@@ -2942,6 +2988,8 @@ JSOX.defineClass = function( name, obj ) {
 		   , tag:denormKeys.toString()
 		   , proto : Object.getPrototypeOf(obj)
 		   , fields : Object.keys(obj) } );
+	// first definition of a tag wins, which is what the old find() scan did
+	if( !commonClassesByTag.has( cls.tag ) ) commonClassesByTag.set( cls.tag, cls );
 	for(let n = 1; n < cls.fields.length; n++) {
 		if( cls.fields[n] < cls.fields[n-1] ) {
 			let tmp = cls.fields[n-1];
@@ -3035,6 +3083,10 @@ JSOX.registerToFrom = function( prototypeName, prototype/*, to, from*/ ) {
  */
 JSOX.stringifier = function() {
 	let classes = [];
+	// classes indexed by prototype and by field tag, so matchObject() is a lookup
+	// instead of a scan of every defined class.
+	let classesByProto = new Map();
+	let classesByTag = new Map();
 	let useQuote = '"';
 
 	let fieldMap = new WeakMap();
@@ -3146,44 +3198,44 @@ JSOX.stringifier = function() {
 		} );
 	   
 		toProtoTypes.set( Uint8Array.prototype, { external:true, name:"u8"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Uint8ClampedArray.prototype, { external:true, name:"cu8"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Int8Array.prototype, { external:true, name:"s8"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Uint16Array.prototype, { external:true, name:"u16"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Int16Array.prototype, { external:true, name:"s16"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Uint32Array.prototype, { external:true, name:"u32"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Int32Array.prototype, { external:true, name:"s32"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		/*
 		if( typeof Uint64Array != "undefined" )
 			toProtoTypes.set( Uint64Array.prototype, { external:true, name:"u64"
-			    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+			    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 			} );
 		if( typeof Int64Array != "undefined" )
 			toProtoTypes.set( Int64Array.prototype, { external:true, name:"s64"
-			    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+			    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 			} );
 		*/
 		toProtoTypes.set( Float32Array.prototype, { external:true, name:"f32"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Float64Array.prototype, { external:true, name:"f64"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 		toProtoTypes.set( Float64Array.prototype, { external:true, name:"f64"
-		    , cb:function() { return "["+getIdentifier(base64ArrayBuffer(this.buffer))+"]" }
+		    , cb:function() { return "["+getIdentifier(base64ArrayView(this))+"]" }
 		} );
 	   
 		toProtoTypes.set( RegExp.prototype, mapToJSOX = { external:true, name:"regex"
@@ -3248,6 +3300,9 @@ JSOX.stringifier = function() {
 				}
 			}
 			if( cls.proto === Object.getPrototypeOf( {} ) ) cls.proto = null;
+			// first definition wins for both keys, matching the old find() scans
+			if( cls.proto && !classesByProto.has( cls.proto ) ) classesByProto.set( cls.proto, cls );
+			if( !classesByTag.has( cls.tag ) ) classesByTag.set( cls.tag, cls );
 		},
 		setDefaultObjectToJSOX( cb ) { objectToJSOX = cb },
 		isEncoding(o) {
@@ -3314,9 +3369,7 @@ JSOX.stringifier = function() {
 		let k;
 		let cls;
 		let prt = Object.getPrototypeOf(o);
-		cls = classes.find( cls=>{
-			if( cls.proto && cls.proto === prt ) return true;
-		} );
+		cls = prt?classesByProto.get( prt ):undefined;
 		if( cls ) return cls;
 
 		if( classes.length || commonClasses.length ) {
@@ -3336,13 +3389,9 @@ JSOX.stringifier = function() {
 				}
 				k = denormKeys.toString();
 			}
-			cls = classes.find( cls=>{
-				if( cls.tag === k ) return true;
-			} );
+			cls = classesByTag.get( k );
 			if( !cls )
-				cls = commonClasses.find( cls=>{
-					if( cls.tag === k ) return true;
-				} );
+				cls = commonClassesByTag.get( k );
 		}
 		return cls;
 	}
@@ -3430,7 +3479,7 @@ JSOX.stringifier = function() {
 			return str( "", {"":object} );
 		} finally {
 			depth--;
-			if( !depth ) commonClasses.length = 0;
+			if( !depth ) { commonClasses.length = 0; commonClassesByTag.clear(); }
 			if( restoreSort !== undefined ) sortFields = restoreSort;
 			if( restoreQuote !== undefined ) useQuote = restoreQuote;
 		}
@@ -3548,7 +3597,8 @@ JSOX.stringifier = function() {
 			// obtain a replacement value.
 
 			if (typeof rep === "function") {
-				isValue = false;
+				// the result is a plain value: a string it returns is quoted below like
+				// any other, unlike converter output, which is already encoded text.
 				value = rep.call(holder, key, value);
 			}
 				//console.log( "PROTOTYPE:", Object.getPrototypeOf( value ) )
@@ -3777,10 +3827,15 @@ JSOX.stringifier = function() {
 	}
 	Object.freeze( decodings );
 	
+	// base64 of just the bytes a typed array view covers, not its whole buffer.
+	function base64ArrayView(view) {
+		return base64ArrayBuffer( new Uint8Array( view.buffer, view.byteOffset, view.byteLength ) );
+	}
+
 	function base64ArrayBuffer(arrayBuffer) {
 		let base64    = ''
 	
-		let bytes         = new Uint8Array(arrayBuffer)
+		let bytes         = (arrayBuffer instanceof Uint8Array)?arrayBuffer:new Uint8Array(arrayBuffer)
 		let byteLength    = bytes.byteLength
 		let byteRemainder = byteLength % 3
 		let mainLength    = byteLength - byteRemainder

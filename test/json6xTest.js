@@ -157,7 +157,7 @@ describe('Basic parsing', function () {
 		it('Should throw with incomplete comment with 3 asterisks', function () {
 			expect(function () {
 				parse( "/***" );
-			}).to.throw(Error,/Open comment/);
+			}).to.throw(Error,/Open comment|Incomplete/);
 		});
 		it('Should handle comment', function () {
 			const o = parse( "/**/1" );

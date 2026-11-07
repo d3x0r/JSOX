@@ -442,7 +442,7 @@ var str = JSOX.stringify(obj); /* uses JSON stringify, so don't have to replace 
 |begin| Parser(methods below) |(cb [,reviver] ) | create a JSOX stream processor.  cb is called with (value) for each value decoded from input given with write().  Optional reviver is called with each object before being passed to callback. |
 |toJSOX  | none | (name,Function/Class,toCb) | For each object that matches the prototype, the name is used to prefix the type; and the cb is called to get toJSOX.  | Instead of setting prototype extensions, provides a way to register formatters for prototypes.  These are shared for all stringifier instances, and will throw an exception if duplicate set happens. |
 |fromJSOX| none | (name,Function/Class,fromCb) | fromCb is called whenever the type 'name' is revived.  The type of object following the name is passd as 'this'. Will throw an exception if duplicate set happens. |
-|registerToFrom  | none | (name,Function/Class,toCb, fromCb) | register both to and from for the same name. |
+|addType  | none | (name,Function/Class[,toCb][,fromCb]) | register both to and from for the same name; either callback may be omitted.  (`registerToFrom` is the deprecated spelling and throws.) |
 |reset| none | () | Reset to/from types on JSOX global parser and stringifier. (should be reserved for tests) |
 
 
@@ -502,14 +502,25 @@ the references do not properly refer to the root of the object.
 `fromJSOX( name, type, callback )`
 
   - name is the tag text which triggers reviving this type.
-  - type is the class or function used to create a `new type()`.  The instance is always created with empty parameters.
+  - type is the class or function used to create a `new type()`.  For a tagged object or array the instance is created with empty parameters; for a tagged *string* the payload is passed to the constructor, so a class that consumes it is built from it.
   - callback(field,val)  is called with `this` set to the object of the type specified, and `field` set as the current field name being revived, `val` is the value being set into the field.
     If field is `undefined` then this is the end of all fields being added to the object, and the `this` object may be changed to a different object; usually `if( field === undefined ) return this;`.
 
 The callback is called after objects are completely revived; it is called when an array value is initially created, or immediately after resolving any other value.
 
+The callback is therefore invoked **once per field** of a tagged object, and then once more with
+`field === undefined`.  It is not a single "build the instance from the collected fields" call —
+a callback written as though it were (one that ignores its arguments and returns a new instance)
+runs for every field and overwrites each one.  A tagged string has no fields, so for that form the
+callback is called just once, with the payload as `val`.
+
+The callback is optional.  Omit it to have the revived fields assigned directly onto a
+`new type()`, which is all a class that simply carries data needs; see `addType` below.
+
 Registers a handler to convert recovered string, array or object from JSOX.  The converted data from the JSOX stream is passed as
 'this'.  The result of the callback may be any type of value; the resulting value is used instead of the data converted from JSOX.
+Returning `undefined` from the final (`field === undefined`) call leaves `this` in place rather than
+discarding it.
 
 Registering the same name more than once throws an error.
 
@@ -527,27 +538,62 @@ function stringTest() {
 
 stringTest.fromJSOX = function(field,val) {
 	if( field ) {
-		console.log( "Resuurect from String:[%s]", this /*string*/ );
+		console.log( "Resuurect from String:[%s]", val /*the payload*/ );
 	} else
-		return new stringTest( this );
+		return new stringTest( val );
 }
 JSOX.fromJSOX( "stringTest", stringTest, stringTest.fromJSOX );
 ```
 
-#### Register toJSOX and fromJSOX for the same type
+#### Register toJSOX and fromJSOX for the same type : `JSOX.addType()`
 
-Registers both to and from methods or a spsecified name, using the specified prototype to match during stringify.
+`addType( name, Type [, toCb] [, fromCb] )`
+
+Registers both to and from methods for a specified name, using the specified prototype to match during stringify.
 Internally, calls the above functions with the parameters split as appropriate.
 
 Registering the same name more than once for From or To throws an error.
 
+Both callbacks are optional.  **A class that just carries data needs neither of them**: with
+no `toCb` the instance's own fields are emitted as a tagged object, and with no `fromCb` the
+instance is created with `new Type()` and those fields are assigned back onto it.  That is
+what revives a class with a positional constructor — `THREE.Vector4`, say — as a real instance
+whose methods work:
+
+``` js
+JSOX.addType( "Vector4", THREE.Vector4 );                 // nothing else required
+
+JSOX.stringify( new THREE.Vector4( 1, 2, 3, 4 ) );        // 'Vector4{w:4,x:1,y:2,z:3}'
+JSOX.parse( 'Vector4{w:4,x:1,y:2,z:3}' ).length();        // 5.477...
+```
+
+Supply `fromCb` only to do something the field-by-field default cannot.  Note that it is a
+**per-field reviver**, called once for each field and then once with `field === undefined`
+(see `fromJSOX` above) — it is *not* a one-shot "build the instance from these fields" hook.
+A callback that ignores its arguments and returns a new instance is therefore called once per
+field, and its return value replaces that field:
+
+``` js
+// WRONG for a tagged object: called per field, so every field becomes a half-built Pt
+JSOX.addType( "Pt", Pt, undefined, function() { return new Pt( this.x, this.y ) } );
+
+// right -- and for a class like this, passing no fromCb at all is righter still
+JSOX.addType( "Pt", Pt, undefined, function( field, val ) {
+	if( field === undefined ) return this;   // final call: settle the identity
+	return val;                              // per field: store this value
+} );
+```
+
+A typed *string* is the one case where the zero-argument form reads correctly, because there
+are no fields to visit — the callback is called once, with the payload:
+
 ``` js
 
-JSOX.registerToFrom( "stringTest", stringTest
+JSOX.addType( "stringTest", stringTest
 	, function() { return '"' + this.toString() + '"' }
-	, function() {
-		console.log( "Resurrect from String:[%s]", this /*string*/ );
-		return new stringTest( this );  // some stringTest class with string initializer
+	, function( field, val ) {
+		console.log( "Resurrect from String:[%s]", val /*the payload*/ );
+		return new stringTest( val );  // some stringTest class with string initializer
 	}
 );
 ```
@@ -567,22 +613,30 @@ with an object, with an object, and with an object respectively.
 ```js
 var JSOX = require( "JSOX" );
 
-function Color() {
-	this.r = 100;
-        this.g = 150;
-        this.b = 20;
+function Color( r, g, b ) {
+	this.r = r ?? 100;
+	this.g = g ?? 150;
+	this.b = b ?? 20;
 }
+function hex2( n ) { return n.toString(16).padStart(2,'0'); }
 
-// notice that the literal quotes to result as output are returned here.
-// this allows the encoder to use an object {}, an array [] or a string ""
-// to pass to the reviver function. 
-JSOX.registerToFrom( "color", Color.prototype, function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
-           , function() { return '"#'+this.r.toString(16)+this.g.toString(16)+this.b.toString(16)+ '"'; }
+// notice that the literal quotes to result as output are returned by the
+// encoder.  this allows the encoder to use an object {}, an array [] or a
+// string "" to pass to the reviver function.
+// the reviver is handed the payload as its `val` argument; `this` is a
+// `new Color( payload )`, so a constructor that consumes the payload itself
+// can just `return this` instead.
+JSOX.addType( "color", Color
+           , function() { return '"#'+hex2(this.r)+hex2(this.g)+hex2(this.b)+'"'; }
+           , function( field, val ) {
+           	const m = /^#(..)(..)(..)$/.exec( val );
+           	return new Color( parseInt(m[1],16), parseInt(m[2],16), parseInt(m[3],16) );
+           }
            );
 
 var c = new Color();
 
-JSOX.stringify( c ) ); // result is 'color"#649614"'
+JSOX.stringify( c ); // result is 'color"#649614"'
 JSOX.parse( JSOX.stringify( c ) ); // result is   'Color { r: 100, g: 150, b: 20 }'  (console.log)
 
 ```
@@ -847,8 +901,13 @@ The same stance applies to [JSON6](https://github.com/d3x0r/JSON6), and is state
     - Build order is now src-to-lib, mjs-to-cjs, then `cli -c package.jsox`, so the CLI never runs against a stale `lib/`.
     - Vertical tab (U+000B) and form feed (U+000C) are whitespace between tokens, as in ECMAScript; line and paragraph separators now also terminate a number.
     - Error positions are now right: the column no longer starts one too high, `_` digit separators are counted, and lines are counted inside comments and strings and for CR, LS and PS as well as LF.  The C parser in sack has the same fix.
+    - `stringify` quotes a string returned by a replacer, and the replacer receives the raw string rather than a quoted one; converter (`toJSOX`) output is still emitted as encoded text.
+    - A block comment closes correctly after consecutive asterisks (`/***/`).
+    - A root string split across `write()` calls is delivered before the next value in the same chunk, instead of being lost.
     - Revert stringifier behavior to emit bare regex again, when there are no flags; while keeping full `/<src>/<flags>` form for advanced options.
     - `stringify` with an indent now indents array elements one level deeper than the enclosing `[`; they used to sit at the parent's depth (objects were already correct).
+    - A `fromJSOX` reviver that returns `undefined` from its final (`field === undefined`) call now leaves the revived object or array in place instead of replacing it with `undefined`, matching what the typed-string path already did.  Returning nothing can no longer discard everything just parsed.
+    - Documented that the `fromJSOX`/`addType` reviver is a per-field callback, not a one-shot "build the instance from these fields" hook, and that a class which only carries data needs no callbacks at all — `addType( name, Class )` revives it as a real instance with its fields assigned.  The `addType`/`registerToFrom` examples taught the zero-argument form, which runs once per field and overwrites each one; they also used the deprecated `registerToFrom` name (it throws), passed `Color.prototype` where the class belongs, and gave the reviver a copy of the encoder.  Added regression tests for typed-object revival at the top level, nested, and in arrays, with and without a `to` encoder, and for a class with a positional constructor (the `THREE.Vector4` case).
 - 1.2.129
     - Improve Regex encoding/decoding (still recovers old stringified versions as code only); save source and flags of expression.
 - 1.2.128
